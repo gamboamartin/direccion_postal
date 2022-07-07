@@ -1,6 +1,6 @@
 {
-  "name": "gamboa.martin/im_registro_patronal",
-  "description": "Datos de IMSS",
+  "name": "gamboa.martin/direccion_postal",
+  "description": "Datos de calles codigos postales etc",
   "type": "library",
   "license": "GPL-3.0-or-later",
   "authors": [
@@ -52,7 +52,8 @@
         "gamboa.martin/configuraciones": "dev-main",
         "gamboa.martin/template_1": "dev-main",
         "gamboa.martin/system": "dev-main",
-        "gamboa.martin/services": "dev-main"
+        "gamboa.martin/services": "dev-main",
+        "gamboa.martin/template": "dev-main"
 
     },
     "require-dev": {
