@@ -18,6 +18,7 @@ use html\dp_pais_html;
 use models\dp_municipio;
 use PDO;
 use stdClass;
+use Throwable;
 
 class controlador_dp_municipio extends system {
 
@@ -58,6 +59,46 @@ class controlador_dp_municipio extends system {
 
 
         return $r_alta;
+
+    }
+
+    public function get_municipio(bool $header, bool $ws = true){
+
+        $keys['dp_pais'] = array('id','descripcion','codigo','codigo_bis');
+        $keys['dp_estado'] = array('id','descripcion','codigo','codigo_bis');
+        $keys['dp_municipio'] = array('id','descripcion','codigo','codigo_bis');
+
+        $filtro = $this->asigna_filtro_get($keys);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar filtros',data:  $filtro,header: $header,ws: $ws);
+
+        }
+
+        $r_dp_municipio = $this->modelo->filtro_and(filtro: $filtro);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener municipios',data:  $r_dp_municipio,header: $header,ws: $ws);
+
+        }
+
+        if($header){
+            $retorno = $_SERVER['HTTP_REFERER'];
+            header('Location:'.$retorno);
+            exit;
+        }
+        if($ws){
+            header('Content-Type: application/json');
+            try {
+                echo json_encode($r_dp_municipio, JSON_THROW_ON_ERROR);
+            }
+            catch (Throwable $e){
+                return $this->retorno_error(mensaje: 'Error al maquetar estados',data:  $e,header: false,ws: $ws);
+            }
+            exit;
+        }
+
+
+        return $r_dp_municipio;
+
 
     }
 
