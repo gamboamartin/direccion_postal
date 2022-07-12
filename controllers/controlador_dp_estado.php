@@ -16,6 +16,7 @@ use html\dp_pais_html;
 use models\dp_estado;
 use PDO;
 use stdClass;
+use Throwable;
 
 class controlador_dp_estado extends system {
 
@@ -48,6 +49,53 @@ class controlador_dp_estado extends system {
         $this->inputs->select->dp_pais_id = $select;
 
         return $r_alta;
+
+    }
+
+    /**
+     * @param bool $header If header muestra directo en aplicacion
+     * @param bool $ws If ws retorna un obj en forma JSON
+     * @example
+     * $_GET[pais_id] = 1;
+     * retorna un JSON con la forma base de r_resultado_modelo
+     * @return array|stdClass|void
+     */
+    public function get_estado(bool $header, bool $ws = true){
+
+        $keys['dp_pais'] = array('id','descripcion','codigo','codigo_bis');
+        $keys['dp_estado'] = array('id','descripcion','codigo','codigo_bis');
+
+        $filtro = $this->asigna_filtro_get($keys);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar filtros',data:  $filtro,header: $header,ws: $ws);
+
+        }
+
+        $r_dp_estado = $this->modelo->filtro_and(filtro: $filtro);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener estados',data:  $r_dp_estado,header: $header,ws: $ws);
+
+        }
+
+        if($header){
+            $retorno = $_SERVER['HTTP_REFERER'];
+            header('Location:'.$retorno);
+            exit;
+        }
+        if($ws){
+            header('Content-Type: application/json');
+            try {
+                echo json_encode($r_dp_estado, JSON_THROW_ON_ERROR);
+            }
+            catch (Throwable $e){
+                return $this->retorno_error(mensaje: 'Error al maquetar estados',data:  $e,header: false,ws: $ws);
+            }
+            exit;
+        }
+
+
+        return $r_dp_estado;
+
 
     }
 
