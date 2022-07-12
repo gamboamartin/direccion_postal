@@ -39,14 +39,14 @@ class controlador_dp_calle_pertenece extends system {
 
         $this->inputs->select = new stdClass();
 
-        $select = (new dp_calle_html())->select_dp_calle_id(id_selected:-1,link: $this->link);
+        $select = (new dp_calle_html())->select_dp_calle_id(cols:12, id_selected:-1,link: $this->link);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);
         }
 
         $this->inputs->select->dp_calle_id = $select;
 
-        $select = (new dp_colonia_html())->select_dp_colonia_id(id_selected:-1,link: $this->link);
+        $select = (new dp_colonia_html())->select_dp_colonia_id(cols:12, id_selected:-1,link: $this->link);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);
         }
@@ -68,14 +68,14 @@ class controlador_dp_calle_pertenece extends system {
 
         $this->inputs->select = new stdClass();
 
-        $select = (new dp_calle_html())->select_dp_calle_id(id_selected:$this->row_upd->dp_calle_id,
+        $select = (new dp_calle_html())->select_dp_calle_id(cols:12, id_selected:$this->row_upd->dp_calle_id,
             link: $this->link);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);
         }
         $this->inputs->select->dp_calle_id = $select;
 
-        $select = (new dp_colonia_html())->select_dp_colonia_id(id_selected:$this->row_upd->dp_colonia_id,
+        $select = (new dp_colonia_html())->select_dp_colonia_id(cols:12, id_selected:$this->row_upd->dp_colonia_id,
             link: $this->link);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);

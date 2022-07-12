@@ -13,6 +13,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use html\dp_cp_html;
+use html\dp_estado_html;
 use html\dp_municipio_html;
 use html\dp_pais_html;
 use models\dp_cp;
@@ -41,14 +42,16 @@ class controlador_dp_cp extends system {
 
         $this->inputs->select = new stdClass();
 
-        $select = (new dp_cp_html())->select_dp_cp_id(id_selected:-1,link: $this->link);
+        $select = (new dp_estado_html())->select_dp_estado_id(cols:6, id_selected:-1,link: $this->link);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);
         }
 
-        $this->inputs->select->dp_cp_id = $select;
+        $this->inputs->select->dp_estado_id = $select;
 
-        $select = (new dp_municipio_html())->select_dp_municipio_id(id_selected:-1,link: $this->link);
+
+
+        $select = (new dp_municipio_html())->select_dp_municipio_id(cols:6, id_selected:-1,link: $this->link);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);
         }
