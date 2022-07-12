@@ -39,7 +39,7 @@ class controlador_dp_municipio extends system {
             return $this->retorno_error(mensaje: 'Error al generar template', data: $r_alta, header: $header, ws: $ws);
         }
 
-        $select = (new dp_pais_html())->select_dp_pais_id(cols:12, id_selected: -1, link: $this->link);
+        $select = (new dp_pais_html())->select_dp_pais_id(cols:12,con_registros: true, id_selected: -1, link: $this->link);
         if (errores::$error) {
             $error = $this->errores->error(mensaje: 'Error al generar select', data: $select);
             print_r($error);
@@ -49,7 +49,7 @@ class controlador_dp_municipio extends system {
         $this->inputs->select = new stdClass();
         $this->inputs->select->dp_pais_id = $select;
 
-        $select = (new dp_estado_html())->select_dp_estado_id(cols:12, id_selected:-1,link: $this->link);
+        $select = (new dp_estado_html())->select_dp_estado_id(cols:12,con_registros: true, id_selected:-1,link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
             print_r($error);

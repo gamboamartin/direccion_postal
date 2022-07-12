@@ -39,7 +39,7 @@ class controlador_dp_estado extends system {
         }
 
 
-        $select = (new dp_pais_html())->select_dp_pais_id(id_selected:-1,link: $this->link);
+        $select = (new dp_pais_html())->select_dp_pais_id(cols:12,con_registros: true,id_selected:-1,link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
             print_r($error);

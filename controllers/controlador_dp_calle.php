@@ -8,11 +8,9 @@
  */
 namespace controllers;
 
-use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use html\dp_calle_html;
-use html\dp_pais_html;
 use models\dp_calle;
 use PDO;
 use stdClass;

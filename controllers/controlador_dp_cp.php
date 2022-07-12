@@ -8,18 +8,17 @@
  */
 namespace controllers;
 
-use base\controller\salida_data;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use html\dp_cp_html;
 use html\dp_estado_html;
 use html\dp_municipio_html;
-use html\dp_pais_html;
+
 use models\dp_cp;
 use PDO;
 use stdClass;
-use Throwable;
+
 
 class controlador_dp_cp extends system {
 
@@ -42,7 +41,8 @@ class controlador_dp_cp extends system {
 
         $this->inputs->select = new stdClass();
 
-        $select = (new dp_estado_html())->select_dp_estado_id(cols:6, id_selected:-1,link: $this->link);
+        $select = (new dp_estado_html())->select_dp_estado_id(cols:6,con_registros: true,
+            id_selected:-1,link: $this->link);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);
         }
@@ -51,7 +51,8 @@ class controlador_dp_cp extends system {
 
 
 
-        $select = (new dp_municipio_html())->select_dp_municipio_id(cols:6, id_selected:-1,link: $this->link);
+        $select = (new dp_municipio_html())->select_dp_municipio_id(cols:6,con_registros: false, id_selected:-1,
+            link: $this->link);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);
         }
