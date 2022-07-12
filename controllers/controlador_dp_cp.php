@@ -65,14 +65,7 @@ class controlador_dp_cp extends system {
         $keys['dp_municipio'] = array('id','descripcion','codigo','codigo_bis');
         $keys['dp_cp'] = array('id','descripcion','codigo','codigo_bis');
 
-        $filtro = $this->asigna_filtro_get($keys);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar filtros',data:  $filtro,header: $header,ws: $ws);
-
-        }
-
-
-        $salida = (new salida_data())->salida_get(controler: $this,filtro:  $filtro,header:  $header,ws:  $ws);
+        $salida = $this->get_out(header: $header,keys: $keys, ws: $ws);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
 
