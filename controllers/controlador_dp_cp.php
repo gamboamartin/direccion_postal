@@ -8,6 +8,7 @@
  */
 namespace controllers;
 
+use base\controller\salida_data;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
@@ -17,6 +18,7 @@ use html\dp_pais_html;
 use models\dp_cp;
 use PDO;
 use stdClass;
+use Throwable;
 
 class controlador_dp_cp extends system {
 
@@ -54,6 +56,37 @@ class controlador_dp_cp extends system {
         $this->inputs->select->dp_municipio_id = $select;
 
         return $r_alta;
+    }
+    public function get_cp(bool $header, bool $ws = true){
+
+        $keys['dp_pais'] = array('id','descripcion','codigo','codigo_bis');
+        $keys['dp_estado'] = array('id','descripcion','codigo','codigo_bis');
+        $keys['dp_municipio'] = array('id','descripcion','codigo','codigo_bis');
+        $keys['dp_cp'] = array('id','descripcion','codigo','codigo_bis');
+
+        $filtro = $this->asigna_filtro_get($keys);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar filtros',data:  $filtro,header: $header,ws: $ws);
+
+        }
+
+        $r_dp_cp = $this->modelo->filtro_and(filtro: $filtro);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener municipios',data:  $r_dp_cp,header: $header,ws: $ws);
+
+        }
+
+
+        $salida = (new salida_data())->salida(header: $header,result:  $r_dp_cp,ws:  $ws);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
+
+        }
+
+
+        return $r_dp_cp;
+
+
     }
 
 

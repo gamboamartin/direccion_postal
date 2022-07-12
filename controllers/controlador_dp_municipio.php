@@ -8,6 +8,7 @@
  */
 namespace controllers;
 
+use base\controller\salida_data;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
@@ -62,7 +63,8 @@ class controlador_dp_municipio extends system {
 
     }
 
-    public function get_municipio(bool $header, bool $ws = true){
+    public function get_municipio(bool $header, bool $ws = true): array|stdClass
+    {
 
         $keys['dp_pais'] = array('id','descripcion','codigo','codigo_bis');
         $keys['dp_estado'] = array('id','descripcion','codigo','codigo_bis');
@@ -80,20 +82,10 @@ class controlador_dp_municipio extends system {
 
         }
 
-        if($header){
-            $retorno = $_SERVER['HTTP_REFERER'];
-            header('Location:'.$retorno);
-            exit;
-        }
-        if($ws){
-            header('Content-Type: application/json');
-            try {
-                echo json_encode($r_dp_municipio, JSON_THROW_ON_ERROR);
-            }
-            catch (Throwable $e){
-                return $this->retorno_error(mensaje: 'Error al maquetar estados',data:  $e,header: false,ws: $ws);
-            }
-            exit;
+        $salida = (new salida_data())->salida(header: $header,result:  $r_dp_municipio,ws:  $ws);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
+
         }
 
 
