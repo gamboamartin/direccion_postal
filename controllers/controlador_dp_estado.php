@@ -73,20 +73,14 @@ class controlador_dp_estado extends system {
 
         }
 
-        $r_dp_estado = $this->modelo->filtro_and(filtro: $filtro);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener estados',data:  $r_dp_estado,header: $header,ws: $ws);
-
-        }
-
-        $salida = (new salida_data())->salida(header: $header,result:  $r_dp_estado,ws:  $ws);
+        $salida = (new salida_data())->salida_get(controler: $this,filtro:  $filtro,header:  $header,ws:  $ws);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
 
         }
 
 
-        return $r_dp_estado;
+        return $salida;
 
 
     }

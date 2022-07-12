@@ -57,7 +57,8 @@ class controlador_dp_cp extends system {
 
         return $r_alta;
     }
-    public function get_cp(bool $header, bool $ws = true){
+    public function get_cp(bool $header, bool $ws = true): array|stdClass
+    {
 
         $keys['dp_pais'] = array('id','descripcion','codigo','codigo_bis');
         $keys['dp_estado'] = array('id','descripcion','codigo','codigo_bis');
@@ -70,21 +71,15 @@ class controlador_dp_cp extends system {
 
         }
 
-        $r_dp_cp = $this->modelo->filtro_and(filtro: $filtro);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener municipios',data:  $r_dp_cp,header: $header,ws: $ws);
 
-        }
-
-
-        $salida = (new salida_data())->salida(header: $header,result:  $r_dp_cp,ws:  $ws);
+        $salida = (new salida_data())->salida_get(controler: $this,filtro:  $filtro,header:  $header,ws:  $ws);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
 
         }
 
 
-        return $r_dp_cp;
+        return $salida;
 
 
     }

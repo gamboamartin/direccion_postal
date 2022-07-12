@@ -76,20 +76,14 @@ class controlador_dp_municipio extends system {
 
         }
 
-        $r_dp_municipio = $this->modelo->filtro_and(filtro: $filtro);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener municipios',data:  $r_dp_municipio,header: $header,ws: $ws);
-
-        }
-
-        $salida = (new salida_data())->salida(header: $header,result:  $r_dp_municipio,ws:  $ws);
+        $salida = (new salida_data())->salida_get(controler: $this,filtro:  $filtro,header:  $header,ws:  $ws);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
 
         }
 
 
-        return $r_dp_municipio;
+        return $salida;
 
 
     }
