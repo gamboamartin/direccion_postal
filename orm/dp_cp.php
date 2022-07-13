@@ -6,7 +6,7 @@ use PDO;
 class dp_cp extends modelo{
     public function __construct(PDO $link){
         $tabla = __CLASS__;
-        $columnas = array($tabla=>false);
+        $columnas = array($tabla=>false,'municipio'=>$tabla,'estado'=>'municipio','pais'=>'estado');
         $campos_obligatorios[] = 'descripcion';
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
