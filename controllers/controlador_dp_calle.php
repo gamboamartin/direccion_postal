@@ -8,6 +8,7 @@
  */
 namespace controllers;
 
+use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use html\dp_calle_html;
@@ -24,6 +25,22 @@ class controlador_dp_calle extends system {
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Calles';
+
+    }
+    public function get_calle(bool $header, bool $ws = true): array|stdClass
+    {
+
+        $keys['dp_calle'] = array('id','descripcion','codigo','codigo_bis');
+
+        $salida = $this->get_out(header: $header,keys: $keys, ws: $ws);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
+
+        }
+
+
+        return $salida;
+
 
     }
 

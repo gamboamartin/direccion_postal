@@ -56,6 +56,24 @@ class controlador_dp_calle_pertenece extends system {
         return $r_alta;
     }
 
+    public function get_calle_pertenece(bool $header, bool $ws = true): array|stdClass
+    {
+
+        $keys['dp_calle'] = array('id','descripcion','codigo','codigo_bis');
+        $keys['dp_colonia'] = array('id','descripcion','codigo','codigo_bis');
+
+        $salida = $this->get_out(header: $header,keys: $keys, ws: $ws);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
+
+        }
+
+
+        return $salida;
+
+
+    }
+
     public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true,
                              bool $muestra_btn = true): array|string
     {
