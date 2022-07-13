@@ -6,7 +6,8 @@ use PDO;
 class dp_colonia_postal extends modelo{
     public function __construct(PDO $link){
         $tabla = __CLASS__;
-        $columnas = array($tabla=>false);
+        $columnas = array($tabla=>false,'dp_cp'=>$tabla,'dp_colonia'=>$tabla,'dp_municipio'=>'dp_cp',
+            'dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado');
         $campos_obligatorios[] = 'descripcion';
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
