@@ -62,6 +62,10 @@ class controlador_dp_calle_pertenece extends system {
 
         $keys['dp_calle'] = array('id','descripcion','codigo','codigo_bis');
         $keys['dp_colonia'] = array('id','descripcion','codigo','codigo_bis');
+        $keys['dp_cp'] = array('id','descripcion','codigo','codigo_bis');
+        $keys['dp_municipio'] = array('id','descripcion','codigo','codigo_bis');
+        $keys['dp_estado'] = array('id','descripcion','codigo','codigo_bis');
+        $keys['dp_pais'] = array('id','descripcion','codigo','codigo_bis');
 
         $salida = $this->get_out(header: $header,keys: $keys, ws: $ws);
         if(errores::$error){
