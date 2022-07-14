@@ -98,12 +98,13 @@ class controlador_dp_calle_pertenece extends system {
         }
         $this->inputs->select->dp_calle_id = $select;
 
-        $select = (new dp_colonia_html())->select_dp_colonia_id(cols:12,con_registros: true, id_selected:$this->row_upd->dp_colonia_id,
+        $select = (new dp_colonia_postal_html())->select_dp_colonia_postal_id(cols:12,con_registros: true,
+            id_selected:$this->row_upd->dp_colonia_postal_id,
             link: $this->link);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);
         }
-        $this->inputs->select->dp_colonia_id = $select;
+        $this->inputs->select->dp_colonia_postal_id = $select;
 
         return $r_modifica;
 
