@@ -8,6 +8,7 @@ use PDO;
 
 
 class dp_colonia_postal_html extends html_controler {
+
     public function select_dp_colonia_postal_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
     {
         $modelo = new dp_colonia_postal($link);

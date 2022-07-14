@@ -14,6 +14,7 @@ use gamboamartin\system\system;
 use html\dp_calle_html;
 use html\dp_calle_pertenece_html;
 use html\dp_colonia_html;
+use html\dp_colonia_postal_html;
 use models\dp_calle_pertenece;
 use PDO;
 use stdClass;
@@ -46,12 +47,12 @@ class controlador_dp_calle_pertenece extends system {
 
         $this->inputs->select->dp_calle_id = $select;
 
-        $select = (new dp_colonia_html())->select_dp_colonia_id(cols:12,con_registros: true, id_selected:-1,link: $this->link);
+        $select = (new dp_colonia_postal_html())->select_dp_colonia_postal_id(cols:12,con_registros: true, id_selected:-1,link: $this->link);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);
         }
 
-        $this->inputs->select->dp_colonia_id = $select;
+        $this->inputs->select->dp_colonia_postal_id = $select;
 
         return $r_alta;
     }
