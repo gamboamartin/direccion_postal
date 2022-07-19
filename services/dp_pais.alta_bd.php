@@ -20,19 +20,13 @@ $tabla = 'dp_pais';
 
 $db = new database();
 
-$link_local = $services->conecta_pdo(conf_database: $db);
 
-
-$modelo_local = new dp_pais(link: $link_local);
-
-$columnas_local = (new columnas())->columnas_bd_native(modelo:$modelo_local, tabla_bd: 'dp_pais');
+$data_local = $services->data_conexion_local(name_model: 'dp_pais');
 if(errores::$error){
-    $error = (new errores())->error('Error al obtener columnas local', $columnas_local);
+    $error = (new errores())->error('Error al obtener datos de conexion local', $data_local);
     (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
 }
-var_dump($columnas_local);
 
-$n_columnas_local = count($columnas_local);
 
 
 foreach ($db->servers_in_data as $database){
@@ -54,7 +48,7 @@ foreach ($db->servers_in_data as $database){
     var_dump($existe_tabla);
     $modelo_remoto = new dp_pais(link: $link_remoto);
 
-    $columnas_remoto = (new columnas())->columnas_bd_native(modelo:$modelo_remoto, tabla_bd: 'dp_pais');
+    $columnas_remoto = (new columnas())->columnas_bd_native(modelo:$modelo_remoto, tabla_bd: $modelo_remoto->tabla);
     if(errores::$error){
         $error = (new errores())->error('Error al obtener columnas remotas', $columnas_remoto);
         (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
@@ -62,16 +56,25 @@ foreach ($db->servers_in_data as $database){
     var_dump($columnas_remoto);
     $n_columnas_remoto = count($columnas_remoto);
 
-    if($n_columnas_remoto > $n_columnas_local){
+    if($n_columnas_remoto > $data_local->n_columnas){
         $error = (new errores())->error('Error las columnas remotas son mayores a las columnas locales',
-            array('remoto'=>$columnas_remoto,'local'=>$columnas_local));
+            array('remoto'=>$columnas_remoto,'local'=>$data_local->columnas));
         (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
 
     }
-    if($n_columnas_remoto < $n_columnas_local){
+    if($n_columnas_remoto < $data_local->n_columnas){
         $error = (new errores())->error('Error las columnas remotas son menores a las columnas locales',
-            array('remoto'=>$columnas_remoto,'local'=>$columnas_local));
+            array('remoto'=>$columnas_remoto,'local'=>$data_local->columnas));
         (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
+
+    }
+
+    foreach ($data_local->columnas as $column_local){
+        foreach ($columnas_remoto as $column_remoto){
+
+            var_dump($column_local);
+            var_dump($column_remoto);
+        }
 
     }
 
