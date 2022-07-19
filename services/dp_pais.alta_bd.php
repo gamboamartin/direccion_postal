@@ -57,61 +57,62 @@ foreach ($db->servers_in_data as $database){
     }
 
     foreach ($data_local->columnas as $column_local){
-        $existe_columna_en_remoto = false;
-        $tipo_dato_en_remoto_valido = false;
-        $null_en_remoto_valido = false;
-        $key_en_remoto_valido = false;
-        $default_en_remoto_valido = false;
-        $extra_en_remoto_valido = false;
+
+
+        $val =$services->init_val_tabla();
+        if(errores::$error){
+            $error = (new errores())->error('Error inicializar datos', $val);
+            (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
+        }
 
 
         foreach ($data_remoto->columnas as $column_remoto){
             if($column_remoto['Field'] === $column_local['Field']){
-                $existe_columna_en_remoto = true;
+                $val->existe = true;
                 if($column_remoto['Type'] === $column_local['Type']){
-                    $tipo_dato_en_remoto_valido = true;
+                    $val->tipo_dato = true;
                 }
                 if($column_remoto['Null'] === $column_local['Null']){
-                    $null_en_remoto_valido = true;
+                    $val->null = true;
                 }
                 if($column_remoto['Key'] === $column_local['Key']){
-                    $key_en_remoto_valido = true;
+                    $val->key = true;
                 }
                 if($column_remoto['Default'] === $column_local['Default']){
-                    $default_en_remoto_valido = true;
+                    $val->default = true;
                 }
                 if($column_remoto['Extra'] === $column_local['Extra']){
-                    $extra_en_remoto_valido = true;
+                    $val->extra = true;
                 }
                 break;
             }
 
         }
-        if(!$existe_columna_en_remoto){
+        if(!$val->existe){
             $error = (new errores())->error('Error no existe columna en remoto', $column_local['Field']);
             (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
         }
-        if(!$tipo_dato_en_remoto_valido){
+        if(!$val->tipo_dato){
             $error = (new errores())->error('Error no coincide tipo de dato columna en remoto', $column_local['Field']);
             (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
         }
-        if(!$null_en_remoto_valido){
+        if(!$val->null){
             $error = (new errores())->error('Error no coincide null columna en remoto', $column_local['Field']);
             (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
         }
-        if(!$key_en_remoto_valido){
+        if(!$val->key){
             $error = (new errores())->error('Error no coincide key columna en remoto', $column_local['Field']);
             (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
         }
-        if(!$default_en_remoto_valido){
+        if(!$val->default){
             $error = (new errores())->error('Error no coincide default columna en remoto', $column_local['Field']);
             (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
         }
-        if(!$extra_en_remoto_valido){
+        if(!$val->extra){
             $error = (new errores())->error('Error no coincide extra columna en remoto', $column_local['Field']);
             (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
         }
-        
+
     }
 
 
