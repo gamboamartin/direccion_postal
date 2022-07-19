@@ -3,9 +3,8 @@
 include "../init.php";
 require '../vendor/autoload.php';
 
-use base\conexion;
-use base\orm\columnas;
-use base\orm\validaciones;
+$_SESSION['usuario_id'] = 2;
+
 use config\database;
 use gamboamartin\errores\errores;
 use gamboamartin\services\error_write\error_write;
@@ -27,8 +26,6 @@ if(errores::$error){
     (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
 }
 
-
-
 foreach ($db->servers_in_data as $database){
 
     $data_remoto = $services->data_conexion_remota(conf_database: $database, name_model: $tabla);
@@ -37,24 +34,66 @@ foreach ($db->servers_in_data as $database){
         (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
     }
 
-    $existe_tabla = (new validaciones())->existe_tabla(link:  $data_remoto->link, name_bd: $database->db_name,tabla: $tabla);
-    if(!$existe_tabla){
-        $error = (new errores())->error('Error no existe la tabla', $tabla);
-        (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-    }
-    
-    $valida = $services->verifica_numero_columnas(data_local: $data_local, data_remoto: $data_remoto);
+    $valida = $services->verifica_tabla_synk(data_local: $data_local,data_remoto:  $data_remoto, database: $database,
+        tabla:  $tabla);
     if(errores::$error){
-        $error = (new errores())->error('Error comparar datos '.$valida, $valida);
+        $error = (new errores())->error('Error comparar datos ', $valida);
         (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
     }
-
-    $valida = $services->verifica_columnas(columnas_local: $data_local->columnas,columnas_remotas:  $data_remoto->columnas);
-    if(errores::$error){
-        $error = (new errores())->error('Error comparar datos '.$valida, $valida);
-        (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-    }
-
 
 }
+
+$dp_pais_modelo_local = new dp_pais(link: $data_local->link);
+
+
+$offset = 0;
+$order['dp_pais.id'] = 'DESC';
+
+$r_dp_pais_modelo_local = $dp_pais_modelo_local->filtro_and(columnas_en_bruto: true, limit: 0,offset: $offset, order: $order);
+if(errores::$error){
+    $error = (new errores())->error('Error al obtener datos locales', $r_dp_pais_modelo_local);
+    (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
+}
+
+$registros = $r_dp_pais_modelo_local->registros;
+
+foreach ($db->servers_in_data as $database){
+    $data_remoto = $services->data_conexion_remota(conf_database: $database, name_model: $tabla);
+    if(errores::$error){
+        $error = (new errores())->error('Error al obtener datos remotos', $data_remoto);
+        (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
+    }
+    $r_dp_pais_modelo_remoto = new dp_pais(link: $data_remoto->link);
+
+    $insersiones = 0;
+
+    foreach ($registros as $registro){
+
+        $filtro['dp_pais.id'] = $registro['id'];
+        $existe_remoto = $r_dp_pais_modelo_remoto->existe(filtro: $filtro);
+        if(errores::$error){
+            $error = (new errores())->error('Error al obtener pais remoto', $existe_remoto);
+            (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
+        }
+        if(!$existe_remoto){
+            unset($registro['usuario_alta_id'],$registro['usuario_update_id']);
+            $r_alta_dp_pais = $r_dp_pais_modelo_remoto->alta_registro(registro: $registro);
+            if(errores::$error){
+                $error = (new errores())->error('Error al insertar pais', $r_alta_dp_pais);
+                (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
+            }
+            $insersiones++;
+        }
+        if($insersiones>=10){
+            break;
+        }
+    }
+
+}
+
+
+
+
+
+
 $services->finaliza_servicio();
