@@ -76,12 +76,18 @@ foreach ($db->servers_in_data as $database){
             (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
         }
         if(!$existe_remoto){
+            $registro = $services->limpia_row_alta(registro: $registro);
+            if(errores::$error){
+                $error = (new errores())->error('Error al limpiar registro', $registro);
+                (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
+            }
             unset($registro['usuario_alta_id'],$registro['usuario_update_id']);
             $r_alta_dp_pais = $r_dp_pais_modelo_remoto->alta_registro(registro: $registro);
             if(errores::$error){
                 $error = (new errores())->error('Error al insertar pais', $r_alta_dp_pais);
                 (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
             }
+
             $insersiones++;
         }
         if($insersiones>=10){
