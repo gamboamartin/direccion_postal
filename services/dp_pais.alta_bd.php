@@ -59,18 +59,12 @@ foreach ($db->servers_in_data as $database){
     foreach ($data_local->columnas as $column_local){
 
 
-        $val =$services->init_val_tabla();
-        if(errores::$error){
-            $error = (new errores())->error('Error inicializar datos', $val);
-            (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-        }
-
-        $val = $services->compara_estructura_synk(columnas_remotas: $data_remoto->columnas, local: $column_local, val: $val);
+        $val = $services->compara_estructura(columnas_remotas: $data_remoto->columnas, local: $column_local);
         if(errores::$error){
             $error = (new errores())->error('Error comparar datos', $val);
             (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
         }
-        
+
         if(!$val->existe){
             $error = (new errores())->error('Error no existe columna en remoto', $column_local['Field']);
             (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
