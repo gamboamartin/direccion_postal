@@ -52,6 +52,15 @@ class controlador_dp_calle_pertenece extends system {
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);
         }
 
+        $in_georeferencia = (new dp_calle_pertenece_html())->input(cols: 12,row_upd:  new stdClass(),value_vacio:  true, campo: "Georeferencia");
+
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar el input',data:  $in_georeferencia);
+            print_r($error);
+            die('Error');
+        }
+
+        $this->inputs->georeferencia = $in_georeferencia;
         $this->inputs->select->dp_colonia_postal_id = $select;
 
         return $r_alta;
