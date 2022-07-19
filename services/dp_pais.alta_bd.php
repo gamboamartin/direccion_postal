@@ -68,21 +68,11 @@ foreach ($db->servers_in_data as $database){
 
         foreach ($data_remoto->columnas as $column_remoto){
             if($column_remoto['Field'] === $column_local['Field']){
-                $val->existe = true;
-                if($column_remoto['Type'] === $column_local['Type']){
-                    $val->tipo_dato = true;
-                }
-                if($column_remoto['Null'] === $column_local['Null']){
-                    $val->null = true;
-                }
-                if($column_remoto['Key'] === $column_local['Key']){
-                    $val->key = true;
-                }
-                if($column_remoto['Default'] === $column_local['Default']){
-                    $val->default = true;
-                }
-                if($column_remoto['Extra'] === $column_local['Extra']){
-                    $val->extra = true;
+
+                $val = $services->compara_estructura_tabla(local:$column_remoto,remoto:  $column_local,val:  $val);
+                if(errores::$error){
+                    $error = (new errores())->error('Error comparar datos', $val);
+                    (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
                 }
                 break;
             }
