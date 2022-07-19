@@ -42,28 +42,17 @@ foreach ($db->servers_in_data as $database){
         $error = (new errores())->error('Error no existe la tabla', $tabla);
         (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
     }
-
-    if($data_remoto->n_columnas > $data_local->n_columnas){
-        $error = (new errores())->error('Error las columnas remotas son mayores a las columnas locales',
-            array('remoto'=>$data_remoto->columnas,'local'=>$data_local->columnas));
+    
+    $valida = $services->verifica_numero_columnas(data_local: $data_local, data_remoto: $data_remoto);
+    if(errores::$error){
+        $error = (new errores())->error('Error comparar datos '.$valida, $valida);
         (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-
-    }
-    if($data_remoto->n_columnas < $data_local->n_columnas){
-        $error = (new errores())->error('Error las columnas remotas son menores a las columnas locales',
-            array('remoto'=>$data_remoto->columnas,'local'=>$data_local->columnas));
-        (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-
     }
 
-    foreach ($data_local->columnas as $column_local){
-
-        $valida = $services->verifica_estructura_por_columna(column_local: $column_local, columnas_remotas: $data_remoto->columnas);
-        if(errores::$error){
-            $error = (new errores())->error('Error comparar datos '.$valida, $valida);
-            (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-        }
-
+    $valida = $services->verifica_columnas(columnas_local: $data_local->columnas,columnas_remotas:  $data_remoto->columnas);
+    if(errores::$error){
+        $error = (new errores())->error('Error comparar datos '.$valida, $valida);
+        (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
     }
 
 
