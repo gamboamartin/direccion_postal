@@ -26,6 +26,11 @@ if(errores::$error){
     (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
 }
 
+if(!isset($db->servers_in_data)){
+    $error = (new errores())->error('Error no existe database->servers_in_data', $db);
+    (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
+}
+
 foreach ($db->servers_in_data as $database){
 
     $data_remoto = $services->data_conexion_remota(conf_database: $database, name_model: $tabla);
@@ -83,10 +88,5 @@ foreach ($db->servers_in_data as $database){
     }
 
 }
-
-
-
-
-
 
 $services->finaliza_servicio();
