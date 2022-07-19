@@ -65,31 +65,14 @@ foreach ($db->servers_in_data as $database){
             (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
         }
 
-        if(!$val->existe){
-            $error = (new errores())->error('Error no existe columna en remoto', $column_local['Field']);
-            (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
+        foreach ($val as $columna_estructura){
+            $valida = $services->valida_columna(column_local: $column_local, key:$columna_estructura,val:  $val);
+            if(errores::$error){
+                $error = (new errores())->error('Error comparar datos '.$columna_estructura, $valida);
+                (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
+            }
         }
-        if(!$val->tipo_dato){
-            $error = (new errores())->error('Error no coincide tipo de dato columna en remoto', $column_local['Field']);
-            (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-        }
-        if(!$val->null){
-            $error = (new errores())->error('Error no coincide null columna en remoto', $column_local['Field']);
-            (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-        }
-        if(!$val->key){
-            $error = (new errores())->error('Error no coincide key columna en remoto', $column_local['Field']);
-            (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-        }
-        if(!$val->default){
-            $error = (new errores())->error('Error no coincide default columna en remoto', $column_local['Field']);
-            (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-        }
-        if(!$val->extra){
-            $error = (new errores())->error('Error no coincide extra columna en remoto', $column_local['Field']);
-            (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-        }
-
+        
     }
 
 
