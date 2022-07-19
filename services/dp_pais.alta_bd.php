@@ -21,7 +21,7 @@ $tabla = 'dp_pais';
 $db = new database();
 
 
-$data_local = $services->data_conexion_local(name_model: 'dp_pais');
+$data_local = $services->data_conexion_local(name_model: $tabla);
 if(errores::$error){
     $error = (new errores())->error('Error al obtener datos de conexion local', $data_local);
     (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
@@ -31,46 +31,33 @@ if(errores::$error){
 
 foreach ($db->servers_in_data as $database){
 
-    $link_remoto = $services->conecta_pdo(conf_database: $database);
+    $data_remoto = $services->data_conexion_remota(conf_database: $database, name_model: $tabla);
     if(errores::$error){
-        $error = (new errores())->error('Error al conectar con remoto', $link_remoto);
+        $error = (new errores())->error('Error al obtener datos remotos', $data_remoto);
         (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
     }
 
-    var_dump($link_remoto);
-
-
-    $existe_tabla = (new validaciones())->existe_tabla(link:  $link_remoto, name_bd: $database->db_name,tabla: $tabla);
+    $existe_tabla = (new validaciones())->existe_tabla(link:  $data_remoto->link, name_bd: $database->db_name,tabla: $tabla);
     if(!$existe_tabla){
         $error = (new errores())->error('Error no existe la tabla', $tabla);
         (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
     }
-    var_dump($existe_tabla);
-    $modelo_remoto = new dp_pais(link: $link_remoto);
 
-    $columnas_remoto = (new columnas())->columnas_bd_native(modelo:$modelo_remoto, tabla_bd: $modelo_remoto->tabla);
-    if(errores::$error){
-        $error = (new errores())->error('Error al obtener columnas remotas', $columnas_remoto);
-        (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-    }
-    var_dump($columnas_remoto);
-    $n_columnas_remoto = count($columnas_remoto);
-
-    if($n_columnas_remoto > $data_local->n_columnas){
+    if($data_remoto->n_columnas > $data_local->n_columnas){
         $error = (new errores())->error('Error las columnas remotas son mayores a las columnas locales',
-            array('remoto'=>$columnas_remoto,'local'=>$data_local->columnas));
+            array('remoto'=>$data_remoto->columnas,'local'=>$data_local->columnas));
         (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
 
     }
-    if($n_columnas_remoto < $data_local->n_columnas){
+    if($data_remoto->n_columnas < $data_local->n_columnas){
         $error = (new errores())->error('Error las columnas remotas son menores a las columnas locales',
-            array('remoto'=>$columnas_remoto,'local'=>$data_local->columnas));
+            array('remoto'=>$data_remoto->columnas,'local'=>$data_local->columnas));
         (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
 
     }
 
     foreach ($data_local->columnas as $column_local){
-        foreach ($columnas_remoto as $column_remoto){
+        foreach ($data_remoto->columnas as $column_remoto){
 
             var_dump($column_local);
             var_dump($column_remoto);
