@@ -69,18 +69,12 @@ foreach ($db->servers_in_data as $database){
 
     foreach ($registros as $registro){
 
-        $filtro['dp_pais.id'] = $registro['id'];
-        $existe_remoto = $r_dp_pais_modelo_remoto->existe(filtro: $filtro);
+        $insertado = $services->alta_row(modelo: $r_dp_pais_modelo_remoto, registro: $registro);
         if(errores::$error){
-            $error = (new errores())->error('Error al obtener pais remoto', $existe_remoto);
+            $error = (new errores())->error(mensaje: 'Error al insertar registro', data: $insertado);
             (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
         }
-        if(!$existe_remoto){
-            $registro = $services->inserta_row_limpio(modelo: $r_dp_pais_modelo_remoto, registro: $registro);
-            if(errores::$error){
-                $error = (new errores())->error('Error al insertar registro', $registro);
-                (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-            }
+        if($insertado){
             $insersiones++;
         }
         if($insersiones>=10){
