@@ -58,21 +58,12 @@ foreach ($db->servers_in_data as $database){
 
     foreach ($data_local->columnas as $column_local){
 
-
-        $val = $services->compara_estructura(columnas_remotas: $data_remoto->columnas, local: $column_local);
+        $valida = $services->verifica_estructura_por_columna(column_local: $column_local, columnas_remotas: $data_remoto->columnas);
         if(errores::$error){
-            $error = (new errores())->error('Error comparar datos', $val);
+            $error = (new errores())->error('Error comparar datos '.$valida, $valida);
             (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
         }
 
-        foreach ($val as $columna_estructura){
-            $valida = $services->valida_columna(column_local: $column_local, key:$columna_estructura,val:  $val);
-            if(errores::$error){
-                $error = (new errores())->error('Error comparar datos '.$columna_estructura, $valida);
-                (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-            }
-        }
-        
     }
 
 
