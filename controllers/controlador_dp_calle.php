@@ -11,6 +11,7 @@ namespace controllers;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
+use gamboamartin\template_1\html;
 use html\dp_calle_html;
 use models\dp_calle;
 use PDO;
@@ -20,7 +21,8 @@ class controlador_dp_calle extends system {
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
         $modelo = new dp_calle(link: $link);
-        $html = new dp_calle_html();
+        $html_base = new html();
+        $html = new dp_calle_html(html: $html_base);
         $obj_link = new links_menu($this->registro_id);
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 

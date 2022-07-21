@@ -11,9 +11,9 @@ namespace controllers;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
+use gamboamartin\template_1\html;
 use html\dp_calle_html;
 use html\dp_calle_pertenece_html;
-use html\dp_colonia_html;
 use html\dp_colonia_postal_html;
 use models\dp_calle_pertenece;
 use PDO;
@@ -23,7 +23,8 @@ class controlador_dp_calle_pertenece extends system {
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
         $modelo = new dp_calle_pertenece(link: $link);
-        $html = new dp_calle_pertenece_html();
+        $html_base = new html();
+        $html = new dp_calle_pertenece_html(html: $html_base);
         $obj_link = new links_menu($this->registro_id);
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
@@ -40,19 +41,19 @@ class controlador_dp_calle_pertenece extends system {
 
         $this->inputs->select = new stdClass();
 
-        $select = (new dp_calle_html())->select_dp_calle_id(cols:12,con_registros: true, id_selected:-1,link: $this->link);
+        $select = (new dp_calle_html(html: $this->html_base))->select_dp_calle_id(cols:12,con_registros: true, id_selected:-1,link: $this->link);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);
         }
 
         $this->inputs->select->dp_calle_id = $select;
 
-        $select = (new dp_colonia_postal_html())->select_dp_colonia_postal_id(cols:12,con_registros: true, id_selected:-1,link: $this->link);
+        $select = (new dp_colonia_postal_html(html: $this->html_base))->select_dp_colonia_postal_id(cols:12,con_registros: true, id_selected:-1,link: $this->link);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);
         }
 
-        $in_georeferencia = (new dp_calle_pertenece_html())->input(cols: 12,row_upd:  new stdClass(),value_vacio:  true, campo: "Georeferencia");
+        $in_georeferencia = (new dp_calle_pertenece_html(html: $this->html_base))->input(cols: 12,row_upd:  new stdClass(),value_vacio:  true, campo: "Georeferencia");
 
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar el input',data:  $in_georeferencia);
@@ -100,14 +101,14 @@ class controlador_dp_calle_pertenece extends system {
 
         $this->inputs->select = new stdClass();
 
-        $select = (new dp_calle_html())->select_dp_calle_id(cols:12,con_registros: true, id_selected:$this->row_upd->dp_calle_id,
+        $select = (new dp_calle_html(html: $this->html_base))->select_dp_calle_id(cols:12,con_registros: true, id_selected:$this->row_upd->dp_calle_id,
             link: $this->link);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);
         }
         $this->inputs->select->dp_calle_id = $select;
 
-        $select = (new dp_colonia_postal_html())->select_dp_colonia_postal_id(cols:12,con_registros: true,
+        $select = (new dp_colonia_postal_html(html: $this->html_base))->select_dp_colonia_postal_id(cols:12,con_registros: true,
             id_selected:$this->row_upd->dp_colonia_postal_id,
             link: $this->link);
         if(errores::$error){

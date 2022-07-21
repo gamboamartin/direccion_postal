@@ -11,6 +11,7 @@ namespace controllers;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
+use gamboamartin\template_1\html;
 use html\dp_estado_html;
 use html\dp_pais_html;
 use models\dp_estado;
@@ -21,7 +22,8 @@ class controlador_dp_estado extends system {
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
         $modelo = new dp_estado(link: $link);
-        $html = new dp_estado_html();
+        $html_base = new html();
+        $html = new dp_estado_html(html: $html_base);
         $obj_link = new links_menu($this->registro_id);
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
@@ -37,7 +39,7 @@ class controlador_dp_estado extends system {
         }
 
 
-        $select = (new dp_pais_html())->select_dp_pais_id(cols:12,con_registros: true,id_selected:-1,link: $this->link);
+        $select = (new dp_pais_html(html: $this->html_base))->select_dp_pais_id(cols:12,con_registros: true,id_selected:-1,link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
             print_r($error);
@@ -86,7 +88,7 @@ class controlador_dp_estado extends system {
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
         }
 
-        $select = (new dp_pais_html())->select_dp_pais_id(cols:12,con_registros:true,
+        $select = (new dp_pais_html(html: $this->html_base))->select_dp_pais_id(cols:12,con_registros:true,
             id_selected:$this->row_upd->dp_pais_id, link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);

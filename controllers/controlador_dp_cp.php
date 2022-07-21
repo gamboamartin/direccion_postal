@@ -11,6 +11,7 @@ namespace controllers;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
+use gamboamartin\template_1\html;
 use html\dp_cp_html;
 use html\dp_estado_html;
 use html\dp_municipio_html;
@@ -24,7 +25,8 @@ class controlador_dp_cp extends system {
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
         $modelo = new dp_cp(link: $link);
-        $html = new dp_cp_html();
+        $html_base = new html();
+        $html = new dp_cp_html(html: $html_base);
         $obj_link = new links_menu($this->registro_id);
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
@@ -41,7 +43,7 @@ class controlador_dp_cp extends system {
 
         $this->inputs->select = new stdClass();
 
-        $select = (new dp_estado_html())->select_dp_estado_id(cols:6,con_registros: true,
+        $select = (new dp_estado_html(html: $this->html_base))->select_dp_estado_id(cols:6,con_registros: true,
             id_selected:-1,link: $this->link);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);
@@ -51,13 +53,13 @@ class controlador_dp_cp extends system {
 
 
 
-        $select = (new dp_municipio_html())->select_dp_municipio_id(cols:6,con_registros: false, id_selected:-1,
+        $select = (new dp_municipio_html(html: $this->html_base))->select_dp_municipio_id(cols:6,con_registros: false, id_selected:-1,
             link: $this->link);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);
         }
 
-        $in_georeferencia = (new dp_cp_html())->input(cols: 12,row_upd:  new stdClass(),value_vacio:  true, campo: "Georeferencia");
+        $in_georeferencia = (new dp_cp_html(html: $this->html_base))->input(cols: 12,row_upd:  new stdClass(),value_vacio:  true, campo: "Georeferencia");
 
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar el input',data:  $in_georeferencia);
