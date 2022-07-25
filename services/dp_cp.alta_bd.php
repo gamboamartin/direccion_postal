@@ -31,14 +31,10 @@ if(!isset($db->servers_in_data)){
     (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
 }
 
-foreach ($db->servers_in_data as $database){
-
-    $valida = $services->valida_estructura(data_local: $data_local, database: $database, tabla: $tabla);
-    if(errores::$error){
-        $error = (new errores())->error('Error comparar datos ', $valida);
-        (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-    }
-
+$valida = $services->valida_estructuras_remotas(data_local: $data_local, servers_in_data: $db->servers_in_data,tabla:  $tabla);
+if(errores::$error){
+    $error = (new errores())->error('Error comparar datos ', $valida);
+    (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
 }
 
 $modelo_local = (new modelo_base(link: $data_local->link))->genera_modelo(modelo: $tabla);
