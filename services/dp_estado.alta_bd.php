@@ -74,19 +74,10 @@ foreach ($db->servers_in_data as $database){
 
     $insersiones = 0;
 
-    foreach ($registros as $registro){
-
-        $insertado = $services->alta_row(modelo: $modelo_remoto, registro: $registro);
-        if(errores::$error){
-            $error = (new errores())->error(mensaje: 'Error al insertar registro', data: $insertado);
-            (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-        }
-        if($insertado){
-            $insersiones++;
-        }
-        if($insersiones>=10){
-            break;
-        }
+    $insersiones_data = $services->inserta_rows(insersiones: $insersiones,modelo_remoto: $modelo_remoto,registros: $registros);
+    if(errores::$error){
+        $error = (new errores())->error(mensaje: 'Error al insertar registro', data: $insersiones_data);
+        (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
     }
 
 }

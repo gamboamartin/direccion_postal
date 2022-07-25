@@ -15,7 +15,7 @@ use gamboamartin\services\services;
 $services = new services(path: __FILE__);
 
 $info = '';
-$tabla = 'dp_pais';
+$tabla = 'dp_municipio';
 
 $db = new database();
 
@@ -66,7 +66,6 @@ foreach ($db->servers_in_data as $database){
         (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
     }
 
-
     $modelo_remoto = (new modelo_base(link: $data_remoto->link))->genera_modelo(modelo: $tabla);
     if(errores::$error){
         $error = (new errores())->error(mensaje: 'Error al generar modelo',data:  $modelo_remoto);
@@ -75,11 +74,13 @@ foreach ($db->servers_in_data as $database){
 
     $insersiones = 0;
 
+
     $insersiones_data = $services->inserta_rows(insersiones: $insersiones,modelo_remoto: $modelo_remoto,registros: $registros);
     if(errores::$error){
         $error = (new errores())->error(mensaje: 'Error al insertar registro', data: $insersiones_data);
         (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
     }
+
 
 }
 
