@@ -60,22 +60,7 @@ if(errores::$error){
 $registros = $r_modelo_local->registros;
 
 foreach ($db->servers_in_data as $database){
-    $data_remoto = $services->data_conexion_remota(conf_database: $database, name_model: $tabla);
-    if(errores::$error){
-        $error = (new errores())->error('Error al obtener datos remotos', $data_remoto);
-        (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-    }
-
-
-    $modelo_remoto = (new modelo_base(link: $data_remoto->link))->genera_modelo(modelo: $tabla);
-    if(errores::$error){
-        $error = (new errores())->error(mensaje: 'Error al generar modelo',data:  $modelo_remoto);
-        (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-    }
-
-    $insersiones = 0;
-
-    $insersiones_data = $services->inserta_rows(insersiones: $insersiones,modelo_remoto: $modelo_remoto,registros: $registros);
+    $insersiones_data = $services->alta_por_host(database: $database, registros: $registros,tabla:  $tabla);
     if(errores::$error){
         $error = (new errores())->error(mensaje: 'Error al insertar registro', data: $insersiones_data);
         (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
