@@ -9,7 +9,6 @@ use config\database;
 use gamboamartin\errores\errores;
 use gamboamartin\services\error_write\error_write;
 use gamboamartin\services\services;
-use models\dp_pais;
 
 
 $services = new services(path: __FILE__);
@@ -41,19 +40,22 @@ foreach ($db->servers_in_data as $database){
 
 }
 
-$dp_pais_modelo_local = new dp_pais(link: $data_local->link);
+/**
+ * @var base\orm\modelo $modelo_local
+ */
+$modelo_local = new $tabla(link: $data_local->link);
 
 
 $offset = 0;
-$order['dp_pais.id'] = 'DESC';
+$order[$tabla.'.id'] = 'DESC';
 
-$r_dp_pais_modelo_local = $dp_pais_modelo_local->filtro_and(columnas_en_bruto: true, limit: 0,offset: $offset, order: $order);
+$r_modelo_local = $modelo_local->filtro_and(columnas_en_bruto: true, limit: 0,offset: $offset, order: $order);
 if(errores::$error){
-    $error = (new errores())->error('Error al obtener datos locales', $r_dp_pais_modelo_local);
+    $error = (new errores())->error('Error al obtener datos locales', $r_modelo_local);
     (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
 }
 
-$registros = $r_dp_pais_modelo_local->registros;
+$registros = $r_modelo_local->registros;
 
 foreach ($db->servers_in_data as $database){
     $data_remoto = $services->data_conexion_remota(conf_database: $database, name_model: $tabla);
@@ -61,13 +63,16 @@ foreach ($db->servers_in_data as $database){
         $error = (new errores())->error('Error al obtener datos remotos', $data_remoto);
         (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
     }
-    $r_dp_pais_modelo_remoto = new dp_pais(link: $data_remoto->link);
+    /**
+     * @var base\orm\modelo $modelo_remoto
+     */
+    $modelo_remoto = new $tabla(link: $data_local->link);
 
     $insersiones = 0;
 
     foreach ($registros as $registro){
 
-        $insertado = $services->alta_row(modelo: $r_dp_pais_modelo_remoto, registro: $registro);
+        $insertado = $services->alta_row(modelo: $modelo_remoto, registro: $registro);
         if(errores::$error){
             $error = (new errores())->error(mensaje: 'Error al insertar registro', data: $insertado);
             (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
