@@ -15,7 +15,7 @@ use models\dp_pais;
 $services = new services(path: __FILE__);
 
 $info = '';
-$tabla = 'dp_pais';
+$tabla = 'dp_estado';
 
 $db = new database();
 
@@ -32,6 +32,7 @@ if(!isset($db->servers_in_data)){
 }
 
 foreach ($db->servers_in_data as $database){
+
 
     $valida = $services->valida_estructura(data_local: $data_local, database: $database, tabla: $tabla);
     if(errores::$error){
