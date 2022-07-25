@@ -5,6 +5,7 @@ require '../vendor/autoload.php';
 
 $_SESSION['usuario_id'] = 2;
 
+use base\orm\modelo_base;
 use config\database;
 use gamboamartin\errores\errores;
 use gamboamartin\services\error_write\error_write;
@@ -40,10 +41,11 @@ foreach ($db->servers_in_data as $database){
 
 }
 
-/**
- * @var base\orm\modelo $modelo_local
- */
-$modelo_local = new $tabla(link: $data_local->link);
+$modelo_local = (new modelo_base(link: $data_local->link))->genera_modelo(modelo: $tabla);
+if(errores::$error){
+    $error = (new errores())->error(mensaje: 'Error al generar modelo',data:  $modelo_local);
+    (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
+}
 
 
 $offset = 0;
@@ -63,10 +65,13 @@ foreach ($db->servers_in_data as $database){
         $error = (new errores())->error('Error al obtener datos remotos', $data_remoto);
         (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
     }
-    /**
-     * @var base\orm\modelo $modelo_remoto
-     */
-    $modelo_remoto = new $tabla(link: $data_local->link);
+
+
+    $modelo_remoto = (new modelo_base(link: $data_remoto->link))->genera_modelo(modelo: $tabla);
+    if(errores::$error){
+        $error = (new errores())->error(mensaje: 'Error al generar modelo',data:  $modelo_remoto);
+        (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
+    }
 
     $insersiones = 0;
 
