@@ -22,16 +22,11 @@ $db = new database();
 
 $data_local = $services->data_conexion_local(name_model: $tabla);
 if(errores::$error){
-    $error = (new errores())->error('Error al obtener datos de conexion local', $data_local);
-    (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
+    return $this->error->error(mensaje: 'Error al obtener datos de conexion local',data:  $data_local);
 }
 
-if(!isset($db->servers_in_data)){
-    $error = (new errores())->error('Error no existe database->servers_in_data', $db);
-    (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
-}
 
-$valida = $services->valida_estructuras_remotas(data_local: $data_local, servers_in_data: $db->servers_in_data,tabla:  $tabla);
+$valida = $services->valida_init_services(data_local: $data_local, db: $db,tabla:  $tabla);
 if(errores::$error){
     $error = (new errores())->error('Error comparar datos ', $valida);
     (new error_write())->out(error: $error,info:  $info,path_info:  $services->name_files->path_info);
