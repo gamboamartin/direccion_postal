@@ -19,7 +19,9 @@ $tabla = 'dp_calle';
 
 $db = new database();
 
-
+/**
+ * Verifica conexiones
+ */
 $data_local = $services->data_conexion_local(name_model: $tabla);
 if(errores::$error){
     return $this->error->error(mensaje: 'Error al obtener datos de conexion local',data:  $data_local);

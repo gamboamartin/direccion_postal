@@ -13,7 +13,8 @@ class dp_colonia_postal_html extends html_controler {
     {
         $modelo = new dp_colonia_postal($link);
 
-        $select = $this->select_catalogo(cols:$cols, con_registros: $con_registros,id_selected:$id_selected, modelo: $modelo);
+        $select = $this->select_catalogo(cols:$cols, con_registros: $con_registros,id_selected:$id_selected,
+            modelo: $modelo, label: 'Colonia con cp');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }

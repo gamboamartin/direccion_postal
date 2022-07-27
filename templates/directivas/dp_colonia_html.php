@@ -12,7 +12,8 @@ class dp_colonia_html extends html_controler {
     {
         $modelo = new dp_colonia($link);
 
-        $select = $this->select_catalogo(cols:$cols, con_registros: $con_registros,id_selected:$id_selected, modelo: $modelo);
+        $select = $this->select_catalogo(cols:$cols, con_registros: $con_registros,id_selected:$id_selected,
+            modelo: $modelo, label: 'Colonia');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
