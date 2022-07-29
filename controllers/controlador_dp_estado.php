@@ -8,6 +8,7 @@
  */
 namespace controllers;
 
+use config\generales;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
@@ -38,8 +39,15 @@ class controlador_dp_estado extends system {
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
         }
 
+        $id_selected = -1;
 
-        $select = (new dp_pais_html(html: $this->html_base))->select_dp_pais_id(cols:12,con_registros: true,id_selected:-1,link: $this->link);
+        $generales = new generales();
+        if(isset($generales->defaults['dp_pais']['id']) ) {
+            $id_selected = $generales->defaults['dp_pais']['id'];
+        }
+
+        $select = (new dp_pais_html(html: $this->html_base))->select_dp_pais_id(cols:12,con_registros: true,
+            id_selected:$id_selected,link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
             print_r($error);
