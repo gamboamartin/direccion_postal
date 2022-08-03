@@ -10,12 +10,13 @@ use stdClass;
 
 class dp_cp_html extends html_controler {
 
-    public function select_dp_cp_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
+    public function select_dp_cp_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+                                    array $filtro = array()): array|string
     {
         $modelo = new dp_cp($link);
 
-        $select = $this->select_catalogo(cols:$cols, con_registros: $con_registros,id_selected:$id_selected,
-            modelo: $modelo,label: 'CP');
+        $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
+            modelo: $modelo, filtro: $filtro, label: 'CP');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
