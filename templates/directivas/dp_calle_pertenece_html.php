@@ -82,10 +82,10 @@ class dp_calle_pertenece_html extends html_controler {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar cols', data: $valida);
         }
-        $modelo = new dp_calle_pertenece($link);
 
-        $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
-            modelo: $modelo, filtro: $filtro, label: 'Calle');
+        $select = $this->entre_calles(cols: $cols,con_registros:  $con_registros, filtro: $filtro,
+            id_selected: $id_selected, link: $link, name: 'dp_calle_pertenece_id' );
+
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
