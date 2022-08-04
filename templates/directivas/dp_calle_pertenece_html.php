@@ -11,6 +11,16 @@ use stdClass;
 
 class dp_calle_pertenece_html extends html_controler {
 
+    /**
+     * Genera un input de tipo entre calles
+     * @param int $cols Numero de columnas css
+     * @param bool $con_registros Si no con registros deja el select vacio
+     * @param array $filtro filtro de datos para otions
+     * @param int $id_selected id seleccionado
+     * @param PDO $link conexion a base de datos
+     * @param string $name name del input
+     * @return array|string
+     */
     private function entre_calles(int $cols, bool $con_registros, array $filtro, int $id_selected, PDO $link,
                                   string $name): array|string
     {
