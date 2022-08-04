@@ -79,7 +79,7 @@ class dp_calle_pertenece_html extends html_controler {
         $modelo = new dp_calle_pertenece($link);
 
         $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
-            modelo: $modelo, filtro: $filtro, key_id: 'dp_calle_pertenece_entre1_id', label: 'Entre Calle');
+            modelo: $modelo, filtro: $filtro, key_id: 'dp_calle_pertenece_id', label: 'Entre Calle');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
@@ -104,7 +104,7 @@ class dp_calle_pertenece_html extends html_controler {
         $modelo = new dp_calle_pertenece($link);
 
         $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
-            modelo: $modelo, filtro: $filtro, key_id: 'dp_calle_pertenece_entre2_id', label: 'Entre Calle');
+            modelo: $modelo, filtro: $filtro, key_id: 'dp_calle_pertenece_id', label: 'Entre Calle');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
