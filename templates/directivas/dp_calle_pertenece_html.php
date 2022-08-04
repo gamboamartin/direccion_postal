@@ -20,6 +20,10 @@ class dp_calle_pertenece_html extends html_controler {
      * @param PDO $link conexion a base de datos
      * @param string $name name del input
      * @return array|string
+     * @version 0.72.8
+     * @verfuncion 0.1.0
+     * @fecha 2022-08-04 13:11
+     * @author mgamboa
      */
     private function entre_calles(int $cols, bool $con_registros, array $filtro, int $id_selected, PDO $link,
                                   string $name): array|string
