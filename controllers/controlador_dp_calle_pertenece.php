@@ -41,14 +41,16 @@ class controlador_dp_calle_pertenece extends system {
 
         $this->inputs->select = new stdClass();
 
-        $select = (new dp_calle_html(html: $this->html_base))->select_dp_calle_id(cols:12,con_registros: true, id_selected:-1,link: $this->link);
+        $select = (new dp_calle_html(html: $this->html_base))->select_dp_calle_id(cols:12,con_registros: true,
+            id_selected:-1,link: $this->link);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);
         }
 
         $this->inputs->select->dp_calle_id = $select;
 
-        $select = (new dp_colonia_postal_html(html: $this->html_base))->select_dp_colonia_postal_id(cols:12,con_registros: true, id_selected:-1,link: $this->link);
+        $select = (new dp_colonia_postal_html(html: $this->html_base))->select_dp_colonia_postal_id(cols:12,
+            con_registros: true, id_selected:-1,link: $this->link);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select', data: $select,header: false,ws: false);
         }

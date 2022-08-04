@@ -24,7 +24,7 @@ class dp_colonia_postal_htmlTest extends test {
 
     /**
      */
-    public function test_select_dp_estado_id(): void
+    public function test_select_dp_colonia_postal_id(): void
     {
         errores::$error = false;
         $_GET['session_id'] = 1;

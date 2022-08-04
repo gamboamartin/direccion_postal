@@ -18,6 +18,10 @@ class dp_colonia_postal_html extends html_controler {
      * @param PDO $link conexion a la base de datos
      * @param array $filtro filtro de registros
      * @return array|string
+     * @version 0.63.7
+     * @verfuncion 0.1.0
+     * @fecha 2022-08-04 11:42
+     * @author mgamboa
      */
     public function select_dp_colonia_postal_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
                                                 array $filtro = array()): array|string

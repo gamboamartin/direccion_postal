@@ -8,6 +8,13 @@ use PDO;
 
 
 class dp_calle_html extends html_controler {
+    /**
+     * @param int $cols
+     * @param bool $con_registros
+     * @param int $id_selected
+     * @param PDO $link
+     * @return array|string
+     */
     public function select_dp_calle_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
     {
         $modelo = new dp_calle($link);
