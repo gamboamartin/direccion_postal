@@ -87,7 +87,7 @@ class dp_calle_pertenece_html extends html_controler {
      * @return array|string
      */
     public function select_dp_calle_pertenece_entre1_id(int $cols, bool $con_registros, int $id_selected,
-                                                        PDO $link, array $filtro): array|string
+                                                        PDO $link, array $filtro = array()): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
         if(errores::$error){
@@ -112,7 +112,7 @@ class dp_calle_pertenece_html extends html_controler {
      * @return array|string
      */
     public function select_dp_calle_pertenece_entre2_id(int $cols, bool $con_registros, int $id_selected,
-                                                        PDO $link, array $filtro): array|string
+                                                        PDO $link, array $filtro = array()): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
         if(errores::$error){
