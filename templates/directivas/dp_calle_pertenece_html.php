@@ -36,7 +36,7 @@ class dp_calle_pertenece_html extends html_controler {
     }
 
     /**
-     * @param int $cols
+     * @param int $cols Numero de columnas en css
      * @param bool $con_registros
      * @param int $id_selected
      * @param PDO $link
@@ -61,6 +61,14 @@ class dp_calle_pertenece_html extends html_controler {
         return $select;
     }
 
+    /**
+     * @param int $cols Numero de columnas en css
+     * @param bool $con_registros
+     * @param int $id_selected
+     * @param PDO $link
+     * @param array $filtro
+     * @return array|string
+     */
     public function select_dp_calle_pertenece_entre1_id(int $cols, bool $con_registros, int $id_selected,
                                                         PDO $link, array $filtro): array|string
     {
@@ -78,6 +86,14 @@ class dp_calle_pertenece_html extends html_controler {
         return $select;
     }
 
+    /**
+     * @param int $cols Numero de columnas en css
+     * @param bool $con_registros
+     * @param int $id_selected
+     * @param PDO $link
+     * @param array $filtro
+     * @return array|string
+     */
     public function select_dp_calle_pertenece_entre2_id(int $cols, bool $con_registros, int $id_selected,
                                                         PDO $link, array $filtro): array|string
     {
