@@ -62,12 +62,16 @@ class dp_calle_pertenece_html extends html_controler {
     }
 
     public function select_dp_calle_pertenece_entre1_id(int $cols, bool $con_registros, int $id_selected,
-                                                        PDO $link): array|string
+                                                        PDO $link, array $filtro): array|string
     {
+        $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar cols', data: $valida);
+        }
         $modelo = new dp_calle_pertenece($link);
 
-        $select = $this->select_catalogo(cols:$cols, con_registros: $con_registros,id_selected:$id_selected,
-            modelo: $modelo, key_id: 'dp_calle_pertenece_entre1_id', label: 'Entre Calle');
+        $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
+            modelo: $modelo, filtro: $filtro, key_id: 'dp_calle_pertenece_entre1_id', label: 'Entre Calle');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
@@ -75,12 +79,16 @@ class dp_calle_pertenece_html extends html_controler {
     }
 
     public function select_dp_calle_pertenece_entre2_id(int $cols, bool $con_registros, int $id_selected,
-                                                        PDO $link): array|string
+                                                        PDO $link, array $filtro): array|string
     {
+        $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar cols', data: $valida);
+        }
         $modelo = new dp_calle_pertenece($link);
 
-        $select = $this->select_catalogo(cols:$cols, con_registros: $con_registros,id_selected:$id_selected,
-            modelo: $modelo, key_id: 'dp_calle_pertenece_entre2_id', label: 'Entre Calle');
+        $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
+            modelo: $modelo, filtro: $filtro, key_id: 'dp_calle_pertenece_entre2_id', label: 'Entre Calle');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
