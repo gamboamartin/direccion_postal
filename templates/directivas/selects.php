@@ -27,6 +27,9 @@ class selects {
     public function dp_calle_pertenece_id(array $filtro, html $html, PDO $link, stdClass $row): array|stdClass
     {
 
+        if(isset($row->dp_colonia_postal_id) && (int)$row->dp_colonia_postal_id !== -1){
+            $filtro['dp_colonia_postal.id'] = $row->dp_colonia_postal_id;
+        }
         $data = $this->select_base(filtro:$filtro, html: $html,link:  $link, row: $row,tabla:  'dp_calle_pertenece');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
@@ -45,7 +48,9 @@ class selects {
      */
     public function dp_calle_pertenece_entre1_id(array $filtro,html $html, PDO $link, stdClass $row): array|stdClass
     {
-
+        if(isset($row->dp_colonia_postal_id) && (int)$row->dp_colonia_postal_id !== -1){
+            $filtro['dp_colonia_postal.id'] = $row->dp_colonia_postal_id;
+        }
         $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_calle_pertenece');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
@@ -63,7 +68,9 @@ class selects {
      */
     public function dp_calle_pertenece_entre2_id(array $filtro,html $html, PDO $link, stdClass $row): array|stdClass
     {
-
+        if(isset($row->dp_colonia_postal_id) && (int)$row->dp_colonia_postal_id !== -1){
+            $filtro['dp_colonia_postal.id'] = $row->dp_colonia_postal_id;
+        }
         $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_calle_pertenece');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
@@ -75,6 +82,7 @@ class selects {
 
     /**
      * Genera un select de tipo estado inicializado
+     * @param array $filtro
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
@@ -83,6 +91,9 @@ class selects {
     public function dp_colonia_postal_id(array $filtro,html $html, PDO $link, stdClass $row): array|stdClass
     {
 
+        if(isset($row->dp_cp_id) && (int)$row->dp_cp_id !== -1){
+            $filtro['dp_cp.id'] = $row->dp_cp_id;
+        }
         $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_colonia_postal');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
@@ -94,6 +105,7 @@ class selects {
 
     /**
      * Genera un select de tipo estado inicializado
+     * @param array $filtro
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
@@ -102,6 +114,9 @@ class selects {
     public function dp_cp_id(array $filtro,html $html, PDO $link, stdClass $row): array|stdClass
     {
 
+        if(isset($row->dp_municipio_id) && (int)$row->dp_municipio_id !== -1){
+            $filtro['dp_municipio.id'] = $row->dp_municipio_id;
+        }
         $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_cp');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
@@ -113,6 +128,7 @@ class selects {
 
     /**
      * Genera un select de tipo estado inicializado
+     * @param array $filtro
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
@@ -121,6 +137,9 @@ class selects {
     public function dp_estado_id(array $filtro,html $html, PDO $link, stdClass $row): array|stdClass
     {
 
+        if(isset($row->dp_pais_id) && (int)$row->dp_pais_id !== -1){
+            $filtro['dp_pais.id'] = $row->dp_pais_id;
+        }
         $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_estado');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
@@ -132,6 +151,7 @@ class selects {
 
     /**
      * Genera un select de tipo estado inicializado
+     * @param array $filtro
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
@@ -139,6 +159,11 @@ class selects {
      */
     public function dp_municipio_id(array $filtro,html $html, PDO $link, stdClass $row): array|stdClass
     {
+
+        if(isset($row->dp_estado_id) && (int)$row->dp_estado_id !== -1){
+            $filtro['dp_estado.id'] = $row->dp_estado_id;
+        }
+
         $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_municipio');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
