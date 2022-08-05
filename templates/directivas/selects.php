@@ -26,11 +26,16 @@ class selects {
      */
     public function dp_calle_pertenece_id(array $filtro, html $html, PDO $link, stdClass $row): array|stdClass
     {
-
         if(isset($row->dp_colonia_postal_id) && (int)$row->dp_colonia_postal_id !== -1){
             $filtro['dp_colonia_postal.id'] = $row->dp_colonia_postal_id;
         }
-        $data = $this->select_base(filtro:$filtro, html: $html,link:  $link, row: $row,tabla:  'dp_calle_pertenece');
+        $con_registros = true;
+        if(count($filtro) === 0){
+            $con_registros = false;
+        }
+
+        $data = $this->select_base(con_registros: $con_registros,filtro:$filtro, html: $html,link:  $link,
+            row: $row,tabla:  'dp_calle_pertenece');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -51,7 +56,12 @@ class selects {
         if(isset($row->dp_colonia_postal_id) && (int)$row->dp_colonia_postal_id !== -1){
             $filtro['dp_colonia_postal.id'] = $row->dp_colonia_postal_id;
         }
-        $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_calle_pertenece');
+        $con_registros = true;
+        if(count($filtro) === 0){
+            $con_registros = false;
+        }
+        $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,link:  $link,
+            row: $row,tabla:  'dp_calle_pertenece');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -73,7 +83,12 @@ class selects {
         if(isset($row->dp_colonia_postal_id) && (int)$row->dp_colonia_postal_id !== -1){
             $filtro['dp_colonia_postal.id'] = $row->dp_colonia_postal_id;
         }
-        $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_calle_pertenece');
+        $con_registros = true;
+        if(count($filtro) === 0){
+            $con_registros = false;
+        }
+        $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,link:  $link,
+            row: $row,tabla:  'dp_calle_pertenece');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -96,7 +111,12 @@ class selects {
         if(isset($row->dp_cp_id) && (int)$row->dp_cp_id !== -1){
             $filtro['dp_cp.id'] = $row->dp_cp_id;
         }
-        $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_colonia_postal');
+        $con_registros = true;
+        if(count($filtro) === 0){
+            $con_registros = false;
+        }
+        $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,
+            link:  $link, row: $row,tabla:  'dp_colonia_postal');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -119,7 +139,12 @@ class selects {
         if(isset($row->dp_municipio_id) && (int)$row->dp_municipio_id !== -1){
             $filtro['dp_municipio.id'] = $row->dp_municipio_id;
         }
-        $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_cp');
+        $con_registros = true;
+        if(count($filtro) === 0){
+            $con_registros = false;
+        }
+        $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,link:  $link,
+            row: $row,tabla:  'dp_cp');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -142,7 +167,12 @@ class selects {
         if(isset($row->dp_pais_id) && (int)$row->dp_pais_id !== -1){
             $filtro['dp_pais.id'] = $row->dp_pais_id;
         }
-        $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_estado');
+        $con_registros = true;
+        if(count($filtro) === 0){
+            $con_registros = false;
+        }
+        $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,
+            link:  $link, row: $row,tabla:  'dp_estado');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -165,8 +195,13 @@ class selects {
         if(isset($row->dp_estado_id) && (int)$row->dp_estado_id !== -1){
             $filtro['dp_estado.id'] = $row->dp_estado_id;
         }
+        $con_registros = true;
+        if(count($filtro) === 0){
+            $con_registros = false;
+        }
 
-        $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_municipio');
+        $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,link:  $link,
+            row: $row,tabla:  'dp_municipio');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -190,7 +225,8 @@ class selects {
     public function dp_pais_id(array $filtro,html $html, PDO $link, stdClass $row): array|stdClass
     {
 
-        $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_pais');
+        $data = $this->select_base(con_registros: true,filtro:$filtro,html: $html,
+            link:  $link, row: $row,tabla:  'dp_pais');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -226,8 +262,8 @@ class selects {
         return $obj_html;
     }
 
-    private function genera_select(array $filtro, PDO $link, html_controler $obj_html, stdClass $row_,
-                                   string $tabla): array|string
+    private function genera_select(bool $con_registros, array $filtro, PDO $link, html_controler $obj_html,
+                                   stdClass $row_, string $tabla): array|string
     {
         $key_id = $this->key_id(tabla: $tabla);
         if(errores::$error){
@@ -239,8 +275,8 @@ class selects {
             return $this->error->error(mensaje: 'Error al generar name function',data:  $name_function);
         }
 
-        $select = $obj_html->$name_function(cols: 6, con_registros:true, id_selected:$row_->$key_id,link: $link,
-            filtro:$filtro);
+        $select = $obj_html->$name_function(cols: 6, con_registros:$con_registros, id_selected:$row_->$key_id,
+            link: $link, filtro:$filtro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
@@ -304,6 +340,7 @@ class selects {
 
 
     /**
+     * @param bool $con_registros
      * @param array $filtro Filtro para obtencion de datos
      * @param html $html Html del template
      * @param PDO $link
@@ -311,7 +348,8 @@ class selects {
      * @param string $tabla Tabla o estructura
      * @return array|stdClass
      */
-    private function select_base(array $filtro, html $html, PDO $link, stdClass $row, string $tabla): array|stdClass
+    private function select_base(bool $con_registros, array $filtro, html $html, PDO $link, stdClass $row,
+                                 string $tabla): array|stdClass
     {
         $row_ = $row;
 
@@ -326,7 +364,8 @@ class selects {
             return $this->error->error(mensaje: 'Error al generar objeto html',data:  $obj_html);
         }
 
-        $select = $this->genera_select(filtro:$filtro,link: $link,obj_html: $obj_html,row_: $row_,tabla: $tabla);
+        $select = $this->genera_select(con_registros:$con_registros, filtro:$filtro,link: $link,
+            obj_html: $obj_html,row_: $row_,tabla: $tabla);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
