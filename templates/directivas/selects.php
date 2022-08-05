@@ -18,7 +18,7 @@ class selects {
 
     /**
      * Genera un select de tipo estado inicializado
-     * @param array $filtro
+     * @param array $filtro Filtro para obtencion de datos
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
@@ -201,7 +201,7 @@ class selects {
 
     /**
      * @param html $html Html del template
-     * @param string $tabla
+     * @param string $tabla Tabla o estructura
      * @return html_controler|array
      */
     private function genera_obj_html(html $html, string $tabla): html_controler|array
@@ -300,7 +300,7 @@ class selects {
      * @param html $html Html del template
      * @param PDO $link
      * @param stdClass $row
-     * @param string $tabla
+     * @param string $tabla Tabla o estructura
      * @return array|stdClass
      */
     private function select_base(array $filtro, html $html, PDO $link, stdClass $row, string $tabla): array|stdClass
