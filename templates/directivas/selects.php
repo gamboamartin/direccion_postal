@@ -265,12 +265,12 @@ class selects {
 
     /**
      * @param bool $con_registros Si con registros muestra los registros
-     * @param array $filtro
-     * @param PDO $link
-     * @param html_controler $obj_html
-     * @param stdClass $row_
-     * @param string $tabla
-     * @param string $name_function
+     * @param array $filtro Filtro de obtencion de datos
+     * @param PDO $link Conexion a la base de datos
+     * @param html_controler $obj_html Obj de controller html
+     * @param stdClass $row_ registro en proceso
+     * @param string $tabla Tabla de ejecucion
+     * @param string $name_function nombre de funcion para generacion de select
      * @return array|string
      */
     private function genera_select(bool $con_registros, array $filtro, PDO $link, html_controler $obj_html,
@@ -386,7 +386,7 @@ class selects {
      * @param bool $con_registros Si con registros muestra los registros
      * @param array $filtro Filtro para obtencion de datos
      * @param html $html Html del template
-     * @param PDO $link
+     * @param PDO $link Conexion a la base de datos
      * @param stdClass $row
      * @param string $tabla Tabla o estructura
      * @param string $name_funcion
