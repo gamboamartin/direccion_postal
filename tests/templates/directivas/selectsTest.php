@@ -34,7 +34,7 @@ class selectsTest extends test {
         $dir = new selects();
 
         $row = new stdClass();
-        $resultado = $dir->dp_pais_id($html, $this->link, $row);
+        $resultado = $dir->dp_pais_id(array(),$html, $this->link, $row);
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals(121,$resultado->row->dp_pais_id);
@@ -48,7 +48,7 @@ class selectsTest extends test {
 
         $row = new stdClass();
         $row->dp_pais_id = 999;
-        $resultado = $dir->dp_pais_id($html, $this->link, $row);
+        $resultado = $dir->dp_pais_id(array(),$html, $this->link, $row);
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals(999,$resultado->row->dp_pais_id);

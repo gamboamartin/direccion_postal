@@ -18,15 +18,16 @@ class selects {
 
     /**
      * Genera un select de tipo estado inicializado
+     * @param array $filtro
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
      * @return array|stdClass
      */
-    public function dp_calle_pertenece_id(html $html, PDO $link, stdClass $row): array|stdClass
+    public function dp_calle_pertenece_id(array $filtro, html $html, PDO $link, stdClass $row): array|stdClass
     {
 
-        $data = $this->select_base(html: $html,link:  $link, row: $row,tabla:  'dp_calle_pertenece');
+        $data = $this->select_base(filtro:$filtro, html: $html,link:  $link, row: $row,tabla:  'dp_calle_pertenece');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -42,10 +43,10 @@ class selects {
      * @param stdClass $row Registro en operacion
      * @return array|stdClass
      */
-    public function dp_calle_pertenece_entre1_id(html $html, PDO $link, stdClass $row): array|stdClass
+    public function dp_calle_pertenece_entre1_id(array $filtro,html $html, PDO $link, stdClass $row): array|stdClass
     {
 
-        $data = $this->select_base(html: $html,link:  $link, row: $row,tabla:  'dp_calle_pertenece');
+        $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_calle_pertenece');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -60,29 +61,10 @@ class selects {
      * @param stdClass $row Registro en operacion
      * @return array|stdClass
      */
-    public function dp_calle_pertenece_entre2_id(html $html, PDO $link, stdClass $row): array|stdClass
+    public function dp_calle_pertenece_entre2_id(array $filtro,html $html, PDO $link, stdClass $row): array|stdClass
     {
 
-        $data = $this->select_base(html: $html,link:  $link, row: $row,tabla:  'dp_calle_pertenece');
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $data);
-
-        }
-
-        return $data;
-    }
-
-    /**
-     * Genera un select de tipo estado inicializado
-     * @param html $html Clade de template
-     * @param PDO $link conexion a bd
-     * @param stdClass $row Registro en operacion
-     * @return array|stdClass
-     */
-    public function dp_colonia_postal_id(html $html, PDO $link, stdClass $row): array|stdClass
-    {
-
-        $data = $this->select_base(html: $html,link:  $link, row: $row,tabla:  'dp_colonia_postal');
+        $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_calle_pertenece');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -98,10 +80,10 @@ class selects {
      * @param stdClass $row Registro en operacion
      * @return array|stdClass
      */
-    public function dp_cp_id(html $html, PDO $link, stdClass $row): array|stdClass
+    public function dp_colonia_postal_id(array $filtro,html $html, PDO $link, stdClass $row): array|stdClass
     {
 
-        $data = $this->select_base(html: $html,link:  $link, row: $row,tabla:  'dp_cp');
+        $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_colonia_postal');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -117,10 +99,10 @@ class selects {
      * @param stdClass $row Registro en operacion
      * @return array|stdClass
      */
-    public function dp_estado_id(html $html, PDO $link, stdClass $row): array|stdClass
+    public function dp_cp_id(array $filtro,html $html, PDO $link, stdClass $row): array|stdClass
     {
 
-        $data = $this->select_base(html: $html,link:  $link, row: $row,tabla:  'dp_estado');
+        $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_cp');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -136,9 +118,28 @@ class selects {
      * @param stdClass $row Registro en operacion
      * @return array|stdClass
      */
-    public function dp_municipio_id(html $html, PDO $link, stdClass $row): array|stdClass
+    public function dp_estado_id(array $filtro,html $html, PDO $link, stdClass $row): array|stdClass
     {
-        $data = $this->select_base(html: $html,link:  $link, row: $row,tabla:  'dp_municipio');
+
+        $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_estado');
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $data);
+
+        }
+
+        return $data;
+    }
+
+    /**
+     * Genera un select de tipo estado inicializado
+     * @param html $html Clade de template
+     * @param PDO $link conexion a bd
+     * @param stdClass $row Registro en operacion
+     * @return array|stdClass
+     */
+    public function dp_municipio_id(array $filtro,html $html, PDO $link, stdClass $row): array|stdClass
+    {
+        $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_municipio');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -149,6 +150,7 @@ class selects {
 
     /**
      * Genera un select de tipo pais inicializado
+     * @param array $filtro
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
@@ -157,12 +159,11 @@ class selects {
      * @verfuncion 0.1.0
      * @fecha 2022-08-05 10:01
      * @author mgamboa
-     *
      */
-    public function dp_pais_id(html $html, PDO $link, stdClass $row): array|stdClass
+    public function dp_pais_id(array $filtro,html $html, PDO $link, stdClass $row): array|stdClass
     {
 
-        $data = $this->select_base(html: $html,link:  $link, row: $row,tabla:  'dp_pais');
+        $data = $this->select_base(filtro:$filtro,html: $html,link:  $link, row: $row,tabla:  'dp_pais');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -190,7 +191,8 @@ class selects {
         return $obj_html;
     }
 
-    private function genera_select(PDO $link, html_controler $obj_html, stdClass $row_, string $tabla): array|string
+    private function genera_select(array $filtro, PDO $link, html_controler $obj_html, stdClass $row_,
+                                   string $tabla): array|string
     {
         $key_id = $this->key_id(tabla: $tabla);
         if(errores::$error){
@@ -202,7 +204,8 @@ class selects {
             return $this->error->error(mensaje: 'Error al generar name function',data:  $name_function);
         }
 
-        $select = $obj_html->$name_function(cols: 6, con_registros:true, id_selected:$row_->$key_id,link: $link);
+        $select = $obj_html->$name_function(cols: 6, con_registros:true, id_selected:$row_->$key_id,link: $link,
+            filtro:$filtro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
@@ -266,13 +269,14 @@ class selects {
 
 
     /**
+     * @param array $filtro
      * @param html $html Html del template
      * @param PDO $link
      * @param stdClass $row
      * @param string $tabla
      * @return array|stdClass
      */
-    private function select_base(html $html, PDO $link, stdClass $row, string $tabla): array|stdClass
+    private function select_base(array $filtro, html $html, PDO $link, stdClass $row, string $tabla): array|stdClass
     {
         $row_ = $row;
 
@@ -287,7 +291,7 @@ class selects {
             return $this->error->error(mensaje: 'Error al generar objeto html',data:  $obj_html);
         }
 
-        $select = $this->genera_select(link: $link,obj_html: $obj_html,row_: $row_,tabla: $tabla);
+        $select = $this->genera_select(filtro:$filtro,link: $link,obj_html: $obj_html,row_: $row_,tabla: $tabla);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
