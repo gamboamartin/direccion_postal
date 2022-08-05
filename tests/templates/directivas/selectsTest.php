@@ -95,6 +95,23 @@ class selectsTest extends test {
         errores::$error = false;
     }
 
+    public function test_name_function(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_estado';
+
+        $dir = new selects();
+        $dir = new liberator($dir);
+
+        $tabla = 'a';
+        $resultado = $dir->name_function($tabla);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals("select_a",$resultado);
+        errores::$error = false;
+    }
+
     /**
      */
     public function test_name_obk_html(): void

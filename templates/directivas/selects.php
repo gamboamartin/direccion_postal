@@ -46,6 +46,7 @@ class selects {
 
     /**
      * Genera un select de tipo estado inicializado
+     * @param array $filtro
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
@@ -282,9 +283,12 @@ class selects {
 
         $name_function = trim($name_function);
         if($name_function==='') {
-            $name_function = $this->name_function(key_id: $key_id);
+            $name_function_ = $this->name_function(key_id: $key_id);
             if (errores::$error) {
-                return $this->error->error(mensaje: 'Error al generar name function', data: $name_function);
+                return $this->error->error(mensaje: 'Error al generar name function', data: $name_function_);
+            }
+            if(is_string($name_function_)) {
+                $name_function = $name_function_;
             }
         }
 
@@ -315,8 +319,21 @@ class selects {
         return $tabla.'_id';
     }
 
-    private function name_function(string $key_id): string
+    /**
+     * Genera el nombre de la funcion a generar
+     * @param string $key_id tabla_id
+     * @return string|array
+     * @version 0.96.8
+     * @verfuncion 0.1.0
+     * @fecha 2022-08-05
+     * @author mgamboa
+     */
+    private function name_function(string $key_id): string|array
     {
+        $key_id = trim($key_id);
+        if($key_id === ''){
+            return $this->error->error(mensaje: 'Error $key_id esta vacia',data: $key_id);
+        }
         return 'select_'.$key_id;
     }
 
