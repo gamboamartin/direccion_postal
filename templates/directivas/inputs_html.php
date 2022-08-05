@@ -15,6 +15,14 @@ class inputs_html {
         $this->error = new errores();
     }
 
+    /**
+     * @param int $cols Numero de columnas css
+     * @param directivas $directivas Directivas de template html
+     * @param stdClass $row_upd registro en proceso
+     * @param bool $value_vacio si vacio limpiar valores
+     * @param string $campo Nombre del campo para name
+     * @return array|string
+     */
     public function input(int $cols, directivas $directivas, stdClass $row_upd, bool $value_vacio,
                           string $campo): array|string
     {
