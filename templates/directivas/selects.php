@@ -262,6 +262,15 @@ class selects {
         return $obj_html;
     }
 
+    /**
+     * @param bool $con_registros
+     * @param array $filtro
+     * @param PDO $link
+     * @param html_controler $obj_html
+     * @param stdClass $row_
+     * @param string $tabla
+     * @return array|string
+     */
     private function genera_select(bool $con_registros, array $filtro, PDO $link, html_controler $obj_html,
                                    stdClass $row_, string $tabla): array|string
     {
@@ -284,8 +293,21 @@ class selects {
         return $select;
     }
 
-    private function key_id(string $tabla): string
+    /**
+     * Genera un key id
+     * @param string $tabla Tabla o estructura de database
+     * @return string|array
+     * @version 0.94.8
+     * @verfuncion 0.1.0
+     * @fecha 2022-08-05 12:33
+     * @author mgamboa
+     */
+    private function key_id(string $tabla): string|array
     {
+        $tabla = trim($tabla);
+        if($tabla === ''){
+            return $this->error->error(mensaje: 'Error tabla esta vacia',data: $tabla);
+        }
         return $tabla.'_id';
     }
 
