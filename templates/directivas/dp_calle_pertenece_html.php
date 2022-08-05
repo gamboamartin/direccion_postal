@@ -83,10 +83,10 @@ class dp_calle_pertenece_html extends html_controler {
 
     /**
      * @param int $cols Numero de columnas en css
-     * @param bool $con_registros
-     * @param int $id_selected
-     * @param PDO $link
-     * @param array $filtro
+     * @param bool $con_registros Si con registros asigna los registros como options
+     * @param int $id_selected Identificador
+     * @param PDO $link Conexion a la base de datos
+     * @param array $filtro Filtro de registros
      * @return array|string
      */
     public function select_dp_calle_pertenece_entre1_id(int $cols, bool $con_registros, int $id_selected,
