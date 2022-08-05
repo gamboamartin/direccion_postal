@@ -62,7 +62,7 @@ class selects {
             $con_registros = false;
         }
         $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,link:  $link,
-            row: $row,tabla:  'dp_calle_pertenece');
+            row: $row,tabla:  'dp_calle_pertenece',name_funcion: 'dp_calle_pertenece_entre1_id');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -89,7 +89,7 @@ class selects {
             $con_registros = false;
         }
         $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,link:  $link,
-            row: $row,tabla:  'dp_calle_pertenece');
+            row: $row,tabla:  'dp_calle_pertenece',name_funcion: 'dp_calle_pertenece_entre1_id');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -389,10 +389,11 @@ class selects {
      * @param PDO $link
      * @param stdClass $row
      * @param string $tabla Tabla o estructura
+     * @param string $name_funcion
      * @return array|stdClass
      */
     private function select_base(bool $con_registros, array $filtro, html $html, PDO $link, stdClass $row,
-                                 string $tabla): array|stdClass
+                                 string $tabla, string $name_funcion = ''): array|stdClass
     {
         $row_ = $row;
 
@@ -408,7 +409,7 @@ class selects {
         }
 
         $select = $this->genera_select(con_registros:$con_registros, filtro:$filtro,link: $link,
-            obj_html: $obj_html,row_: $row_,tabla: $tabla);
+            obj_html: $obj_html,row_: $row_,tabla: $tabla, name_function: $name_funcion);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
