@@ -4,7 +4,7 @@ namespace tests\links\secciones;
 use gamboamartin\errores\errores;
 use gamboamartin\template_1\html;
 use gamboamartin\test\test;
-use html\dp_pais_html;
+use html\selects;
 use stdClass;
 
 
@@ -23,32 +23,38 @@ class selectsTest extends test {
 
     /**
      */
-    public function test_select_dp_pais_id(): void
+    public function test_dp_pais_id(): void
     {
         errores::$error = false;
         $_GET['session_id'] = 1;
         $_GET['seccion'] = 'dp_estado';
         $html = new html();
-        $dir = new dp_pais_html($html);
+        $dir = new selects();
 
-        $cols = 1;
-        $con_registros = false;
-        $id_selected = -1;
-        $resultado = $dir->select_dp_pais_id($cols, $con_registros, $id_selected, $this->link);
-
-        $this->assertIsString($resultado);
+        $row = new stdClass();
+        $resultado = $dir->dp_pais_id($html, $this->link, $row);
+        $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals("<div class='control-group col-sm-1'><label class='control-label' for='dp_pais_id'>Pais</label><div class='controls'><select class='form-control selectpicker color-secondary dp_pais_id' id='dp_pais_id' name='dp_pais_id' ><option value=''  >Selecciona una opcion</option></select></div></div>",$resultado);
+        $this->assertEquals(121,$resultado->row->dp_pais_id);
+        $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-6'><label class='control-label' for='dp_pais_id'>Pais",$resultado->select);
+
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_estado';
+        $html = new html();
+        $dir = new selects();
+
+        $row = new stdClass();
+        $row->dp_pais_id = 999;
+        $resultado = $dir->dp_pais_id($html, $this->link, $row);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals(999,$resultado->row->dp_pais_id);
+        $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-6'><label class='control-label' for='dp_pais_id'>Pais",$resultado->select);
 
 
         errores::$error = false;
-        $cols = 1;
-        $con_registros = true;
-        $id_selected = -1;
-        $resultado = $dir->select_dp_pais_id($cols, $con_registros, $id_selected, $this->link);
-        $this->assertIsString($resultado);
-        $this->assertNotTrue(errores::$error);
-        $this->assertStringContainsStringIgnoringCase("control-label' for='dp_pais_id'>Pais</label><div class='controls'><select class='for",$resultado);
+
 
         errores::$error = false;
     }

@@ -80,6 +80,11 @@ class selects {
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
      * @return array|stdClass
+     * @version 0.83.8
+     * @verfuncion 0.1.0
+     * @fecha 2022-08-05 10:01
+     * @author mgamboa
+     *
      */
     public function dp_pais_id(html $html, PDO $link, stdClass $row): array|stdClass
     {
