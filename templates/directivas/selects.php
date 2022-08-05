@@ -171,13 +171,17 @@ class selects {
         return $data;
     }
 
+    /**
+     * @param html $html Html del template
+     * @param string $tabla
+     * @return html_controler|array
+     */
     private function genera_obj_html(html $html, string $tabla): html_controler|array
     {
         $name_obj = $this->name_obk_html(tabla: $tabla);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener nombre de obj',data:  $name_obj);
         }
-
 
         $obj_html = $this->obj_html(name_obj: $name_obj,html: $html);
         if(errores::$error){
@@ -234,8 +238,25 @@ class selects {
         return "html\\".$tabla.'_html';
     }
 
-    private function obj_html(string $name_obj, html $html): html_controler
+    /**
+     * Genera un objeto de tipo html controler
+     * @param string $name_obj Nombre del objeto a generar
+     * @param html $html html controller
+     * @return html_controler|array
+     * @version 0.88.8
+     * @verfuncion 0.1.0
+     * @fecha 2022-08-05 10:54
+     * @author mgamboa
+     */
+    private function obj_html(string $name_obj, html $html): html_controler|array
     {
+        $name_obj = trim($name_obj);
+        if($name_obj === ''){
+            return $this->error->error(mensaje: 'Error name obj esta vacio',data: $name_obj);
+        }
+        if(!class_exists($name_obj)){
+            return $this->error->error(mensaje: 'Error no existe la clase',data: $name_obj);
+        }
         /**
          * @var $obj_html html_controler
          */
@@ -244,9 +265,13 @@ class selects {
     }
 
 
-
-
-
+    /**
+     * @param html $html Html del template
+     * @param PDO $link
+     * @param stdClass $row
+     * @param string $tabla
+     * @return array|stdClass
+     */
     private function select_base(html $html, PDO $link, stdClass $row, string $tabla): array|stdClass
     {
         $row_ = $row;

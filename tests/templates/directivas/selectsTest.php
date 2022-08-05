@@ -7,6 +7,7 @@ use gamboamartin\test\liberator;
 use gamboamartin\test\test;
 use html\selects;
 use stdClass;
+use html\dp_cp_html;
 
 
 class selectsTest extends test {
@@ -73,6 +74,24 @@ class selectsTest extends test {
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals("html\a_html",$resultado);
+        errores::$error = false;
+    }
+
+    /**
+     */
+    public function test_obj_html(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_estado';
+        $html = new html();
+        $dir = new selects();
+        $dir = new liberator($dir);
+
+        $name_obj = dp_cp_html::class;
+        $resultado = $dir->obj_html($name_obj, $html);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
         errores::$error = false;
     }
 
