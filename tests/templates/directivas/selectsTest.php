@@ -76,6 +76,28 @@ class selectsTest extends test {
         errores::$error = false;
     }
 
+    public function test_genera_select(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_estado';
+
+        $dir = new selects();
+        $dir = new liberator($dir);
+
+        $tabla = 'dp_cp';
+        $con_registros = false;
+        $filtro = array();
+        $html = new html();
+        $obj_html = new dp_cp_html($html);
+        $row_ = new stdClass();
+        $resultado = $dir->genera_select($con_registros, $filtro, $this->link, $obj_html, $row_, $tabla);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-6'><label class='control-label' for='dp_cp_id'>", $resultado);
+        errores::$error = false;
+    }
+
     /**
      */
     public function test_key_id(): void
@@ -146,6 +168,28 @@ class selectsTest extends test {
         $resultado = $dir->obj_html($name_obj, $html);
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+    }
+
+    public function test_select_base(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_estado';
+
+        $dir = new selects();
+       // $dir = new liberator($dir);
+
+        $tabla = 'dp_colonia';
+        $con_registros = false;
+        $filtro = array();
+        $html = new html();
+        $row = new stdClass();
+        $row->dp_colonia_id = 10;
+        $resultado = $dir->select_base($con_registros, $filtro, $html, $this->link, $row, $tabla);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals(10,$resultado->row->dp_colonia_id);
         errores::$error = false;
     }
 

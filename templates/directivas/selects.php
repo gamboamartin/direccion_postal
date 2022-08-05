@@ -46,7 +46,7 @@ class selects {
 
     /**
      * Genera un select de tipo estado inicializado
-     * @param array $filtro
+     * @param array $filtro Filtro de datos
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
@@ -264,6 +264,7 @@ class selects {
     }
 
     /**
+     * Genera un select inicilaizado
      * @param bool $con_registros Si con registros muestra los registros
      * @param array $filtro Filtro de obtencion de datos
      * @param PDO $link Conexion a la base de datos
@@ -272,13 +273,27 @@ class selects {
      * @param string $tabla Tabla de ejecucion
      * @param string $name_function nombre de funcion para generacion de select
      * @return array|string
+     * @version 0.128..26
+     * @verfuncion 0.1.0
+     * @fecha 2022-08-05 13:19
+     * @author mgamboa
      */
     private function genera_select(bool $con_registros, array $filtro, PDO $link, html_controler $obj_html,
                                    stdClass $row_, string $tabla, string $name_function = ''): array|string
     {
+        $tabla = trim($tabla);
+        if($tabla === ''){
+            return $this->error->error(mensaje: 'Error tabla esta vacia',data: $tabla);
+        }
+
+
+
         $key_id = $this->key_id(tabla: $tabla);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar key id',data:  $key_id);
+        }
+        if(!isset($row_->$key_id)){
+            $row_->$key_id = -1;
         }
 
         $name_function = trim($name_function);
@@ -383,18 +398,29 @@ class selects {
 
 
     /**
+     * Genera un select basico
      * @param bool $con_registros Si con registros muestra los registros
      * @param array $filtro Filtro para obtencion de datos
      * @param html $html Html del template
      * @param PDO $link Conexion a la base de datos
-     * @param stdClass $row
+     * @param stdClass $row Registro en ejecucion
      * @param string $tabla Tabla o estructura
-     * @param string $name_funcion
+     * @param string $name_funcion Nombre de funcion
      * @return array|stdClass
+     * @version 0.100.8
+     * @verfuncion 0.1.0
+     * @fecha 2022-08-05 15:50
+     * @author mgamboa
      */
-    private function select_base(bool $con_registros, array $filtro, html $html, PDO $link, stdClass $row,
+    PUBLIC function select_base(bool $con_registros, array $filtro, html $html, PDO $link, stdClass $row,
                                  string $tabla, string $name_funcion = ''): array|stdClass
     {
+
+        $tabla = trim($tabla);
+        if($tabla === ''){
+            return $this->error->error(mensaje: 'Error la tabla esta vacia',data:  $tabla);
+        }
+
         $row_ = $row;
 
         $row_ = (new init())->row_value_id($row_, tabla: $tabla);
