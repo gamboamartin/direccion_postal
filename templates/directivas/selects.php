@@ -62,7 +62,7 @@ class selects {
             $con_registros = false;
         }
         $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,link:  $link,
-            row: $row,tabla:  'dp_calle_pertenece',name_funcion: 'dp_calle_pertenece_entre1_id');
+            row: $row,tabla:  'dp_calle_pertenece',name_funcion: 'select_dp_calle_pertenece_entre1_id');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -89,7 +89,7 @@ class selects {
             $con_registros = false;
         }
         $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,link:  $link,
-            row: $row,tabla:  'dp_calle_pertenece',name_funcion: 'dp_calle_pertenece_entre1_id');
+            row: $row,tabla:  'dp_calle_pertenece',name_funcion: 'select_dp_calle_pertenece_entre1_id');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
