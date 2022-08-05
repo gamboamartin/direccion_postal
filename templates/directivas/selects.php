@@ -263,25 +263,29 @@ class selects {
     }
 
     /**
-     * @param bool $con_registros
+     * @param bool $con_registros Si con registros muestra los registros
      * @param array $filtro
      * @param PDO $link
      * @param html_controler $obj_html
      * @param stdClass $row_
      * @param string $tabla
+     * @param string $name_function
      * @return array|string
      */
     private function genera_select(bool $con_registros, array $filtro, PDO $link, html_controler $obj_html,
-                                   stdClass $row_, string $tabla): array|string
+                                   stdClass $row_, string $tabla, string $name_function = ''): array|string
     {
         $key_id = $this->key_id(tabla: $tabla);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar key id',data:  $key_id);
         }
 
-        $name_function = $this->name_function(key_id: $key_id);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar name function',data:  $name_function);
+        $name_function = trim($name_function);
+        if($name_function==='') {
+            $name_function = $this->name_function(key_id: $key_id);
+            if (errores::$error) {
+                return $this->error->error(mensaje: 'Error al generar name function', data: $name_function);
+            }
         }
 
         $select = $obj_html->$name_function(cols: 6, con_registros:$con_registros, id_selected:$row_->$key_id,
@@ -362,7 +366,7 @@ class selects {
 
 
     /**
-     * @param bool $con_registros
+     * @param bool $con_registros Si con registros muestra los registros
      * @param array $filtro Filtro para obtencion de datos
      * @param html $html Html del template
      * @param PDO $link
