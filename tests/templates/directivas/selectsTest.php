@@ -60,6 +60,24 @@ class selectsTest extends test {
 
     /**
      */
+    public function test_genera_obj_html(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_estado';
+        $html = new html();
+        $dir = new selects();
+        $dir = new liberator($dir);
+
+        $tabla = 'dp_calle';
+        $resultado = $dir->genera_obj_html($html, $tabla);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+    }
+
+    /**
+     */
     public function test_name_obk_html(): void
     {
         errores::$error = false;

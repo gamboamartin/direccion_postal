@@ -203,9 +203,17 @@ class selects {
      * @param html $html Html del template
      * @param string $tabla Tabla o estructura
      * @return html_controler|array
+     * @version 0.92.8
+     * @verfuncion 0.1.0
+     * @fecha 2022-08-05 12:20
+     * @author mgamboa
      */
     private function genera_obj_html(html $html, string $tabla): html_controler|array
     {
+        $tabla = trim($tabla);
+        if($tabla === ''){
+            return $this->error->error(mensaje: 'Error tabla esta vacia',data: $tabla);
+        }
         $name_obj = $this->name_obk_html(tabla: $tabla);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener nombre de obj',data:  $name_obj);
@@ -296,7 +304,7 @@ class selects {
 
 
     /**
-     * @param array $filtro
+     * @param array $filtro Filtro para obtencion de datos
      * @param html $html Html del template
      * @param PDO $link
      * @param stdClass $row
