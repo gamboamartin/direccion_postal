@@ -178,7 +178,7 @@ class selectsTest extends test {
         $_GET['seccion'] = 'dp_estado';
 
         $dir = new selects();
-       // $dir = new liberator($dir);
+        $dir = new liberator($dir);
 
         $tabla = 'dp_colonia';
         $con_registros = false;

@@ -62,7 +62,8 @@ class selects {
             $con_registros = false;
         }
         $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,link:  $link,
-            row: $row,tabla:  'dp_calle_pertenece',name_funcion: 'select_dp_calle_pertenece_entre1_id');
+            row: $row,tabla:  'dp_calle_pertenece',key_id:'dp_calle_pertenece_entre1_id' ,
+            name_funcion: 'select_dp_calle_pertenece_entre1_id');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -89,7 +90,8 @@ class selects {
             $con_registros = false;
         }
         $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,link:  $link,
-            row: $row,tabla:  'dp_calle_pertenece',name_funcion: 'select_dp_calle_pertenece_entre2_id');
+            row: $row,tabla:  'dp_calle_pertenece',key_id:'dp_calle_pertenece_entre2_id',
+            name_funcion: 'select_dp_calle_pertenece_entre2_id');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -271,6 +273,7 @@ class selects {
      * @param html_controler $obj_html Obj de controller html
      * @param stdClass $row_ registro en proceso
      * @param string $tabla Tabla de ejecucion
+     * @param string $key_id llave del identificador
      * @param string $name_function nombre de funcion para generacion de select
      * @return array|string
      * @version 0.128..26
@@ -279,18 +282,22 @@ class selects {
      * @author mgamboa
      */
     private function genera_select(bool $con_registros, array $filtro, PDO $link, html_controler $obj_html,
-                                   stdClass $row_, string $tabla, string $name_function = ''): array|string
+                                   stdClass $row_, string $tabla, string $key_id = '',
+                                   string $name_function = ''): array|string
     {
         $tabla = trim($tabla);
         if($tabla === ''){
             return $this->error->error(mensaje: 'Error tabla esta vacia',data: $tabla);
         }
 
+        $key_id = trim($key_id);
+        if($key_id === '') {
+            $key_id_ = $this->key_id(tabla: $tabla);
+            if (errores::$error) {
+                return $this->error->error(mensaje: 'Error al generar key id', data: $key_id);
+            }
 
-
-        $key_id = $this->key_id(tabla: $tabla);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar key id',data:  $key_id);
+            $key_id = (string)$key_id_;
         }
         if(!isset($row_->$key_id)){
             $row_->$key_id = -1;
@@ -405,6 +412,7 @@ class selects {
      * @param PDO $link Conexion a la base de datos
      * @param stdClass $row Registro en ejecucion
      * @param string $tabla Tabla o estructura
+     * @param string $key_id Llave del identiifcador a validar
      * @param string $name_funcion Nombre de funcion
      * @return array|stdClass
      * @version 0.100.8
@@ -412,8 +420,8 @@ class selects {
      * @fecha 2022-08-05 15:50
      * @author mgamboa
      */
-    PUBLIC function select_base(bool $con_registros, array $filtro, html $html, PDO $link, stdClass $row,
-                                 string $tabla, string $name_funcion = ''): array|stdClass
+    private function select_base(bool $con_registros, array $filtro, html $html, PDO $link, stdClass $row,
+                                 string $tabla, string $key_id = '', string $name_funcion = ''): array|stdClass
     {
 
         $tabla = trim($tabla);
@@ -435,7 +443,7 @@ class selects {
         }
 
         $select = $this->genera_select(con_registros:$con_registros, filtro:$filtro,link: $link,
-            obj_html: $obj_html,row_: $row_,tabla: $tabla, name_function: $name_funcion);
+            obj_html: $obj_html,row_: $row_,tabla: $tabla, key_id: $key_id, name_function: $name_funcion);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
