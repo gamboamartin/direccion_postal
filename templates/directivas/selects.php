@@ -59,8 +59,10 @@ class selects {
 
         return $data;
     }
+
     /**
      * Genera un select de tipo estado inicializado
+     * @param array $filtro
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
