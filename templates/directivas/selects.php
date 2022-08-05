@@ -6,7 +6,6 @@ use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\system\init;
 use gamboamartin\template\html;
-use models\dp_calle;
 use PDO;
 use stdClass;
 
@@ -62,8 +61,21 @@ class selects {
         return 'select_'.$key_id;
     }
 
-    private function name_obk_html(string $tabla): string
+    /**
+     * Genera el name del obj html
+     * @param string $tabla Tabla para generacion
+     * @return string|array
+     * @version 0.86.8
+     * @verfuncion 0.1.0
+     * @fecha 2022-08-05 10:36
+     * @author mgamboa
+     */
+    private function name_obk_html(string $tabla): string|array
     {
+        $tabla = trim($tabla);
+        if($tabla === ''){
+            return $this->error->error(mensaje: 'Error tabla esta vacia',data: $tabla);
+        }
         return "html\\".$tabla.'_html';
     }
 

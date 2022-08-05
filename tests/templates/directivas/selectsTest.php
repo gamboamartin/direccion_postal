@@ -3,6 +3,7 @@ namespace tests\links\secciones;
 
 use gamboamartin\errores\errores;
 use gamboamartin\template_1\html;
+use gamboamartin\test\liberator;
 use gamboamartin\test\test;
 use html\selects;
 use stdClass;
@@ -54,8 +55,24 @@ class selectsTest extends test {
 
 
         errores::$error = false;
+    }
 
+    /**
+     */
+    public function test_name_obk_html(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_estado';
 
+        $dir = new selects();
+        $dir = new liberator($dir);
+
+        $tabla =  'a';
+        $resultado = $dir->name_obk_html($tabla);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals("html\a_html",$resultado);
         errores::$error = false;
     }
 
