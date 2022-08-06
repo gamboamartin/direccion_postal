@@ -16,6 +16,23 @@ class selects {
         $this->error = new errores();
     }
 
+    public function direcciones(html $html, PDO $link, stdClass $row, stdClass $selects): array|stdClass
+    {
+        $tablas = array('dp_pais_id','dp_estado_id','dp_municipio_id','dp_cp_id','dp_colonia_postal_id',
+            'dp_calle_pertenece_id','dp_calle_pertenece_entre1_id','dp_calle_pertenece_entre2_id');
+        foreach ($tablas as $key_id){
+            $filtro = array();
+            $data_select = $this->$key_id(filtro:$filtro,html: $html,link:  $link, row: $row);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
+
+            }
+            $selects->$key_id = $data_select->select;
+            $row = $data_select->row;
+        }
+        return $selects;
+    }
+
     /**
      * Genera un select de tipo estado inicializado
      * @param array $filtro Filtro para obtencion de datos
