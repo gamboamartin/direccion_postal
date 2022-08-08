@@ -5,6 +5,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\system\system;
 use gamboamartin\template\directivas;
+use gamboamartin\validacion\validacion;
 use models\dp_calle;
 use PDO;
 use stdClass;
@@ -20,10 +21,36 @@ class inputs_html {
      * Asigna los elementos de un direcciones basicas
      * @param system $controler Controlador en ejecucion
      * @param stdClass $inputs Inputs con datos asignados en forma de html
-     * @return stdClass
+     * @return stdClass|array
+     * @version 0.105.8
+     * @verfuncion 0.1.0
+     * @fecha 2022-08-08 13:39
+     * @author mgamboa
      */
-    public function base_direcciones_asignacion(system $controler, stdClass $inputs): stdClass
+    public function base_direcciones_asignacion(system $controler, stdClass $inputs): stdClass|array
     {
+
+        $keys = array('selects');
+        $valida = (new validacion())->valida_existencia_keys(keys: $keys, registro: $inputs);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar inputs', data: $valida);
+        }
+
+        $keys = array('dp_pais_id','dp_estado_id','dp_municipio_id','dp_cp_id','dp_colonia_postal_id',
+            'dp_calle_pertenece_id');
+        $valida = (new validacion())->valida_existencia_keys(keys: $keys, registro: $inputs->selects,
+            valida_vacio: false);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar inputs->selects', data: $valida);
+        }
+
+        if(is_array($controler->inputs)){
+            $controler->inputs = (object)$controler->inputs;
+        }
+        if(!isset($controler->inputs->select)){
+            $controler->inputs->select = new stdClass();
+        }
+
         $controler->inputs->select->dp_pais_id = $inputs->selects->dp_pais_id;
         $controler->inputs->select->dp_estado_id = $inputs->selects->dp_estado_id;
         $controler->inputs->select->dp_municipio_id = $inputs->selects->dp_municipio_id;
