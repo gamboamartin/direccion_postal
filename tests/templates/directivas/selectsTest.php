@@ -25,6 +25,28 @@ class selectsTest extends test {
 
     /**
      */
+    public function test_direcciones(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_estado';
+        $html = new html();
+        $dir = new selects();
+        //$dir = new liberator($dir);
+
+        $row = new stdClass();
+        $selects = new stdClass();
+        $resultado = $dir->direcciones($html, $this->link, $row, $selects);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+
+        $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-6'><label class='control-label' for='dp_pais_id'>Pais</label><",$resultado->dp_pais_id);
+        $this->assertStringContainsStringIgnoringCase("'><label class='control-label' for='dp_calle_pertenece_entre2_id",$resultado->dp_calle_pertenece_entre2_id);
+        errores::$error = false;
+    }
+
+    /**
+     */
     public function test_dp_pais_id(): void
     {
         errores::$error = false;

@@ -23,6 +23,10 @@ class selects {
      * @param stdClass $row registro en proceso
      * @param stdClass $selects Conjunto de selects para la integracion
      * @return array|stdClass
+     * @version 0.109.8
+     * @verfuncion 0.1.0
+     * @author mgamboa
+     * @fecha 2022-08-08 16:35
      */
     public function direcciones(html $html, PDO $link, stdClass $row, stdClass $selects): array|stdClass
     {
