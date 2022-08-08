@@ -40,6 +40,7 @@ class selects {
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
      * @return array|stdClass
+     *
      */
     public function dp_calle_pertenece_id(array $filtro, html $html, PDO $link, stdClass $row): array|stdClass
     {

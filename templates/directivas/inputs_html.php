@@ -3,6 +3,7 @@ namespace html;
 
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
+use gamboamartin\system\system;
 use gamboamartin\template\directivas;
 use models\dp_calle;
 use PDO;
@@ -13,6 +14,23 @@ class inputs_html {
     private errores $error;
     public function __construct(){
         $this->error = new errores();
+    }
+
+    /**
+     * Asigna los elementos de un direcciones basicas
+     * @param system $controler Controlador en ejecucion
+     * @param stdClass $inputs Inputs con datos asignados en forma de html
+     * @return stdClass
+     */
+    public function base_direcciones_asignacion(system $controler, stdClass $inputs): stdClass
+    {
+        $controler->inputs->select->dp_pais_id = $inputs->selects->dp_pais_id;
+        $controler->inputs->select->dp_estado_id = $inputs->selects->dp_estado_id;
+        $controler->inputs->select->dp_municipio_id = $inputs->selects->dp_municipio_id;
+        $controler->inputs->select->dp_cp_id = $inputs->selects->dp_cp_id;
+        $controler->inputs->select->dp_colonia_postal_id = $inputs->selects->dp_colonia_postal_id;
+        $controler->inputs->select->dp_calle_pertenece_id = $inputs->selects->dp_calle_pertenece_id;
+        return $controler->inputs->select;
     }
 
     /**
