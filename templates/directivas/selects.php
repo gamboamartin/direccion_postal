@@ -16,6 +16,14 @@ class selects {
         $this->error = new errores();
     }
 
+    /**
+     * Genera los inputs de direcciones de manera masiva
+     * @param html $html Html de controler
+     * @param PDO $link conexion a la base de datos
+     * @param stdClass $row registro en proceso
+     * @param stdClass $selects Conjunto de selects para la integracion
+     * @return array|stdClass
+     */
     public function direcciones(html $html, PDO $link, stdClass $row, stdClass $selects): array|stdClass
     {
         $tablas = array('dp_pais_id','dp_estado_id','dp_municipio_id','dp_cp_id','dp_colonia_postal_id',
