@@ -15,7 +15,7 @@ class dp_cp_html extends html_controler {
      * Genera un select de tipo cp
      * @param int $cols Numero de columnas en css
      * @param bool $con_registros si no con registros deja un select vacio
-     * @param int $id_selected Id seleccionado
+     * @param int|null $id_selected Id seleccionado
      * @param PDO $link conexion a la base de datos
      * @param array $filtro Filtro para obtencion de datos
      * @return array|string
@@ -24,7 +24,7 @@ class dp_cp_html extends html_controler {
      * @fecha 2022-08-03 17:15
      * @author mgamboa
      */
-    public function select_dp_cp_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+    public function select_dp_cp_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link,
                                     array $filtro = array()): array|string
     {
 
@@ -34,6 +34,9 @@ class dp_cp_html extends html_controler {
         }
         $modelo = new dp_cp($link);
 
+        if(is_null($id_selected)){
+            $id_selected = -1;
+        }
         $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
             modelo: $modelo, filtro: $filtro, label: 'CP');
         if(errores::$error){

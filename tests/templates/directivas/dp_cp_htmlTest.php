@@ -39,7 +39,7 @@ class dp_cp_htmlTest extends test {
 
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals("<div class='control-group col-sm-1'><label class='control-label' for='dp_cp_id'>CP</label><div class='controls'><select class='form-control selectpicker color-secondary dp_cp_id' id='dp_cp_id' name='dp_cp_id' ><option value=''  >Selecciona una opcion</option></select></div></div>",$resultado);
+        $this->assertEquals("<div class='control-group col-sm-1'><label class='control-label' for='dp_cp_id'>CP</label><div class='controls'><select class='form-control selectpicker color-secondary dp_cp_id' id='dp_cp_id' name='dp_cp_id'  ><option value=''  >Selecciona una opcion</option></select></div></div>",$resultado);
 
 
         errores::$error = false;

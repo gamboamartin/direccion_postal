@@ -38,7 +38,7 @@ class dp_pais_htmlTest extends test {
 
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals("<div class='control-group col-sm-1'><label class='control-label' for='dp_pais_id'>Pais</label><div class='controls'><select class='form-control selectpicker color-secondary dp_pais_id' id='dp_pais_id' name='dp_pais_id' ><option value=''  >Selecciona una opcion</option></select></div></div>",$resultado);
+        $this->assertEquals("<div class='control-group col-sm-1'><label class='control-label' for='dp_pais_id'>Pais</label><div class='controls'><select class='form-control selectpicker color-secondary dp_pais_id' id='dp_pais_id' name='dp_pais_id'  ><option value=''  >Selecciona una opcion</option></select></div></div>",$resultado);
 
 
         errores::$error = false;

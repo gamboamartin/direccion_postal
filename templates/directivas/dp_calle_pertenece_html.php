@@ -58,18 +58,22 @@ class dp_calle_pertenece_html extends html_controler {
     /**
      * @param int $cols Numero de columnas en css
      * @param bool $con_registros
-     * @param int $id_selected
+     * @param int|null $id_selected
      * @param PDO $link
      * @param array $filtro
      * @return array|string
      */
-    public function select_dp_calle_pertenece_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+    public function select_dp_calle_pertenece_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link,
                                                  array $filtro = array()): array|string
     {
 
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar cols', data: $valida);
+        }
+
+        if(is_null($id_selected)){
+            $id_selected = -1;
         }
 
         $select = $this->entre_calles(cols: $cols,con_registros:  $con_registros, filtro: $filtro,
