@@ -15,7 +15,7 @@ class dp_pais_html extends html_controler {
      * @param bool $con_registros si no con registros deja el select vacio
      * @param int|null $id_selected id para selected
      * @param PDO $link conexion a la base de datos
-     * @param array $filtro
+     * @param array $filtro Filtro de obtencion de datos
      * @return array|string
      * @version 0.120.26
      * @verfuncion 0.1.0
