@@ -8,16 +8,27 @@ use stdClass;
 class dp_calle_pertenece extends modelo{
     public function __construct(PDO $link){
         $tabla = __CLASS__;
-        $columnas = array($tabla=>false,'dp_colonia_postal'=>$tabla,'dp_calle'=>$tabla,'dp_cp'=>'dp_colonia_postal',
-            'dp_colonia'=>'dp_colonia_postal','dp_municipio'=>'dp_cp','dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado');
+        $columnas = array($tabla=>false);
         $campos_obligatorios[] = 'descripcion';
+        $campos_obligatorios[] = 'descripcion_select';
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas);
     }
 
-    public function objs_direcciones(int $dp_calle_pertenece_id): stdClass
+    /**
+     * Genera un objeto con todos los elementos de una calle como elemento atomico de domicilios a nivel datos
+     * @param int $dp_calle_pertenece_id Identificador de calle_pertenece
+     * @return stdClass|array $data->pais, $data->estado, $data->municipio, $data->cp, $data->colonia, $data->colonia_postal
+     * $data->calle, $data->calle_pertenece
+     * @version 0.115.8
+     */
+    public function objs_direcciones(int $dp_calle_pertenece_id): stdClass|array
     {
+        if($dp_calle_pertenece_id <=0){
+            return $this->error->error(mensaje: 'Error $dp_calle_pertenece_id debe ser mayor a 0',
+                data:  $dp_calle_pertenece_id);
+        }
         $dp_calle_pertenece = $this->registro(
             registro_id: $dp_calle_pertenece_id, columnas_en_bruto: true,retorno_obj: true);
         if(errores::$error){
@@ -62,7 +73,7 @@ class dp_calle_pertenece extends modelo{
         $dp_pais = (new dp_pais($this->link))->registro(registro_id: $dp_estado->dp_pais_id,
             columnas_en_bruto: true,retorno_obj: true);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al obtener estado',data:  $dp_pais);
+            return $this->error->error(mensaje: 'Error al obtener pais',data:  $dp_pais);
         }
 
         $data = new stdClass();

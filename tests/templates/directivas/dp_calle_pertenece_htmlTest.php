@@ -42,6 +42,7 @@ class dp_calle_pertenece_htmlTest extends test {
         $resultado = $dir->entre_calles(cols:$cols,con_registros: $con_registros,filtro:  $filtro,
             id_selected:  $id_selected,label:  'Entre Calle', link: $this->link,name:  $name);
 
+
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertStringContainsStringIgnoringCase("ss='control-group col-sm-1'><label class='control-label' for='dp_calle_pertenece_id'>Entre Calle</lab",$resultado);

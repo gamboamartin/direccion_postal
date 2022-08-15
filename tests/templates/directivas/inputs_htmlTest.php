@@ -33,6 +33,7 @@ class inputs_htmlTest extends test {
     {
         errores::$error = false;
         $_GET['session_id'] = 1;
+        $_SESSION['usuario_id'] = 2;
         $_GET['seccion'] = 'dp_estado';
 
         $inp = new inputs_html();
