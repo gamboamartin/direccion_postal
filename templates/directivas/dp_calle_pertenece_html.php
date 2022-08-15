@@ -45,6 +45,16 @@ class dp_calle_pertenece_html extends html_controler {
         return $select;
     }
 
+    /**
+     * Generea input a partir de la variable $div, la cual toma como valor un nuevo objeto de la clase inputs_html,
+     * y su función input que toma como referencias los valores de $cols, $row_upd, $value_vacio y $campo.
+     * En caso de que exista algún error, un if se encarga de capturar el error y mostrar sus respectivos datos.
+     * @param int $cols Numero de columnas css
+     * @param stdClass $row_upd registro en proceso
+     * @param bool $value_vacio Si vacio limpiar valores
+     * @param string $campo Nombre del campo para name
+     * @return array|string
+     */
     public function input(int $cols, stdClass $row_upd, bool $value_vacio, string $campo): array|string
     {
 
