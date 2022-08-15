@@ -56,6 +56,7 @@ class selects {
      * @param stdClass $row Registro en operacion
      * @param bool $disabled Si disabled deja el input deshabilitado
      * @return array|stdClass
+     * @version 0.114.8
      */
     public function dp_calle_pertenece_id(array $filtro, html $html, PDO $link, stdClass $row,
                                           bool $disabled = false): array|stdClass
@@ -493,9 +494,9 @@ class selects {
             return $this->error->error(mensaje: 'Error al generar objeto html',data:  $obj_html);
         }
 
-        $select = $this->genera_select(con_registros:$con_registros, filtro:$filtro,link: $link,
-            obj_html: $obj_html,row_: $row_,tabla: $tabla, key_id: $key_id, name_function: $name_funcion,
-            disabled: $disabled);
+        $select = $this->genera_select(con_registros: $con_registros, filtro: $filtro, link: $link,
+            obj_html: $obj_html, row_: $row_, tabla: $tabla, disabled: $disabled, key_id: $key_id,
+            name_function: $name_funcion);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 

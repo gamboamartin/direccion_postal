@@ -47,6 +47,60 @@ class selectsTest extends test {
 
     /**
      */
+    public function test_dp_calle_pertenece_id(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_estado';
+        $html = new html();
+        $dir = new selects();
+        //$dir = new liberator($dir);
+
+        $row = new stdClass();
+        $filtro =  array();
+        $link = $this->link;
+        $disabled = false;
+        $resultado = $dir->dp_calle_pertenece_id($filtro, $html, $link, $row,$disabled);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+
+        $this->assertEquals(-1,$resultado->row->dp_calle_pertenece_id);
+        $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-6'><label class='control-label' for='dp_calle_pertenece_id'>Calle</label><div class='controls'><se",$resultado->select);
+
+        errores::$error = false;
+
+        $row = new stdClass();
+        $filtro =  array();
+        $link = $this->link;
+        $disabled = true;
+        $resultado = $dir->dp_calle_pertenece_id($filtro, $html, $link, $row,$disabled);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+
+        $this->assertEquals(-1,$resultado->row->dp_calle_pertenece_id);
+        $this->assertStringContainsStringIgnoringCase("dp_calle_pertenece_id' id='dp_calle_pertenece_id' name='dp_calle_pertenece_id'  disabled",$resultado->select);
+
+
+        errores::$error = false;
+
+        $row = new stdClass();
+        $row->dp_calle_pertenece_id = 1;
+        $filtro =  array();
+        $link = $this->link;
+        $disabled = true;
+        $resultado = $dir->dp_calle_pertenece_id($filtro, $html, $link, $row,$disabled);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+
+        $this->assertEquals(1,$resultado->row->dp_calle_pertenece_id);
+        $this->assertStringContainsStringIgnoringCase("dp_calle_pertenece_id' id='dp_calle_pertenece_id' name='dp_calle_pertenece_id'  disabled",$resultado->select);
+
+
+        errores::$error = false;
+    }
+
+    /**
+     */
     public function test_dp_pais_id(): void
     {
         errores::$error = false;
