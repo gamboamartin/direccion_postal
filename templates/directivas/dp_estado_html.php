@@ -12,8 +12,9 @@ class dp_estado_html extends html_controler {
     /**
      * @param int $cols Columnas css
      * @param bool $con_registros si con registros asigna registros si no deja limpio el select
-     * @param int $id_selected Id seleccionado
+     * @param int|null $id_selected Id seleccionado
      * @param PDO $link Conexion a la bd
+     * @param bool $disabled Si disabled el input queda deshabilitado
      * @param array $filtro Filtro para la obtencion de registros
      * @return array|string
      * @version 0.59.7
@@ -22,7 +23,7 @@ class dp_estado_html extends html_controler {
      * @author mgamboa
      */
     public function select_dp_estado_id(int $cols, bool $con_registros,int|null $id_selected, PDO $link,
-                                        array $filtro = array()): array|string
+                                        bool $disabled = false, array $filtro = array()): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
         if(errores::$error){
@@ -34,7 +35,7 @@ class dp_estado_html extends html_controler {
             $id_selected = -1;
         }
         $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
-            modelo: $modelo, filtro: $filtro, label: 'Estado');
+            modelo: $modelo, disabled: $disabled, filtro: $filtro, label: 'Estado');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
