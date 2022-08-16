@@ -59,8 +59,7 @@ class selectsTest extends test {
         $row = new stdClass();
         $filtro =  array();
         $link = $this->link;
-        $disabled = false;
-        $resultado = $dir->dp_calle_pertenece_entre1_id($filtro, $html, $link, $row,$disabled);
+        $resultado = $dir->dp_calle_pertenece_entre1_id(filtro: $filtro,html:  $html, link: $link,row:  $row);
         $this->assertEquals(-1,$resultado->row->dp_calle_pertenece_id);
         $this->assertEquals(-1,$resultado->row->dp_calle_pertenece_entre1_id);
         $this->assertStringContainsStringIgnoringCase("' for='dp_calle_pertenece_entre1_id'>E",$resultado->select);
@@ -83,7 +82,7 @@ class selectsTest extends test {
         $filtro =  array();
         $link = $this->link;
         $disabled = false;
-        $resultado = $dir->dp_calle_pertenece_id($filtro, $html, $link, $row,$disabled);
+        $resultado = $dir->dp_calle_pertenece_id(filtro: $filtro,html:  $html, link: $link,row:  $row,disabled: $disabled);
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
 
@@ -96,7 +95,7 @@ class selectsTest extends test {
         $filtro =  array();
         $link = $this->link;
         $disabled = true;
-        $resultado = $dir->dp_calle_pertenece_id($filtro, $html, $link, $row,$disabled);
+        $resultado = $dir->dp_calle_pertenece_id(filtro: $filtro,html:  $html,link:  $link,row:  $row,disabled: $disabled);
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
 
@@ -111,7 +110,7 @@ class selectsTest extends test {
         $filtro =  array();
         $link = $this->link;
         $disabled = true;
-        $resultado = $dir->dp_calle_pertenece_id($filtro, $html, $link, $row,$disabled);
+        $resultado = $dir->dp_calle_pertenece_id(filtro: $filtro, html: $html, link: $link, row: $row,disabled: $disabled);
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
 
