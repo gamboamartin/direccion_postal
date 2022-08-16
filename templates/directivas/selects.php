@@ -217,6 +217,7 @@ class selects {
      * @param int $cols N columnas css
      * @param bool $disabled Si disabled deja el input deshabilitado
      * @return array|stdClass
+     * @version 0.125.8
      */
     public function dp_estado_id(array $filtro,html $html, PDO $link, stdClass $row, int $cols = 6,
                                  bool $disabled = false): array|stdClass

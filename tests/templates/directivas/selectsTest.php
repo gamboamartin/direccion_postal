@@ -121,6 +121,52 @@ class selectsTest extends test {
         errores::$error = false;
     }
 
+    public function test_dp_estado_id(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_estado';
+        $html = new html();
+        $dir = new selects();
+        //$dir = new liberator($dir);
+
+        $row = new stdClass();
+        $filtro =  array();
+        $link = $this->link;
+        $resultado = $dir->dp_calle_pertenece_entre1_id(filtro: $filtro,html:  $html, link: $link,row:  $row);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals(-1,$resultado->row->dp_calle_pertenece_id);
+        $this->assertEquals(-1,$resultado->row->dp_calle_pertenece_entre1_id);
+        $this->assertStringContainsStringIgnoringCase("e1_id'>Entre calle</label><div class='co",$resultado->select);
+
+        errores::$error = false;
+
+        $row = new stdClass();
+        $filtro =  array();
+        $link = $this->link;
+
+        $cols = 1;
+        $resultado = $dir->dp_calle_pertenece_entre1_id(filtro: $filtro,html:  $html, link: $link,row:  $row,cols: $cols );
+        $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-1'><l",$resultado->select);
+
+        errores::$error = false;
+
+        $row = new stdClass();
+        $filtro =  array();
+        $link = $this->link;
+
+        $cols = 1;
+        $disabled = true;
+        $resultado = $dir->dp_calle_pertenece_entre1_id(filtro: $filtro,html:  $html, link: $link,row:  $row,
+            cols: $cols , disabled: $disabled);
+
+        $this->assertStringContainsStringIgnoringCase("name='dp_calle_pertenece_entre1_id'  disabled><o",$resultado->select);
+
+
+        errores::$error = false;
+    }
+
     /**
      */
     public function test_dp_pais_id(): void
