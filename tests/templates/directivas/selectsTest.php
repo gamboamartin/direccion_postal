@@ -47,6 +47,29 @@ class selectsTest extends test {
 
     /**
      */
+    public function test_dp_calle_pertenece_entre1_id(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_estado';
+        $html = new html();
+        $dir = new selects();
+        //$dir = new liberator($dir);
+
+        $row = new stdClass();
+        $filtro =  array();
+        $link = $this->link;
+        $disabled = false;
+        $resultado = $dir->dp_calle_pertenece_entre1_id($filtro, $html, $link, $row,$disabled);
+        $this->assertEquals(-1,$resultado->row->dp_calle_pertenece_id);
+        $this->assertEquals(-1,$resultado->row->dp_calle_pertenece_entre1_id);
+        $this->assertStringContainsStringIgnoringCase("' for='dp_calle_pertenece_entre1_id'>E",$resultado->select);
+
+        errores::$error = false;
+    }
+
+    /**
+     */
     public function test_dp_calle_pertenece_id(): void
     {
         errores::$error = false;

@@ -87,6 +87,7 @@ class selects {
      * @param stdClass $row Registro en operacion
      * @param bool $disabled Si disabled deja el input deshabilitado
      * @return array|stdClass
+     * @version 0.123.8
      */
     public function dp_calle_pertenece_entre1_id(array $filtro,html $html, PDO $link, stdClass $row,
                                                  bool $disabled = false): array|stdClass
@@ -98,9 +99,9 @@ class selects {
         if(count($filtro) === 0){
             $con_registros = false;
         }
-        $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,link:  $link,
-            row: $row,tabla:  'dp_calle_pertenece',key_id:'dp_calle_pertenece_entre1_id' ,
-            name_funcion: 'select_dp_calle_pertenece_entre1_id', disabled: $disabled);
+        $data = $this->select_base(con_registros: $con_registros, filtro: $filtro, html: $html, link: $link,
+            row: $row, tabla: 'dp_calle_pertenece', disabled: $disabled,
+            key_id: 'dp_calle_pertenece_entre1_id', name_funcion: 'select_dp_calle_pertenece_entre1_id');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
