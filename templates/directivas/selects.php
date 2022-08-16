@@ -210,7 +210,7 @@ class selects {
 
     /**
      * Genera un select de tipo estado inicializado
-     * @param array $filtro
+     * @param array $filtro Filtro para obtencion de datos
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
@@ -230,7 +230,7 @@ class selects {
             $con_registros = false;
         }
         $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,
-            link:  $link, row: $row,tabla:  'dp_estado', disabled:$disabled);
+            link:  $link, row: $row,tabla:  'dp_estado', cols: $cols, disabled:$disabled);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
