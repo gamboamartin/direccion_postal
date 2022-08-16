@@ -31,6 +31,15 @@ class controlador_dp_colonia extends system {
 
     }
 
+    /**
+     * Función que obtiene los campos de dp_colonia por medio de un arreglo $keys con los nombres de dichos campos.
+     * La variable $salida llama a la función get_out con los parámetros $header, $keys y $ws.
+     * En caso de presentarse un error, un if se encarga de capturarlo y mostrar la información correspondiente.
+     * Finalmente se retorna la variable $salida.
+     * @param bool $header
+     * @param bool $ws
+     * @return array|stdClass
+     */
     public function get_colonia(bool $header, bool $ws = true): array|stdClass
     {
 
