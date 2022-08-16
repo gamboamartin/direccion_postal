@@ -117,7 +117,7 @@ class selects {
 
     /**
      * Genera un select de tipo estado inicializado
-     * @param array $filtro
+     * @param array $filtro Filtro con datos para obtencion de select
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
