@@ -325,6 +325,7 @@ class selects {
      * @param bool $disabled Si disabled el input queda deshablitado
      * @param string $key_id llave del identificador
      * @param string $name_function nombre de funcion para generacion de select
+     * @param stdClass $params Conjunto de parametros para select
      * @return array|string
      * @version 0.128..26
      * @verfuncion 0.1.0
@@ -333,7 +334,7 @@ class selects {
      */
     private function genera_select(bool $con_registros, array $filtro, PDO $link, html_controler $obj_html,
                                    stdClass $row_, string $tabla, bool $disabled = false, string $key_id = '',
-                                   string $name_function = ''): array|string
+                                   string $name_function = '', stdClass $params = new stdClass()): array|string
     {
         $tabla = trim($tabla);
         if($tabla === ''){
@@ -364,7 +365,9 @@ class selects {
             }
         }
 
-        $select = $obj_html->$name_function(cols: 6, con_registros:$con_registros, id_selected:$row_->$key_id,
+        $cols = $params->$name_function->cols ?? 6;
+
+        $select = $obj_html->$name_function(cols: $cols, con_registros:$con_registros, id_selected:$row_->$key_id,
             link: $link, filtro:$filtro, disabled:$disabled);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
