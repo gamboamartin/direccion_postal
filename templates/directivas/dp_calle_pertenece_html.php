@@ -38,7 +38,7 @@ class dp_calle_pertenece_html extends html_controler {
 
         $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
             modelo: $modelo, disabled: $disabled, filtro: $filtro, key_id: 'dp_calle_pertenece_id', label: $label,
-            name: $name);
+            name: $name, required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
