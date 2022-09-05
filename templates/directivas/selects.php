@@ -96,7 +96,7 @@ class selects {
      * @version 0.123.8
      */
     public function dp_calle_pertenece_entre1_id(array $filtro,html $html, PDO $link, stdClass $row, int $cols = 6,
-                                                 bool $disabled = false): array|stdClass
+                                                 bool $disabled = false, bool $required = false): array|stdClass
     {
         if(isset($row->dp_colonia_postal_id) && (int)$row->dp_colonia_postal_id !== -1){
             $filtro['dp_colonia_postal.id'] = $row->dp_colonia_postal_id;
@@ -107,7 +107,8 @@ class selects {
         }
         $data = $this->select_base(con_registros: $con_registros, filtro: $filtro, html: $html, link: $link,
             row: $row, tabla: 'dp_calle_pertenece', cols: $cols, disabled: $disabled,
-            key_id: 'dp_calle_pertenece_entre1_id', name_funcion: 'select_dp_calle_pertenece_entre1_id');
+            key_id: 'dp_calle_pertenece_entre1_id', name_funcion: 'select_dp_calle_pertenece_entre1_id',
+            required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -127,7 +128,7 @@ class selects {
      * @return array|stdClass
      */
     public function dp_calle_pertenece_entre2_id(array $filtro,html $html, PDO $link, stdClass $row, int $cols = 6,
-                                                 bool $disabled = false): array|stdClass
+                                                 bool $disabled = false, bool $required = false): array|stdClass
     {
         if(isset($row->dp_colonia_postal_id) && (int)$row->dp_colonia_postal_id !== -1){
             $filtro['dp_colonia_postal.id'] = $row->dp_colonia_postal_id;
@@ -138,7 +139,8 @@ class selects {
         }
         $data = $this->select_base(con_registros: $con_registros, filtro: $filtro, html: $html, link: $link,
             row: $row, tabla: 'dp_calle_pertenece', cols: $cols, disabled: $disabled,
-            key_id: 'dp_calle_pertenece_entre2_id', name_funcion: 'select_dp_calle_pertenece_entre2_id');
+            key_id: 'dp_calle_pertenece_entre2_id', name_funcion: 'select_dp_calle_pertenece_entre2_id',
+            required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -158,7 +160,7 @@ class selects {
      * @return array|stdClass
      */
     public function dp_colonia_postal_id(array $filtro,html $html, PDO $link, stdClass $row, int $cols = 6,
-                                         bool $disabled = false): array|stdClass
+                                         bool $disabled = false, bool $required = false): array|stdClass
     {
 
         if(isset($row->dp_cp_id) && (int)$row->dp_cp_id !== -1){
@@ -169,7 +171,7 @@ class selects {
             $con_registros = false;
         }
         $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,
-            link:  $link, row: $row,tabla:  'dp_colonia_postal', cols: $cols, disabled: $disabled);
+            link:  $link, row: $row,tabla:  'dp_colonia_postal', cols: $cols, disabled: $disabled, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -189,7 +191,7 @@ class selects {
      * @return array|stdClass
      */
     public function dp_cp_id(array $filtro,html $html, PDO $link, stdClass $row, int $cols = 6,
-                             bool $disabled = false): array|stdClass
+                             bool $disabled = false, bool $required = false): array|stdClass
     {
 
         if(isset($row->dp_municipio_id) && (int)$row->dp_municipio_id !== -1){
@@ -200,7 +202,7 @@ class selects {
             $con_registros = false;
         }
         $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,link:  $link,
-            row: $row,tabla:  'dp_cp', cols: $cols, disabled:$disabled);
+            row: $row,tabla:  'dp_cp', cols: $cols, disabled:$disabled, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -232,7 +234,7 @@ class selects {
             $con_registros = false;
         }
         $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,
-            link:  $link, row: $row,tabla:  'dp_estado', cols: $cols, disabled:$disabled);
+            link:  $link, row: $row,tabla:  'dp_estado', cols: $cols, disabled:$disabled, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -252,7 +254,7 @@ class selects {
      * @return array|stdClass
      */
     public function dp_municipio_id(array $filtro,html $html, PDO $link, stdClass $row, int $cols = 6,
-                                    bool $disabled = false): array|stdClass
+                                    bool $disabled = false, bool $required = false): array|stdClass
     {
 
         if(isset($row->dp_estado_id) && (int)$row->dp_estado_id !== -1){
@@ -264,7 +266,7 @@ class selects {
         }
 
         $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,link:  $link,
-            row: $row,tabla:  'dp_municipio', cols: $cols, disabled:$disabled);
+            row: $row,tabla:  'dp_municipio', cols: $cols, disabled:$disabled, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -292,7 +294,7 @@ class selects {
     {
 
         $data = $this->select_base(con_registros: true,filtro:$filtro,html: $html,
-            link:  $link, row: $row,tabla:  'dp_pais',cols: $cols, disabled: $disabled);
+            link:  $link, row: $row,tabla:  'dp_pais',cols: $cols, disabled: $disabled, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
