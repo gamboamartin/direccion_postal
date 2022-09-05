@@ -39,8 +39,9 @@ class selects {
             $filtro = array();
             $cols = $params->$key_id->cols ?? 6;
             $disabled = $params->$key_id->disabled ?? false;
+            $required = $params->$key_id->required ?? false;
             $data_select = $this->$key_id(filtro:$filtro,html: $html,link:  $link, row: $row, cols: $cols,
-                disabled:$disabled);
+                disabled:$disabled, required: $required);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al generar select en '.$key_id,data:  $data_select);
 
@@ -63,7 +64,7 @@ class selects {
      * @version 0.114.8
      */
     public function dp_calle_pertenece_id(array $filtro, html $html, PDO $link, stdClass $row, int $cols = 6,
-                                          bool $disabled = false): array|stdClass
+                                          bool $disabled = false, bool $required = false): array|stdClass
     {
         if(isset($row->dp_colonia_postal_id) && (int)$row->dp_colonia_postal_id !== -1){
             $filtro['dp_colonia_postal.id'] = $row->dp_colonia_postal_id;
@@ -74,7 +75,7 @@ class selects {
         }
 
         $data = $this->select_base(con_registros: $con_registros,filtro:$filtro, html: $html,link:  $link,
-            row: $row,tabla:  'dp_calle_pertenece', cols: $cols, disabled:$disabled);
+            row: $row,tabla:  'dp_calle_pertenece', cols: $cols, disabled:$disabled, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -220,7 +221,7 @@ class selects {
      * @version 0.125.8
      */
     public function dp_estado_id(array $filtro,html $html, PDO $link, stdClass $row, int $cols = 6,
-                                 bool $disabled = false): array|stdClass
+                                 bool $disabled = false, bool $required = false): array|stdClass
     {
 
         if(isset($row->dp_pais_id) && (int)$row->dp_pais_id !== -1){
@@ -287,7 +288,7 @@ class selects {
      * @author mgamboa
      */
     public function dp_pais_id(array $filtro,html $html, PDO $link, stdClass $row, int $cols = 6,
-                               bool $disabled = false): array|stdClass
+                               bool $disabled = false, bool $required = false): array|stdClass
     {
 
         $data = $this->select_base(con_registros: true,filtro:$filtro,html: $html,
@@ -347,7 +348,8 @@ class selects {
      */
     private function genera_select(bool $con_registros, array $filtro, PDO $link, html_controler $obj_html,
                                    stdClass $row_, string $tabla, int $cols = 6, bool $disabled = false,
-                                   string $key_id = '', string $name_function = ''): array|string
+                                   string $key_id = '', string $name_function = '',
+                                   bool $required = false): array|string
     {
         $tabla = trim($tabla);
         if($tabla === ''){
@@ -380,7 +382,7 @@ class selects {
 
 
         $select = $obj_html->$name_function(cols: $cols, con_registros:$con_registros, id_selected:$row_->$key_id,
-            link: $link, filtro:$filtro, disabled:$disabled);
+            link: $link, filtro:$filtro, disabled:$disabled, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
@@ -489,7 +491,7 @@ class selects {
      */
     private function select_base(bool $con_registros, array $filtro, html $html, PDO $link, stdClass $row,
                                  string $tabla, int $cols = 6, bool $disabled = false, string $key_id = '',
-                                 string $name_funcion = ''): array|stdClass
+                                 string $name_funcion = '', bool $required = false): array|stdClass
     {
 
         $tabla = trim($tabla);
@@ -512,7 +514,7 @@ class selects {
 
         $select = $this->genera_select(con_registros: $con_registros, filtro: $filtro, link: $link,
             obj_html: $obj_html, row_: $row_, tabla: $tabla, cols: $cols, disabled: $disabled, key_id: $key_id,
-            name_function: $name_funcion);
+            name_function: $name_funcion, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 

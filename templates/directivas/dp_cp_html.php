@@ -26,7 +26,8 @@ class dp_cp_html extends html_controler {
      * @author mgamboa
      */
     public function select_dp_cp_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link,
-                                    bool $disabled = false, array $filtro = array()): array|string
+                                    bool $disabled = false, array $filtro = array(),
+                                    bool $required = false): array|string
     {
 
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
@@ -39,7 +40,7 @@ class dp_cp_html extends html_controler {
             $id_selected = -1;
         }
         $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
-            modelo: $modelo, disabled: $disabled, filtro: $filtro, label: 'CP');
+            modelo: $modelo, disabled: $disabled, filtro: $filtro, label: 'CP', required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
