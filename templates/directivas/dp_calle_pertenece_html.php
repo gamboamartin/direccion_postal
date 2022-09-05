@@ -68,12 +68,13 @@ class dp_calle_pertenece_html extends html_controler {
     }
 
     /**
+     * Genera un select de tipo calle_pertenece
      * @param int $cols Numero de columnas en css
      * @param bool $con_registros Si cno con registros deja el select sin options
-     * @param int|null $id_selected
-     * @param PDO $link
-     * @param bool $disabled
-     * @param array $filtro
+     * @param int|null $id_selected Identificador para selected
+     * @param PDO $link Conexion a la base de datos
+     * @param bool $disabled Si disabled el input que da inactivo
+     * @param array $filtro Filtro para obtencion de datos via filtro and del modelo
      * @return array|string
      */
     public function select_dp_calle_pertenece_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link,

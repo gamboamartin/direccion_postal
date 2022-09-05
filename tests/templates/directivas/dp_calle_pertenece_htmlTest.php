@@ -68,6 +68,26 @@ class dp_calle_pertenece_htmlTest extends test {
         errores::$error = false;
     }
 
+    public function test_select_dp_calle_pertenece_id(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_estado';
+        $html = new html();
+        $dir = new dp_calle_pertenece_html($html);
+        //$dir = new liberator($dir);
+
+        $cols = 1;
+        $con_registros = true;
+        $id_selected = -1;
+
+        $resultado = $dir->select_dp_calle_pertenece_id($cols, $con_registros, $id_selected, $this->link);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertStringContainsStringIgnoringCase(" class='control-label' for='dp_calle_pertenece_id'>Calle</label><div class='contr",$resultado);
+        errores::$error = false;
+    }
+
 
 
 
