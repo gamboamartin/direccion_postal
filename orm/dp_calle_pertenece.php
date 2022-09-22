@@ -94,4 +94,25 @@ class dp_calle_pertenece extends modelo{
 
 
     }
+
+    public function id_predeterminado(): array|int
+    {
+        $filtro['dp_calle_pertenece.predeterminado'] = 'activo';
+
+        $r_dp_calle_pertenece = $this->filtro_and(filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener dp_calle_pertenece',data:  $r_dp_calle_pertenece);
+        }
+
+        if($r_dp_calle_pertenece->n_registros === 0){
+            return $this->error->error(mensaje: 'Error no existe calle_predeterminada',data:  $r_dp_calle_pertenece);
+        }
+        if($r_dp_calle_pertenece->n_registros > 1){
+            return $this->error->error(
+                mensaje: 'Error existe mas de una calle predeterminada',data:  $r_dp_calle_pertenece);
+        }
+
+        return (int) $r_dp_calle_pertenece->registros[0]['dp_calle_pertenece_id'];
+
+    }
 }
