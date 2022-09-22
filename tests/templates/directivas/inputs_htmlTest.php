@@ -22,9 +22,9 @@ class inputs_htmlTest extends test {
         parent::__construct($name, $data, $dataName);
         $this->errores = new errores();
         $this->paths_conf = new stdClass();
-        $this->paths_conf->generales = '/var/www/html/cat_sat/config/generales.php';
-        $this->paths_conf->database = '/var/www/html/cat_sat/config/database.php';
-        $this->paths_conf->views = '/var/www/html/cat_sat/config/views.php';
+        $this->paths_conf->generales = '/var/www/html/direccion_postal/config/generales.php';
+        $this->paths_conf->database = '/var/www/html/direccion_postal/config/database.php';
+        $this->paths_conf->views = '/var/www/html/direccion_postal/config/views.php';
     }
 
     /**

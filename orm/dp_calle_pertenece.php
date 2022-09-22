@@ -12,6 +12,8 @@ class dp_calle_pertenece extends modelo{
             'dp_colonia'=>'dp_colonia_postal','dp_municipio'=>'dp_cp','dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado');
         $campos_obligatorios[] = 'descripcion';
         $campos_obligatorios[] = 'descripcion_select';
+        $campos_obligatorios[] = 'dp_calle_id';
+        $campos_obligatorios[] = 'dp_colonia_postal_id';
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas);
