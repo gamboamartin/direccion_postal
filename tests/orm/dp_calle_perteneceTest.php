@@ -57,7 +57,7 @@ class dp_calle_perteneceTest extends test {
 
         $this->assertIsArray($resultado);
         $this->assertTrue(errores::$error);
-        $this->assertStringContainsStringIgnoringCase("Error no existe calle_predeterminada", $resultado['mensaje']);
+        $this->assertStringContainsStringIgnoringCase("Error no existe predeterminado", $resultado['mensaje']);
 
         errores::$error = false;
 

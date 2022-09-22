@@ -34,15 +34,6 @@ class dp_calle_pertenece extends modelo{
         return $r_alta_bd;
     }
 
-    private function existe_predeterminado(): bool|array
-    {
-        $filtro['dp_calle_pertenece.predeterminado'] = 'activo';
-        $existe = $this->existe(filtro: $filtro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al verificar si existe',data:  $existe);
-        }
-        return $existe;
-    }
 
     /**
      * Genera un objeto con todos los elementos de una calle como elemento atomico de domicilios a nivel datos
@@ -117,46 +108,7 @@ class dp_calle_pertenece extends modelo{
 
         return $data;
 
-
     }
 
-    /**
-     * Obtiene una calle predeterminada
-     * @return array|int
-     * @version 0.131.10
-     */
-    public function id_predeterminado(): array|int
-    {
-        $filtro['dp_calle_pertenece.predeterminado'] = 'activo';
 
-        $r_dp_calle_pertenece = $this->filtro_and(filtro: $filtro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al obtener dp_calle_pertenece',data:  $r_dp_calle_pertenece);
-        }
-
-        if($r_dp_calle_pertenece->n_registros === 0){
-            return $this->error->error(mensaje: 'Error no existe calle_predeterminada',data:  $r_dp_calle_pertenece);
-        }
-        if($r_dp_calle_pertenece->n_registros > 1){
-            return $this->error->error(
-                mensaje: 'Error existe mas de una calle predeterminada',data:  $r_dp_calle_pertenece);
-        }
-
-        return (int) $r_dp_calle_pertenece->registros[0]['dp_calle_pertenece_id'];
-
-    }
-
-    private function valida_predetermiando(): bool|array
-    {
-        if(isset($this->registro['predeterminado']) && $this->registro['predeterminado'] === 'activo'){
-            $existe = $this->existe_predeterminado();
-            if(errores::$error){
-                return $this->error->error(mensaje: 'Error al verificar si existe',data:  $existe);
-            }
-            if($existe){
-                return $this->error->error(mensaje: 'Error ya existe elemento predeterminado',data:  $this->registro);
-            }
-        }
-        return true;
-    }
 }
