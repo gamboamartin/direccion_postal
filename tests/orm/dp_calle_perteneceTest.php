@@ -30,8 +30,62 @@ class dp_calle_perteneceTest extends test {
         $this->paths_conf->views = '/var/www/html/cat_sat/config/views.php';
     }
 
-    /**
-     */
+    public function test_id_prederminado(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_estado';
+        $_SESSION['usuario_id'] = 1;
+        $modelo = new dp_calle_pertenece($this->link);
+
+        $del = (new base_test())->del_dp_calle(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al eliminar', $del);
+            print_r($error);
+            exit;
+        }
+
+        $alta = (new base_test())->alta_dp_calle_pertenece(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al insertar', $alta);
+            print_r($error);
+            exit;
+        }
+
+
+        $resultado = $modelo->id_predeterminado();
+
+        $this->assertIsArray($resultado);
+        $this->assertTrue(errores::$error);
+        $this->assertStringContainsStringIgnoringCase("Error no existe calle_predeterminada", $resultado['mensaje']);
+
+        errores::$error = false;
+
+        $del = (new base_test())->del_dp_calle(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al eliminar', $del);
+            print_r($error);
+            exit;
+        }
+
+        $alta = (new base_test())->alta_dp_calle_pertenece(link: $this->link, predeterminado: 'activo');
+        if(errores::$error){
+            $error = (new errores())->error('Error al insertar', $alta);
+            print_r($error);
+            exit;
+        }
+
+        $resultado = $modelo->id_predeterminado();
+        $this->assertIsInt($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals(1, $resultado);
+
+        errores::$error = false;
+
+
+    }
+
+
     public function test_objs_direcciones(): void
     {
         errores::$error = false;

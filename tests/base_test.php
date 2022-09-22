@@ -28,7 +28,7 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_calle_pertenece(PDO $link): array|\stdClass
+    public function alta_dp_calle_pertenece(PDO $link, string $predeterminado = 'inactivo'): array|\stdClass
     {
 
         $alta = $this->alta_dp_calle($link);
@@ -44,6 +44,7 @@ class base_test{
         $registro['descripcion_select'] = 1;
         $registro['dp_calle_id'] = 1;
         $registro['dp_colonia_postal_id'] = 1;
+        $registro['predeterminado'] = $predeterminado;
 
 
 

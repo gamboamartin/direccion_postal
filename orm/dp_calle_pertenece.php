@@ -95,6 +95,11 @@ class dp_calle_pertenece extends modelo{
 
     }
 
+    /**
+     * Obtiene una calle predeterminada
+     * @return array|int
+     * @version 0.131.10
+     */
     public function id_predeterminado(): array|int
     {
         $filtro['dp_calle_pertenece.predeterminado'] = 'activo';
