@@ -108,11 +108,26 @@ class base_test{
         return $del;
     }
 
-    public function del_dp_cp(PDO $link): array
+    public function del_dp_colonia_postal(PDO $link): array
     {
 
 
-        $del = $this->del($link, 'gamboamartin\\direccion_postal\\models\\dp_cp');
+        $del = $this->del($link, 'gamboamartin\\direccion_postal\\models\\dp_colonia_postal');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
+    public function del_dp_cp(PDO $link): array
+    {
+
+        $del = $this->del_dp_colonia_postal($link);
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+
+        $del = $this->del($link, 'gamboamartin\\direccion_postal\\models\\dp_colonia_postal');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
