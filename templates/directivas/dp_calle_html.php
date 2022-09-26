@@ -1,9 +1,9 @@
 <?php
 namespace html;
 
+use gamboamartin\direccion_postal\models\dp_calle;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
-use models\dp_calle;
 use PDO;
 
 

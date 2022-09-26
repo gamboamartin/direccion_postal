@@ -1,10 +1,10 @@
 <?php
 namespace html;
 
+use gamboamartin\direccion_postal\models\dp_calle_pertenece;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\template\directivas;
-use models\dp_calle_pertenece;
 use PDO;
 use stdClass;
 
@@ -21,6 +21,7 @@ class dp_calle_pertenece_html extends html_controler {
      * @param PDO $link conexion a base de datos
      * @param string $name name del input
      * @param bool $disabled Si disabled deja el input deshabilitado
+     * @param bool $required
      * @return array|string
      * @version 0.72.8
      * @verfuncion 0.1.0

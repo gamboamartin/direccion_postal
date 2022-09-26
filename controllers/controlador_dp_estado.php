@@ -9,13 +9,14 @@
 namespace controllers;
 
 use config\generales;
+use gamboamartin\direccion_postal\models\dp_estado;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template_1\html;
 use html\dp_estado_html;
 use html\dp_pais_html;
-use models\dp_estado;
+
 use PDO;
 use stdClass;
 

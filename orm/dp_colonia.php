@@ -1,11 +1,11 @@
 <?php
-namespace models;
+namespace gamboamartin\direccion_postal\models;
 use base\orm\modelo;
 use PDO;
 
 class dp_colonia extends modelo{
     public function __construct(PDO $link){
-        $tabla = __CLASS__;
+        $tabla = 'dp_colonia';
         $columnas = array($tabla=>false);
         $campos_obligatorios[] = 'descripcion';
 

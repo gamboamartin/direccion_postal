@@ -1,10 +1,10 @@
 <?php
 namespace html;
 
+use gamboamartin\direccion_postal\models\dp_municipio;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\template\directivas;
-use models\dp_municipio;
 use PDO;
 
 

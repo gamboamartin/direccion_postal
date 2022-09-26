@@ -8,11 +8,11 @@
  */
 namespace controllers;
 
+use gamboamartin\direccion_postal\models\dp_pais;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template_1\html;
 use html\dp_pais_html;
-use models\dp_pais;
 use PDO;
 use stdClass;
 

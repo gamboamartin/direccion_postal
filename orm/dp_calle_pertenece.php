@@ -1,5 +1,5 @@
 <?php
-namespace models;
+namespace gamboamartin\direccion_postal\models;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
@@ -7,7 +7,7 @@ use stdClass;
 
 class dp_calle_pertenece extends modelo{
     public function __construct(PDO $link){
-        $tabla = __CLASS__;
+        $tabla = 'dp_calle_pertenece';
         $columnas = array($tabla=>false,'dp_colonia_postal'=>$tabla,'dp_calle'=>$tabla,'dp_cp'=>'dp_colonia_postal',
             'dp_colonia'=>'dp_colonia_postal','dp_municipio'=>'dp_cp','dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado');
         $campos_obligatorios[] = 'descripcion';

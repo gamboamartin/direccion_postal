@@ -1,12 +1,11 @@
 <?php
-namespace tests\links\secciones;
+namespace gamboamartin\direccion_postal\tests\templates\directivas;
 
 use gamboamartin\errores\errores;
 use gamboamartin\template_1\html;
 use gamboamartin\test\liberator;
 use gamboamartin\test\test;
 use html\dp_calle_pertenece_html;
-use html\dp_estado_html;
 use stdClass;
 
 

@@ -14,9 +14,8 @@
         "psr-4": {
           "controllers\\": "controllers",
           "config\\": "config/",
-          "models\\": "orm",
-          "tests\\": "tests/",
-          "links\\": "links/",
+          "gamboamartin\\direccion_postal\\models\\": "orm",
+          "gamboamartin\\direccion_postal\\tests\\": "tests",
           "html\\": "templates/directivas/"
 
         }

@@ -1,11 +1,11 @@
 <?php
-namespace tests;
+namespace gamboamartin\direccion_postal\tests;
 use base\orm\modelo_base;
+use gamboamartin\direccion_postal\models\dp_calle;
+use gamboamartin\direccion_postal\models\dp_calle_pertenece;
+use gamboamartin\direccion_postal\models\dp_pais;
 use gamboamartin\errores\errores;
 
-use models\dp_calle;
-use models\dp_calle_pertenece;
-use models\dp_pais;
 use PDO;
 
 
@@ -90,7 +90,7 @@ class base_test{
             return (new errores())->error('Error al eliminar', $del);
         }
 
-        $del = $this->del($link, 'models\\dp_calle');
+        $del = $this->del($link, 'gamboamartin\\direccion_postal\\models\\dp_calle');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
@@ -101,7 +101,7 @@ class base_test{
     {
 
 
-        $del = $this->del($link, 'models\\dp_calle_pertenece');
+        $del = $this->del($link, 'gamboamartin\\direccion_postal\\models\\dp_calle_pertenece');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }

@@ -1,20 +1,12 @@
 <?php
-namespace tests\orm;
+namespace gamboamartin\direccion_postal\tests\orm;
 
+use gamboamartin\direccion_postal\models\dp_calle_pertenece;
+use gamboamartin\direccion_postal\tests\base_test;
 use gamboamartin\errores\errores;
 use gamboamartin\test\test;
-use JsonException;
-
-
-use models\dp_calle_pertenece;
-use models\dp_colonia;
-use models\dp_colonia_postal;
-use models\dp_cp;
-use models\dp_estado;
-use models\dp_municipio;
-use models\dp_pais;
 use stdClass;
-use tests\base_test;
+
 
 
 class dp_calle_perteneceTest extends test {

@@ -1,10 +1,10 @@
 <?php
 namespace html;
 
+use gamboamartin\direccion_postal\models\dp_estado;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\template_1\directivas;
-use models\dp_estado;
 use PDO;
 
 
@@ -16,6 +16,7 @@ class dp_estado_html extends html_controler {
      * @param PDO $link Conexion a la bd
      * @param bool $disabled Si disabled el input queda deshabilitado
      * @param array $filtro Filtro para la obtencion de registros
+     * @param bool $required
      * @return array|string
      * @version 0.59.7
      * @verfuncion 0.1.0

@@ -1,10 +1,10 @@
 <?php
 namespace html;
 
+use gamboamartin\direccion_postal\models\dp_colonia_postal;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\template\directivas;
-use models\dp_colonia_postal;
 use PDO;
 
 
@@ -18,6 +18,7 @@ class dp_colonia_postal_html extends html_controler {
      * @param PDO $link conexion a la base de datos
      * @param bool $disabled Si disabled el input queda deshabilitado
      * @param array $filtro filtro de registros
+     * @param bool $required
      * @return array|string
      * @version 0.63.7
      * @verfuncion 0.1.0

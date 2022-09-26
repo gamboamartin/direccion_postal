@@ -8,12 +8,12 @@
  */
 namespace controllers;
 
+use gamboamartin\direccion_postal\models\dp_calle;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template_1\html;
 use html\dp_calle_html;
-use models\dp_calle;
 use PDO;
 use stdClass;
 

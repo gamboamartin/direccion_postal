@@ -8,7 +8,7 @@
  */
 namespace controllers;
 
-use base\controller\salida_data;
+use gamboamartin\direccion_postal\models\dp_municipio;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
@@ -17,10 +17,8 @@ use html\dp_estado_html;
 use html\dp_municipio_html;
 use html\dp_pais_html;
 
-use models\dp_municipio;
 use PDO;
 use stdClass;
-use Throwable;
 
 class controlador_dp_municipio extends system {
 
