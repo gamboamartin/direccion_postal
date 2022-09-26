@@ -111,8 +111,23 @@ class base_test{
     public function del_dp_estado(PDO $link): array
     {
 
+        $del = $this->del_dp_municipio($link);
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
 
         $del = $this->del($link, 'gamboamartin\\direccion_postal\\models\\dp_estado');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
+    public function del_dp_municipio(PDO $link): array
+    {
+
+
+        $del = $this->del($link, 'gamboamartin\\direccion_postal\\models\\dp_municipio');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
