@@ -35,9 +35,10 @@ class controlador_dp_calle extends system {
      * La variable $salida llama a la función get_out con los parámetros $header, $keys y $ws.
      * En caso de presentarse un error, un if se encarga de capturarlo y mostrar la información correspondiente.
      * Finalmente se retorna la variable $salida.
-     * @param bool $header
-     * @param bool $ws
+     * @param bool $header si header da salida html
+     * @param bool $ws si ws da salida json
      * @return array|stdClass
+     * @version 0.139.10
      */
     public function get_calle(bool $header, bool $ws = true): array|stdClass
     {
