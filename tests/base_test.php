@@ -130,7 +130,7 @@ class base_test{
             return (new errores())->error('Error al eliminar', $del);
         }
 
-        $del = $this->del($link, 'gamboamartin\\direccion_postal\\models\\dp_colonia_postal');
+        $del = $this->del($link, 'gamboamartin\\direccion_postal\\models\\dp_cp');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
