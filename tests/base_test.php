@@ -108,6 +108,16 @@ class base_test{
         return $del;
     }
 
+    public function del_dp_pais(PDO $link): array
+    {
+
+        $del = $this->del($link, 'gamboamartin\\direccion_postal\\models\\dp_pais');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
 
 
 
