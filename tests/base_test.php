@@ -110,7 +110,10 @@ class base_test{
 
     public function del_dp_colonia_postal(PDO $link): array
     {
-
+        $del = $this->del_dp_calle_pertenece($link);
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
 
         $del = $this->del($link, 'gamboamartin\\direccion_postal\\models\\dp_colonia_postal');
         if(errores::$error){
