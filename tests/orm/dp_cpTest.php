@@ -2,6 +2,7 @@
 namespace gamboamartin\direccion_postal\tests\orm;
 
 use gamboamartin\direccion_postal\models\dp_calle_pertenece;
+use gamboamartin\direccion_postal\models\dp_cp;
 use gamboamartin\direccion_postal\tests\base_test;
 use gamboamartin\errores\errores;
 use gamboamartin\test\test;
@@ -9,7 +10,7 @@ use stdClass;
 
 
 
-class dp_calle_perteneceTest extends test {
+class dp_cpTest extends test {
     public errores $errores;
     private stdClass $paths_conf;
     public function __construct(?string $name = null, array $data = [], $dataName = '')
@@ -22,83 +23,37 @@ class dp_calle_perteneceTest extends test {
         $this->paths_conf->views = '/var/www/html/cat_sat/config/views.php';
     }
 
-    public function test_id_prederminado(): void
+    public function test_alta_bd(): void
     {
         errores::$error = false;
         $_GET['session_id'] = 1;
         $_GET['seccion'] = 'dp_estado';
         $_SESSION['usuario_id'] = 1;
-        $modelo = new dp_calle_pertenece($this->link);
+        $modelo = new dp_cp($this->link);
 
-        $del = (new base_test())->del_dp_calle(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
-
-        $del = (new base_test())->del_dp_cp(link: $this->link);
+        $del = (new base_test())->del_dp_pais(link: $this->link);
         if(errores::$error){
             $error  = (new errores())->error('Error al eliminar', $del);
             print_r($error);
             exit;
         }
 
-        $del = (new base_test())->del_dp_colonia(link: $this->link);
-        if(errores::$error){
-            $error  = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
 
-        $alta = (new base_test())->alta_dp_calle_pertenece(link: $this->link, cp_predeterminado: 'activo');
+        $alta = (new base_test())->alta_dp_municipio(
+            link: $this->link, estado_predeterminado: 'activo',pais_predeterminado: 'activo', predeterminado : 'activo');
         if(errores::$error){
-            $error = (new errores())->error('Error al insertar', $alta);
+            $error  = (new errores())->error('Error al insertar', $alta);
             print_r($error);
             exit;
         }
 
 
-        $resultado = $modelo->id_predeterminado();
+        $modelo->registro['codigo'] = '011250';
 
-        $this->assertIsArray($resultado);
-        $this->assertTrue(errores::$error);
-        $this->assertStringContainsStringIgnoringCase("Error no existe predeterminado", $resultado['mensaje']);
+        $resultado = $modelo->alta_bd();
 
-        errores::$error = false;
-
-        $del = (new base_test())->del_dp_calle(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
-
-        $del = (new base_test())->del_dp_cp(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
-
-        $del = (new base_test())->del_dp_colonia(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
-
-        $alta = (new base_test())->alta_dp_calle_pertenece(link: $this->link, cp_predeterminado: 'activo', predeterminado: 'activo');
-        if(errores::$error){
-            $error = (new errores())->error('Error al insertar', $alta);
-            print_r($error);
-            exit;
-        }
-
-        $resultado = $modelo->id_predeterminado();
-        $this->assertIsInt($resultado);
+        $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals(1, $resultado);
 
         errores::$error = false;
 
@@ -122,14 +77,14 @@ class dp_calle_perteneceTest extends test {
             exit;
         }
 
-        $del = (new base_test())->del_dp_cp($this->link);
+        $del = (new base_test())->del_dp_colonia($this->link);
         if(errores::$error){
             $error = (new errores())->error('Error al eliminar', $del);
             print_r($error);
             exit;
         }
 
-        $del = (new base_test())->del_dp_colonia($this->link);
+        $del = (new base_test())->del_dp_cp($this->link);
         if(errores::$error){
             $error = (new errores())->error('Error al eliminar', $del);
             print_r($error);
@@ -146,7 +101,7 @@ class dp_calle_perteneceTest extends test {
 
         errores::$error = false;
 
-        $alta = (new base_test())->alta_dp_calle_pertenece(link:$this->link, cp_predeterminado: 'activo');
+        $alta = (new base_test())->alta_dp_calle_pertenece(link: $this->link, cp_predeterminado: 'activo');
         if(errores::$error){
             $error = (new errores())->error('Error al insertar', $alta);
             print_r($error);

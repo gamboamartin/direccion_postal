@@ -3,10 +3,16 @@ namespace gamboamartin\direccion_postal\tests;
 use base\orm\modelo_base;
 use gamboamartin\direccion_postal\models\dp_calle;
 use gamboamartin\direccion_postal\models\dp_calle_pertenece;
+use gamboamartin\direccion_postal\models\dp_colonia;
+use gamboamartin\direccion_postal\models\dp_colonia_postal;
+use gamboamartin\direccion_postal\models\dp_cp;
+use gamboamartin\direccion_postal\models\dp_estado;
+use gamboamartin\direccion_postal\models\dp_municipio;
 use gamboamartin\direccion_postal\models\dp_pais;
 use gamboamartin\errores\errores;
 
 use PDO;
+use stdClass;
 
 
 class base_test{
@@ -28,10 +34,17 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_calle_pertenece(PDO $link, string $predeterminado = 'inactivo'): array|\stdClass
+    public function alta_dp_calle_pertenece(
+        PDO $link, string $cp_predeterminado = 'inactivo', string $predeterminado = 'inactivo'): array|\stdClass
     {
 
         $alta = $this->alta_dp_calle($link);
+        if(errores::$error){
+            return (new errores())->error('Error al dar de alta', $alta);
+
+        }
+
+        $alta = $this->alta_dp_colonia_postal(link: $link, cp_predeterminado: $cp_predeterminado );
         if(errores::$error){
             return (new errores())->error('Error al dar de alta', $alta);
 
@@ -55,12 +68,130 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_pais(PDO $link): array|\stdClass
+    public function alta_dp_colonia(PDO $link): array|\stdClass
+    {
+
+
+        $registro = array();
+        $registro['id'] = 1;
+        $registro['codigo'] = '0009999';
+        $registro['descripcion'] = '0009999';
+
+
+        $alta = (new dp_colonia($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+        }
+        return $alta;
+    }
+
+    public function alta_dp_colonia_postal(PDO $link, string $cp_predeterminado = 'inactivo'): array|\stdClass
+    {
+
+
+        $alta = $this->alta_dp_cp(link:$link, predeterminado :$cp_predeterminado);
+        if(errores::$error){
+            return (new errores())->error('Error al dar de alta', $alta);
+
+        }
+
+        $alta = $this->alta_dp_colonia(link:$link);
+        if(errores::$error){
+            return (new errores())->error('Error al dar de alta', $alta);
+
+        }
+
+        $registro = array();
+        $registro['id'] = 1;
+        $registro['codigo'] = 1;
+        $registro['descripcion'] = 1;
+        $registro['descripcion_select'] = 1;
+        $registro['dp_colonia_id'] = 1;
+
+        $alta = (new dp_colonia_postal($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+        }
+        return $alta;
+    }
+
+    public function alta_dp_cp(PDO $link, string $predeterminado = 'inactivo'): array|\stdClass
+    {
+
+
+        $registro = array();
+        $registro['id'] = 1;
+        $registro['codigo'] = '0009999';
+        $registro['predeterminado'] = $predeterminado;
+
+        $alta = (new dp_cp($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+        }
+        return $alta;
+    }
+
+    public function alta_dp_estado(
+        PDO $link, string $pais_predeterminado, string $predeterminado = 'inactivo'): array|\stdClass
+    {
+
+        $alta = $this->alta_dp_pais(link: $link, predeterminado: $pais_predeterminado);
+        if(errores::$error){
+            return (new errores())->error('Error al dar de alta', $alta);
+
+        }
+
+
+        $registro = array();
+        $registro['id'] = 1;
+        $registro['codigo'] = 1;
+        $registro['descripcion'] = 1;
+        $registro['descripcion_select'] = 1;
+        $registro['predeterminado'] = $predeterminado;
+
+
+
+        $alta = (new dp_estado($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+        }
+        return $alta;
+    }
+
+    public function alta_dp_municipio(
+        PDO $link, string $estado_predeterminado = 'inactivo', string $pais_predeterminado = 'inactivo',
+        string $predeterminado = 'inactivo'): array|stdClass
+    {
+
+        $alta = $this->alta_dp_estado(
+            link: $link,pais_predeterminado: $pais_predeterminado, predeterminado: $estado_predeterminado);
+        if(errores::$error){
+            return (new errores())->error('Error al dar de alta', $alta);
+
+        }
+
+
+        $registro = array();
+        $registro['id'] = 1;
+        $registro['codigo'] = 1;
+        $registro['descripcion'] = 1;
+        $registro['descripcion_select'] = 1;
+        $registro['predeterminado'] = $predeterminado;
+
+        $alta = (new dp_municipio($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+        }
+        return $alta;
+    }
+
+    public function alta_dp_pais(PDO $link, string $predeterminado = 'inactivo'): array|\stdClass
     {
         $registro = array();
         $registro['id'] = 1;
         $registro['codigo'] = 1;
         $registro['descripcion'] = 1;
+        $registro['predeterminado'] = $predeterminado;
 
 
 
@@ -102,6 +233,20 @@ class base_test{
 
 
         $del = $this->del($link, 'gamboamartin\\direccion_postal\\models\\dp_calle_pertenece');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
+    public function del_dp_colonia(PDO $link): array
+    {
+        $del = $this->del_dp_colonia_postal($link);
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+
+        $del = $this->del($link, 'gamboamartin\\direccion_postal\\models\\dp_colonia');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
