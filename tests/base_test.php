@@ -121,7 +121,7 @@ class base_test{
 
         $registro = array();
         $registro['id'] = 1;
-        $registro['codigo'] = '0009999';
+        $registro['codigo'] = '00099';
         $registro['predeterminado'] = $predeterminado;
 
         $alta = (new dp_cp($link))->alta_registro($registro);

@@ -48,7 +48,7 @@ class dp_cpTest extends test {
         }
 
 
-        $modelo->registro['codigo'] = '011250';
+        $modelo->registro['codigo'] = '01125';
 
         $resultado = $modelo->alta_bd();
 
