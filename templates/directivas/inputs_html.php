@@ -66,16 +66,21 @@ class inputs_html {
      * @param bool $value_vacio si vacio limpiar valores
      * @param string $campo Nombre del campo para name
      * @return array|string
+     * @version 0.148.10
      */
     public function input(int $cols, directivas $directivas, stdClass $row_upd, bool $value_vacio,
                           string $campo): array|string
     {
 
         if($cols<=0){
-            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
+            return $this->error->error(mensaje: 'Error cols debe ser mayor a 0', data: $cols);
         }
         if($cols>=13){
-            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
+            return $this->error->error(mensaje: 'Error cols debe ser menor o igual a  12', data: $cols);
+        }
+        $campo = trim($campo);
+        if($campo === ''){
+            return $this->error->error(mensaje: 'Error campo debe tener info', data: $campo);
         }
 
         $html =$directivas->input_text_required(disable: false,name: $campo,place_holder: $campo,

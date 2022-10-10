@@ -3,6 +3,7 @@ namespace tests\links\secciones;
 
 use controllers\controlador_dp_colonia;
 use gamboamartin\errores\errores;
+use gamboamartin\template\directivas;
 use gamboamartin\template_1\html;
 use gamboamartin\test\liberator;
 use gamboamartin\test\test;
@@ -54,6 +55,32 @@ class inputs_htmlTest extends test {
 
         errores::$error = false;
     }
+
+    /**
+     */
+    public function test_input(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_SESSION['usuario_id'] = 2;
+        $_GET['seccion'] = 'dp_estado';
+
+        $inp = new inputs_html();
+
+        $html = new html();
+        $cols = 3;
+        $directivas = new directivas($html);
+        $row_upd = new stdClass();
+        $value_vacio = false;
+        $campo = 'a';
+
+        $resultado = $inp->input($cols, $directivas, $row_upd, $value_vacio, $campo);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals("<div class='control-group col-sm-3'><label class='control-label' for='a'>a</label><div class='controls'><input type='text' name='a' value='' class='form-control'  required id='a' placeholder='a' /></div></div>",$resultado);
+        errores::$error = false;
+    }
+
 
 
 
