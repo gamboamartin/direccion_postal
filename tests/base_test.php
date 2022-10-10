@@ -35,7 +35,9 @@ class base_test{
     }
 
     public function alta_dp_calle_pertenece(
-        PDO $link, string $cp_predeterminado = 'inactivo', string $predeterminado = 'inactivo'): array|\stdClass
+        PDO $link, string $cp_predeterminado = 'inactivo', string $estado_predeterminado = 'inactivo',
+        string $municipio_predeterminado = 'inactivo', string $pais_predeterminado = 'inactivo',
+        string $predeterminado = 'inactivo'): array|\stdClass
     {
 
         $alta = $this->alta_dp_calle($link);
@@ -44,7 +46,9 @@ class base_test{
 
         }
 
-        $alta = $this->alta_dp_colonia_postal(link: $link, cp_predeterminado: $cp_predeterminado );
+        $alta = $this->alta_dp_colonia_postal(link: $link, cp_predeterminado: $cp_predeterminado,
+            estado_predeterminado : $estado_predeterminado, municipio_predeterminado: $municipio_predeterminado,
+            pais_predeterminado : $pais_predeterminado );
         if(errores::$error){
             return (new errores())->error('Error al dar de alta', $alta);
 
@@ -85,11 +89,16 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_colonia_postal(PDO $link, string $cp_predeterminado = 'inactivo'): array|\stdClass
+    public function alta_dp_colonia_postal(PDO $link, string $cp_predeterminado = 'inactivo',
+                                           string $estado_predeterminado = 'inactivo',
+                                           string $municipio_predeterminado = 'inactivo',
+                                           string $pais_predeterminado = 'inactivo'): array|\stdClass
     {
 
 
-        $alta = $this->alta_dp_cp(link:$link, predeterminado :$cp_predeterminado);
+        $alta = $this->alta_dp_cp(link:$link, estado_predeterminado: $estado_predeterminado,
+            municipio_predeterminado: $municipio_predeterminado, pais_predeterminado: $pais_predeterminado,
+            predeterminado :$cp_predeterminado);
         if(errores::$error){
             return (new errores())->error('Error al dar de alta', $alta);
 
@@ -115,9 +124,17 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_cp(PDO $link, string $predeterminado = 'inactivo'): array|\stdClass
+    public function alta_dp_cp(PDO $link, string $estado_predeterminado = 'inactivo',
+                               string $municipio_predeterminado = 'inactivo', string $pais_predeterminado = 'inactivo',
+                               string $predeterminado = 'inactivo'): array|\stdClass
     {
 
+        $alta = $this->alta_dp_municipio(link: $link, estado_predeterminado: $estado_predeterminado,
+            pais_predeterminado: $pais_predeterminado, predeterminado: $municipio_predeterminado);
+        if(errores::$error){
+            return (new errores())->error('Error al dar de alta', $alta);
+
+        }
 
         $registro = array();
         $registro['id'] = 1;

@@ -91,6 +91,13 @@ class dp_cpTest extends test {
             exit;
         }
 
+        $del = (new base_test())->del_dp_pais($this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al eliminar', $del);
+            print_r($error);
+            exit;
+        }
+
 
 
         $dp_calle_pertenece_id = 1;
@@ -101,7 +108,8 @@ class dp_cpTest extends test {
 
         errores::$error = false;
 
-        $alta = (new base_test())->alta_dp_calle_pertenece(link: $this->link, cp_predeterminado: 'activo');
+        $alta = (new base_test())->alta_dp_calle_pertenece(link: $this->link, cp_predeterminado: 'activo',
+            estado_predeterminado: 'activo', municipio_predeterminado: 'activo', pais_predeterminado: 'activo');
         if(errores::$error){
             $error = (new errores())->error('Error al insertar', $alta);
             print_r($error);
