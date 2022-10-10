@@ -52,9 +52,8 @@ class dp_calle_perteneceTest extends test {
             exit;
         }
 
-        $alta = (new base_test())->alta_dp_calle_pertenece(
-            link: $this->link, cp_predeterminado: 'activo', estado_predeterminado: 'activo',
-            municipio_predeterminado: 'activo', pais_predeterminado: 'activo');
+        $alta = (new base_test())->alta_dp_calle_pertenece(link: $this->link);
+
         if(errores::$error){
             $error = (new errores())->error('Error al insertar', $alta);
             print_r($error);
@@ -98,9 +97,7 @@ class dp_calle_perteneceTest extends test {
             exit;
         }
 
-        $alta = (new base_test())->alta_dp_calle_pertenece(link: $this->link, cp_predeterminado: 'activo',
-            estado_predeterminado: 'activo', municipio_predeterminado: 'activo', pais_predeterminado: 'activo',
-            predeterminado: 'activo');
+        $alta = (new base_test())->alta_dp_calle_pertenece(link: $this->link, predeterminado: 'activo');
         if(errores::$error){
             $error = (new errores())->error('Error al insertar', $alta);
             print_r($error);
@@ -165,8 +162,7 @@ class dp_calle_perteneceTest extends test {
 
         errores::$error = false;
 
-        $alta = (new base_test())->alta_dp_calle_pertenece(link:$this->link, cp_predeterminado: 'activo',
-            estado_predeterminado: 'activo', municipio_predeterminado: 'activo', pais_predeterminado: 'activo');
+        $alta = (new base_test())->alta_dp_calle_pertenece(link:$this->link);
         if(errores::$error){
             $error = (new errores())->error('Error al insertar', $alta);
             print_r($error);

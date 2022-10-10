@@ -17,12 +17,17 @@ use stdClass;
 
 class base_test{
 
-    public function alta_dp_calle(PDO $link): array|\stdClass
+    public function alta_dp_calle(PDO $link, int $id = 1, bool $predeterminado = false): array|\stdClass
     {
 
 
         $registro = array();
-        $registro['id'] = 1;
+
+        if($predeterminado){
+            $registro['predeterminado'] = 'activo';
+        }
+
+        $registro['id'] = $id;
         $registro['codigo'] = 1;
         $registro['descripcion'] = 1;
         $registro['descripcion_select'] = 1;
@@ -34,35 +39,73 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_calle_pertenece(
-        PDO $link, string $cp_predeterminado = 'inactivo', string $estado_predeterminado = 'inactivo',
-        string $municipio_predeterminado = 'inactivo', string $pais_predeterminado = 'inactivo',
-        string $predeterminado = 'inactivo'): array|\stdClass
+    public function alta_dp_calle_pertenece(PDO $link, int $dp_calle_id = -1, int $dp_colonia_postal_id = -1,
+                                            int $id = 1, bool $predeterminado = false): array|\stdClass
     {
 
-        $alta = $this->alta_dp_calle($link);
-        if(errores::$error){
-            return (new errores())->error('Error al dar de alta', $alta);
-
-        }
-
-        $alta = $this->alta_dp_colonia_postal(link: $link, cp_predeterminado: $cp_predeterminado,
-            estado_predeterminado : $estado_predeterminado, municipio_predeterminado: $municipio_predeterminado,
-            pais_predeterminado : $pais_predeterminado );
-        if(errores::$error){
-            return (new errores())->error('Error al dar de alta', $alta);
-
-        }
-
         $registro = array();
-        $registro['id'] = 1;
+
+        if($predeterminado){
+            $registro['predeterminado'] = 'activo';
+        }
+
+        if($dp_calle_id === -1) {
+
+            $alta = $this->alta_dp_calle(link:$link, predeterminado: true);
+            if(errores::$error){
+                return (new errores())->error('Error al dar de alta', $alta);
+
+            }
+
+        }
+        if($dp_calle_id > 0){
+            $registro['dp_calle_id'] = $dp_calle_id;
+
+            $existe = (new dp_calle($link))->existe_by_id(registro_id: $dp_calle_id);
+            if (errores::$error) {
+                return (new errores())->error('Error al validar si existe', $existe);
+            }
+
+            if(!$existe) {
+                $alta = $this->alta_dp_calle(link: $link, id: $dp_calle_id);
+                if (errores::$error) {
+                    return (new errores())->error('Error al dar de alta', $alta);
+                }
+            }
+
+        }
+
+        if($dp_colonia_postal_id === -1) {
+
+            $alta = $this->alta_dp_colonia_postal(link:$link, predeterminado: true);
+            if(errores::$error){
+                return (new errores())->error('Error al dar de alta', $alta);
+
+            }
+
+        }
+        if($dp_colonia_postal_id > 0){
+            $registro['dp_colonia_postal_id'] = $dp_colonia_postal_id;
+
+            $existe = (new dp_colonia_postal($link))->existe_by_id(registro_id: $dp_colonia_postal_id);
+            if (errores::$error) {
+                return (new errores())->error('Error al validar si existe', $existe);
+            }
+
+            if(!$existe) {
+                $alta = $this->alta_dp_colonia_postal(link: $link, id: $dp_colonia_postal_id);
+                if (errores::$error) {
+                    return (new errores())->error('Error al dar de alta', $alta);
+                }
+            }
+
+        }
+
+
+        $registro['id'] = $id;
         $registro['codigo'] = 1;
         $registro['descripcion'] = 1;
         $registro['descripcion_select'] = 1;
-        $registro['dp_calle_id'] = 1;
-        $registro['dp_colonia_postal_id'] = 1;
-        $registro['predeterminado'] = $predeterminado;
-
 
 
         $alta = (new dp_calle_pertenece($link))->alta_registro($registro);
@@ -72,12 +115,17 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_colonia(PDO $link): array|\stdClass
+    public function alta_dp_colonia(PDO $link, int $id = 1, bool $predeterminado = false): array|\stdClass
     {
 
 
         $registro = array();
-        $registro['id'] = 1;
+
+        if($predeterminado){
+            $registro['predeterminado'] = 'activo';
+        }
+
+        $registro['id'] = $id;
         $registro['codigo'] = '0009999';
         $registro['descripcion'] = '0009999';
 
@@ -89,33 +137,75 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_colonia_postal(PDO $link, string $cp_predeterminado = 'inactivo',
-                                           string $estado_predeterminado = 'inactivo',
-                                           string $municipio_predeterminado = 'inactivo',
-                                           string $pais_predeterminado = 'inactivo'): array|\stdClass
+    public function alta_dp_colonia_postal(PDO $link, int $id = 1, int $dp_colonia_id = -1, int $dp_cp_id = -1,
+                                           bool $predeterminado = false): array|\stdClass
     {
 
 
-        $alta = $this->alta_dp_cp(link:$link, estado_predeterminado: $estado_predeterminado,
-            municipio_predeterminado: $municipio_predeterminado, pais_predeterminado: $pais_predeterminado,
-            predeterminado :$cp_predeterminado);
-        if(errores::$error){
-            return (new errores())->error('Error al dar de alta', $alta);
-
-        }
-
-        $alta = $this->alta_dp_colonia(link:$link);
-        if(errores::$error){
-            return (new errores())->error('Error al dar de alta', $alta);
-
-        }
-
         $registro = array();
-        $registro['id'] = 1;
+
+        if($predeterminado){
+            $registro['predeterminado'] = 'activo';
+        }
+
+
+        if($dp_colonia_id === -1) {
+
+            $alta = $this->alta_dp_colonia(link:$link, predeterminado: true);
+            if(errores::$error){
+                return (new errores())->error('Error al dar de alta', $alta);
+
+            }
+
+        }
+        if($dp_colonia_id > 0){
+            $registro['dp_colonia_id'] = $dp_colonia_id;
+
+            $existe = (new dp_colonia($link))->existe_by_id(registro_id: $dp_colonia_id);
+            if (errores::$error) {
+                return (new errores())->error('Error al validar si existe', $existe);
+            }
+
+            if(!$existe) {
+                $alta = $this->alta_dp_colonia(link: $link, id: $dp_colonia_id);
+                if (errores::$error) {
+                    return (new errores())->error('Error al dar de alta', $alta);
+                }
+            }
+
+        }
+
+        if($dp_cp_id === -1) {
+
+            $alta = $this->alta_dp_cp(link:$link, predeterminado: true);
+            if(errores::$error){
+                return (new errores())->error('Error al dar de alta', $alta);
+
+            }
+
+        }
+        if($dp_cp_id > 0){
+            $registro['dp_cp_id'] = $dp_cp_id;
+
+            $existe = (new dp_cp($link))->existe_by_id(registro_id: $dp_cp_id);
+            if (errores::$error) {
+                return (new errores())->error('Error al validar si existe', $existe);
+            }
+
+            if(!$existe) {
+                $alta = $this->alta_dp_cp(link: $link, id: $dp_cp_id);
+                if (errores::$error) {
+                    return (new errores())->error('Error al dar de alta', $alta);
+                }
+            }
+
+        }
+
+
+        $registro['id'] = $id;
         $registro['codigo'] = 1;
         $registro['descripcion'] = 1;
         $registro['descripcion_select'] = 1;
-        $registro['dp_colonia_id'] = 1;
 
         $alta = (new dp_colonia_postal($link))->alta_registro($registro);
         if(errores::$error){
@@ -124,22 +214,43 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_cp(PDO $link, string $estado_predeterminado = 'inactivo',
-                               string $municipio_predeterminado = 'inactivo', string $pais_predeterminado = 'inactivo',
-                               string $predeterminado = 'inactivo'): array|\stdClass
+    public function alta_dp_cp(PDO $link, int $id = 1, int $dp_municipio_id = -1,
+                               bool $predeterminado = false): array|\stdClass
     {
 
-        $alta = $this->alta_dp_municipio(link: $link, estado_predeterminado: $estado_predeterminado,
-            pais_predeterminado: $pais_predeterminado, predeterminado: $municipio_predeterminado);
-        if(errores::$error){
-            return (new errores())->error('Error al dar de alta', $alta);
+        $registro = array();
+        if($predeterminado){
+            $registro['predeterminado'] = 'activo';
+        }
+
+        if($dp_municipio_id === -1) {
+            $alta = $this->alta_dp_municipio(link: $link, predeterminado: true);
+            if (errores::$error) {
+                return (new errores())->error('Error al dar de alta', $alta);
+
+            }
+        }
+        if($dp_municipio_id > 0){
+            $registro['dp_municipio_id'] = $dp_municipio_id;
+
+            $existe = (new dp_municipio($link))->existe_by_id(registro_id: $dp_municipio_id);
+            if (errores::$error) {
+                return (new errores())->error('Error al validar si existe', $existe);
+            }
+
+            if(!$existe) {
+                $alta = $this->alta_dp_municipio(link: $link, id: $dp_municipio_id);
+                if (errores::$error) {
+                    return (new errores())->error('Error al dar de alta', $alta);
+                }
+            }
 
         }
 
-        $registro = array();
-        $registro['id'] = 1;
+
+        $registro['id'] = $id;
         $registro['codigo'] = '00099';
-        $registro['predeterminado'] = $predeterminado;
+
 
         $alta = (new dp_cp($link))->alta_registro($registro);
         if(errores::$error){
@@ -148,25 +259,47 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_estado(
-        PDO $link, string $pais_predeterminado, string $predeterminado = 'inactivo'): array|\stdClass
+    public function alta_dp_estado(PDO $link, int $id = 1, int $dp_pais_id = -1, bool $predeterminado = false): array|\stdClass
     {
 
-        $alta = $this->alta_dp_pais(link: $link, predeterminado: $pais_predeterminado);
-        if(errores::$error){
-            return (new errores())->error('Error al dar de alta', $alta);
+
+        $registro = array();
+
+        if($dp_pais_id === -1) {
+            $alta = $this->alta_dp_pais(link: $link, predeterminado: true);
+            if (errores::$error) {
+                return (new errores())->error('Error al dar de alta', $alta);
+            }
+        }
+        if($dp_pais_id > 0){
+            $registro['dp_pais_id'] = $dp_pais_id;
+
+            $existe = (new dp_pais($link))->existe_by_id(registro_id: $dp_pais_id);
+            if (errores::$error) {
+                return (new errores())->error('Error al validar si existe', $existe);
+            }
+
+            if(!$existe) {
+                $alta = $this->alta_dp_pais(link: $link, id: $dp_pais_id);
+                if (errores::$error) {
+                    return (new errores())->error('Error al dar de alta', $alta);
+                }
+            }
 
         }
 
 
-        $registro = array();
-        $registro['id'] = 1;
+
+
+        if($predeterminado){
+            $registro['predeterminado'] = 'activo';
+        }
+
+
+        $registro['id'] = $id;
         $registro['codigo'] = 1;
         $registro['descripcion'] = 1;
         $registro['descripcion_select'] = 1;
-        $registro['predeterminado'] = $predeterminado;
-
-
 
         $alta = (new dp_estado($link))->alta_registro($registro);
         if(errores::$error){
@@ -175,25 +308,44 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_municipio(
-        PDO $link, string $estado_predeterminado = 'inactivo', string $pais_predeterminado = 'inactivo',
-        string $predeterminado = 'inactivo'): array|stdClass
-    {
+    public function alta_dp_municipio(PDO $link, int $dp_estado_id = -1, int $id = 1, bool $predeterminado = false): array|stdClass{
 
-        $alta = $this->alta_dp_estado(
-            link: $link,pais_predeterminado: $pais_predeterminado, predeterminado: $estado_predeterminado);
-        if(errores::$error){
-            return (new errores())->error('Error al dar de alta', $alta);
 
+        if($predeterminado){
+            $registro['predeterminado'] = 'activo';
+        }
+
+        if($dp_estado_id === -1) {
+            $alta = $this->alta_dp_estado(link: $link, predeterminado: true);
+            if (errores::$error) {
+                return (new errores())->error('Error al dar de alta', $alta);
+            }
         }
 
 
-        $registro = array();
-        $registro['id'] = 1;
+        if($dp_estado_id > 0) {
+            $registro['dp_estado_id'] = $dp_estado_id;
+
+            $existe = (new dp_estado($link))->existe_by_id(registro_id: $dp_estado_id);
+            if (errores::$error) {
+                return (new errores())->error('Error al validar si existe', $existe);
+            }
+
+            if(!$existe) {
+                $alta = $this->alta_dp_estado(link: $link, id: $dp_estado_id);
+                if (errores::$error) {
+                    return (new errores())->error('Error al dar de alta', $alta);
+                }
+            }
+        }
+
+
+
+        $registro['id'] = $id;
         $registro['codigo'] = 1;
         $registro['descripcion'] = 1;
         $registro['descripcion_select'] = 1;
-        $registro['predeterminado'] = $predeterminado;
+
 
         $alta = (new dp_municipio($link))->alta_registro($registro);
         if(errores::$error){
@@ -202,15 +354,16 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_pais(PDO $link, string $predeterminado = 'inactivo'): array|\stdClass
+    public function alta_dp_pais(PDO $link, int $id = 1, bool $predeterminado = false): array|\stdClass
     {
         $registro = array();
-        $registro['id'] = 1;
+        if($predeterminado){
+            $registro['predeterminado'] = 'activo';
+        }
+
+        $registro['id'] = $id;
         $registro['codigo'] = 1;
         $registro['descripcion'] = 1;
-        $registro['predeterminado'] = $predeterminado;
-
-
 
         $alta = (new dp_pais($link))->alta_registro($registro);
         if(errores::$error){
