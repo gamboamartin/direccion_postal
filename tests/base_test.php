@@ -11,26 +11,23 @@ use gamboamartin\direccion_postal\models\dp_municipio;
 use gamboamartin\direccion_postal\models\dp_pais;
 use gamboamartin\errores\errores;
 
+use gamboamartin\test\test;
 use PDO;
 use stdClass;
 
 
 class base_test{
 
-    public function alta_dp_calle(PDO $link, int $id = 1, bool $predeterminado = false): array|\stdClass
+    public function alta_dp_calle(PDO $link, string $codigo = '1', string $descripcion = '1', int $id = 1,
+                                  bool $predeterminado = false): array|\stdClass
     {
 
 
-        $registro = array();
-
-        if($predeterminado){
-            $registro['predeterminado'] = 'activo';
+        $registro = (new test())->registro(
+            codigo: $codigo,descripcion:  $descripcion,id:  $id,predeterminado:  $predeterminado);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al generar registro', data: $registro);
         }
-
-        $registro['id'] = $id;
-        $registro['codigo'] = 1;
-        $registro['descripcion'] = 1;
-        $registro['descripcion_select'] = 1;
 
         $alta = (new dp_calle($link))->alta_registro($registro);
         if(errores::$error){
@@ -39,14 +36,15 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_calle_pertenece(PDO $link, int $dp_calle_id = -1, int $dp_colonia_postal_id = -1,
-                                            int $id = 1, bool $predeterminado = false): array|\stdClass
+    public function alta_dp_calle_pertenece(PDO $link, string $codigo = '1',string $descripcion = '1',
+                                            int $dp_calle_id = -1, int $dp_colonia_postal_id = -1, int $id = 1,
+                                            bool $predeterminado = false): array|\stdClass
     {
 
-        $registro = array();
-
-        if($predeterminado){
-            $registro['predeterminado'] = 'activo';
+        $registro = (new test())->registro(
+            codigo: $codigo,descripcion:  $descripcion,id:  $id,predeterminado:  $predeterminado);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al generar registro', data: $registro);
         }
 
         if($dp_calle_id === -1) {
@@ -102,11 +100,6 @@ class base_test{
         }
 
 
-        $registro['id'] = $id;
-        $registro['codigo'] = 1;
-        $registro['descripcion'] = 1;
-        $registro['descripcion_select'] = 1;
-
 
         $alta = (new dp_calle_pertenece($link))->alta_registro($registro);
         if(errores::$error){
@@ -115,19 +108,16 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_colonia(PDO $link, int $id = 1, bool $predeterminado = false): array|\stdClass
+    public function alta_dp_colonia(PDO $link, string $codigo = '0009999', string $descripcion = '0009999',
+                                    int $id = 1, bool $predeterminado = false): array|\stdClass
     {
 
-
-        $registro = array();
-
-        if($predeterminado){
-            $registro['predeterminado'] = 'activo';
+        $registro = (new test())->registro(
+            codigo: $codigo,descripcion:  $descripcion,id:  $id,predeterminado:  $predeterminado);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al generar registro', data: $registro);
         }
 
-        $registro['id'] = $id;
-        $registro['codigo'] = '0009999';
-        $registro['descripcion'] = '0009999';
 
 
         $alta = (new dp_colonia($link))->alta_registro($registro);
@@ -137,15 +127,16 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_colonia_postal(PDO $link, int $id = 1, int $dp_colonia_id = -1, int $dp_cp_id = -1,
+    public function alta_dp_colonia_postal(PDO $link, string $codigo = '1', string $descripcion = '1',
+                                           int $dp_colonia_id = -1, int $dp_cp_id = -1, int $id = 1,
                                            bool $predeterminado = false): array|\stdClass
     {
 
 
-        $registro = array();
-
-        if($predeterminado){
-            $registro['predeterminado'] = 'activo';
+        $registro = (new test())->registro(
+            codigo: $codigo,descripcion:  $descripcion,id:  $id,predeterminado:  $predeterminado);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al generar registro', data: $registro);
         }
 
 
@@ -214,13 +205,14 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_cp(PDO $link, int $id = 1, int $dp_municipio_id = -1,
-                               bool $predeterminado = false): array|\stdClass
+    public function alta_dp_cp(PDO $link, string $codigo = '00099',string $descripcion = '00099' , int $dp_municipio_id = -1,
+                               int $id = 1, bool $predeterminado = false): array|\stdClass
     {
 
-        $registro = array();
-        if($predeterminado){
-            $registro['predeterminado'] = 'activo';
+        $registro = (new test())->registro(
+            codigo: $codigo,descripcion:  $descripcion,id:  $id,predeterminado:  $predeterminado);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al generar registro', data: $registro);
         }
 
         if($dp_municipio_id === -1) {
@@ -247,11 +239,6 @@ class base_test{
 
         }
 
-
-        $registro['id'] = $id;
-        $registro['codigo'] = '00099';
-
-
         $alta = (new dp_cp($link))->alta_registro($registro);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
@@ -259,11 +246,16 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_estado(PDO $link, int $id = 1, int $dp_pais_id = -1, bool $predeterminado = false): array|\stdClass
+    public function alta_dp_estado(PDO $link, string $codigo = '1', string $descripcion = '1', int $dp_pais_id = -1,
+                                   int $id = 1, bool $predeterminado = false): array|\stdClass
     {
 
 
-        $registro = array();
+        $registro = (new test())->registro(
+            codigo: $codigo,descripcion:  $descripcion,id:  $id,predeterminado:  $predeterminado);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al generar registro', data: $registro);
+        }
 
         if($dp_pais_id === -1) {
             $alta = $this->alta_dp_pais(link: $link, predeterminado: true);
@@ -289,18 +281,6 @@ class base_test{
         }
 
 
-
-
-        if($predeterminado){
-            $registro['predeterminado'] = 'activo';
-        }
-
-
-        $registro['id'] = $id;
-        $registro['codigo'] = 1;
-        $registro['descripcion'] = 1;
-        $registro['descripcion_select'] = 1;
-
         $alta = (new dp_estado($link))->alta_registro($registro);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
@@ -308,11 +288,14 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_municipio(PDO $link, int $dp_estado_id = -1, int $id = 1, bool $predeterminado = false): array|stdClass{
+    public function alta_dp_municipio(PDO $link, string $codigo = '1', string $descripcion = '1',
+                                      int $dp_estado_id = -1, int $id = 1, bool $predeterminado = false): array|stdClass{
 
 
-        if($predeterminado){
-            $registro['predeterminado'] = 'activo';
+        $registro = (new test())->registro(
+            codigo: $codigo,descripcion:  $descripcion,id:  $id,predeterminado:  $predeterminado);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al generar registro', data: $registro);
         }
 
         if($dp_estado_id === -1) {
@@ -340,13 +323,6 @@ class base_test{
         }
 
 
-
-        $registro['id'] = $id;
-        $registro['codigo'] = 1;
-        $registro['descripcion'] = 1;
-        $registro['descripcion_select'] = 1;
-
-
         $alta = (new dp_municipio($link))->alta_registro($registro);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
@@ -354,16 +330,15 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_pais(PDO $link, int $id = 1, bool $predeterminado = false): array|\stdClass
+    public function alta_dp_pais(PDO $link, string $codigo = '1', string $descripcion = '1', int $id = 1,
+                                 bool $predeterminado = false): array|\stdClass
     {
-        $registro = array();
-        if($predeterminado){
-            $registro['predeterminado'] = 'activo';
-        }
 
-        $registro['id'] = $id;
-        $registro['codigo'] = 1;
-        $registro['descripcion'] = 1;
+        $registro = (new test())->registro(
+            codigo: $codigo,descripcion:  $descripcion,id:  $id,predeterminado:  $predeterminado);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al generar registro', data: $registro);
+        }
 
         $alta = (new dp_pais($link))->alta_registro($registro);
         if(errores::$error){
