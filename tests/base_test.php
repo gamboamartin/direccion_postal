@@ -163,14 +163,35 @@ class base_test{
 
         if($dp_colonia_id === -1) {
 
-            $alta = $this->alta_dp_colonia(link:$link, predeterminado: true);
-            if(errores::$error){
-                return (new errores())->error('Error al dar de alta', $alta);
+            $existe = (new dp_colonia($link))->existe_by_id(registro_id: 1);
+            if (errores::$error) {
+                return (new errores())->error('Error al validar si existe', $existe);
 
+            }
+            if($existe){
+                $del = (new \gamboamartin\direccion_postal\tests\base_test())->del_dp_colonia(link: $link);
+                if (errores::$error) {
+                    return (new errores())->error('Error al eliminar', $del);
+                }
+            }
+
+            $existe = (new dp_colonia($link))->existe_predeterminado();
+            if (errores::$error) {
+                return (new errores())->error('Error al validar si existe', $existe);
+
+            }
+            if(!$existe) {
+
+                $alta = (new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_colonia(link: $link, predeterminado: true);
+                if (errores::$error) {
+                    return (new errores())->error('Error al dar de alta', $alta);
+
+                }
             }
 
         }
         if($dp_colonia_id > 0){
+
             $registro['dp_colonia_id'] = $dp_colonia_id;
 
             $existe = (new dp_colonia($link))->existe_by_id(registro_id: $dp_colonia_id);
@@ -179,7 +200,7 @@ class base_test{
             }
 
             if(!$existe) {
-                $alta = $this->alta_dp_colonia(link: $link, id: $dp_colonia_id);
+                $alta = (new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_colonia(link: $link, id: $dp_colonia_id);
                 if (errores::$error) {
                     return (new errores())->error('Error al dar de alta', $alta);
                 }
