@@ -49,17 +49,6 @@ class base_test{
 
         if($dp_calle_id === -1) {
 
-            $existe = (new dp_calle($link))->existe_by_id(registro_id: 1);
-            if (errores::$error) {
-                return (new errores())->error('Error al validar si existe', $existe);
-
-            }
-            if($existe){
-                $del = (new \gamboamartin\direccion_postal\tests\base_test())->del_dp_calle(link: $link);
-                if (errores::$error) {
-                    return (new errores())->error('Error al eliminar', $del);
-                }
-            }
 
             $existe = (new dp_calle($link))->existe_predeterminado();
             if (errores::$error) {
@@ -163,17 +152,6 @@ class base_test{
 
         if($dp_colonia_id === -1) {
 
-            $existe = (new dp_colonia($link))->existe_by_id(registro_id: 1);
-            if (errores::$error) {
-                return (new errores())->error('Error al validar si existe', $existe);
-
-            }
-            if($existe){
-                $del = (new \gamboamartin\direccion_postal\tests\base_test())->del_dp_colonia(link: $link);
-                if (errores::$error) {
-                    return (new errores())->error('Error al eliminar', $del);
-                }
-            }
 
             $existe = (new dp_colonia($link))->existe_predeterminado();
             if (errores::$error) {
@@ -210,17 +188,6 @@ class base_test{
 
         if($dp_cp_id === -1) {
 
-            $existe = (new dp_cp($link))->existe_by_id(registro_id: 1);
-            if (errores::$error) {
-                return (new errores())->error('Error al validar si existe', $existe);
-
-            }
-            if($existe){
-                $del = (new \gamboamartin\direccion_postal\tests\base_test())->del_dp_cp(link: $link);
-                if (errores::$error) {
-                    return (new errores())->error('Error al eliminar', $del);
-                }
-            }
 
             $existe = (new dp_cp($link))->existe_predeterminado();
             if (errores::$error) {
@@ -321,18 +288,7 @@ class base_test{
         }
 
         if($dp_pais_id === -1) {
-
-            $existe = (new dp_pais($link))->existe_by_id(registro_id: 1);
-            if (errores::$error) {
-                return (new errores())->error('Error al validar si existe', $existe);
-
-            }
-            if($existe){
-                $del = (new \gamboamartin\direccion_postal\tests\base_test())->del_dp_pais(link: $link);
-                if (errores::$error) {
-                    return (new errores())->error('Error al eliminar', $del);
-                }
-            }
+            
 
             $existe = (new dp_pais($link))->existe_predeterminado();
             if (errores::$error) {
