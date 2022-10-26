@@ -76,7 +76,9 @@ class dp_calle_pertenece_html extends html_controler {
      * @param PDO $link Conexion a la base de datos
      * @param bool $disabled Si disabled el input que da inactivo
      * @param array $filtro Filtro para obtencion de datos via filtro and del modelo
+     * @param bool $required Integra attr required html
      * @return array|string
+     * @version 1.157.10
      */
     public function select_dp_calle_pertenece_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link,
                                                  bool $disabled = false, array $filtro = array(),

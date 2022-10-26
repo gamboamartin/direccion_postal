@@ -288,7 +288,7 @@ class base_test{
         }
 
         if($dp_pais_id === -1) {
-            
+
 
             $existe = (new dp_pais($link))->existe_predeterminado();
             if (errores::$error) {

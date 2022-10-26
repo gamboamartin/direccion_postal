@@ -45,7 +45,7 @@ class dp_calle_pertenece_htmlTest extends test {
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertStringContainsStringIgnoringCase("ss='control-group col-sm-1'><label class='control-label' for='dp_calle_pertenece_id'>Entre Calle</lab",$resultado);
-        $this->assertStringContainsStringIgnoringCase("ass='form-control selectpicker color-secondary dp_calle_pertenece_id'",$resultado);
+        $this->assertStringContainsStringIgnoringCase("tenece_id'>Entre Calle</label><div class='controls'><se",$resultado);
 
         errores::$error = false;
         $_GET['session_id'] = 1;
@@ -62,7 +62,7 @@ class dp_calle_pertenece_htmlTest extends test {
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-1'><label class='control-label' for='xxx'",$resultado);
-        $this->assertStringContainsStringIgnoringCase(" color-secondary xxx' id='xxx' name='xxx'",$resultado);
+        $this->assertStringContainsStringIgnoringCase("='control-label' for='xxx'>xxx</label><div class",$resultado);
 
         errores::$error = false;
     }

@@ -100,7 +100,7 @@ class selectsTest extends test {
         $this->assertNotTrue(errores::$error);
 
         $this->assertEquals(-1,$resultado->row->dp_calle_pertenece_id);
-        $this->assertStringContainsStringIgnoringCase("dp_calle_pertenece_id' id='dp_calle_pertenece_id' name='dp_calle_pertenece_id'  disabled",$resultado->select);
+        $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-6'><label class='control-label' for='dp_calle_pertenece_id'>Calle</labe",$resultado->select);
 
 
         errores::$error = false;
@@ -115,7 +115,7 @@ class selectsTest extends test {
         $this->assertNotTrue(errores::$error);
 
         $this->assertEquals(1,$resultado->row->dp_calle_pertenece_id);
-        $this->assertStringContainsStringIgnoringCase("dp_calle_pertenece_id' id='dp_calle_pertenece_id' name='dp_calle_pertenece_id'  disabled",$resultado->select);
+        $this->assertStringContainsStringIgnoringCase("abel' for='dp_calle_pertenece_id'>Calle</label><div class='controls'><select",$resultado->select);
 
 
         errores::$error = false;

@@ -40,7 +40,7 @@ class dp_colonia_postal_htmlTest extends test {
 
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals("<div class='control-group col-sm-1'><label class='control-label' for='dp_colonia_postal_id'>Colonia</label><div class='controls'><select class='form-control selectpicker color-secondary dp_colonia_postal_id' id='dp_colonia_postal_id' name='dp_colonia_postal_id'  ><option value=''  >Selecciona una opcion</option></select></div></div>",$resultado);
+        $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-1'><label class='control-label' for='dp_colonia_postal_id'>Colonia</label><div class='controls'><select class='form-control selectpicker color-secondary  dp_colonia_postal_id' data-live-search=",$resultado);
 
 
         errores::$error = false;
