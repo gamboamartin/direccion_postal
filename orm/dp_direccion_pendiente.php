@@ -15,8 +15,6 @@ class dp_direccion_pendiente extends modelo{
         $campos_view['descripcion_municipio'] = array('type' => 'inputs');
         $campos_view['descripcion_cp'] = array('type' => 'inputs');
         $campos_view['descripcion_colonia'] = array('type' => 'inputs');
-        $campos_view['descripcion_colonia_postal'] = array('type' => 'inputs');
-        $campos_view['descripcion_calle'] = array('type' => 'inputs');
         $campos_view['descripcion_calle_pertenece'] = array('type' => 'inputs');
 
         parent::__construct(link: $link,tabla:  $tabla, columnas: $columnas, campos_view: $campos_view);
@@ -61,8 +59,6 @@ class dp_direccion_pendiente extends modelo{
             $this->registro['codigo'] .= $this->registro['descripcion_municipio'];
             $this->registro['codigo'] .= $this->registro['descripcion_cp'];
             $this->registro['codigo'] .= $this->registro['descripcion_colonia'];
-            $this->registro['codigo'] .= $this->registro['descripcion_colonia_postal'];
-            $this->registro['codigo'] .= $this->registro['descripcion_calle'];
             $this->registro['codigo'] .= $this->registro['descripcion_calle_pertenece'];
         }
 

@@ -33,8 +33,6 @@ class controlador_dp_direccion_pendiente extends system {
         $columns["dp_direccion_pendiente_descripcion_municipio"]["titulo"] = "Municipio";
         $columns["dp_direccion_pendiente_descripcion_cp"]["titulo"] = "CP";
         $columns["dp_direccion_pendiente_descripcion_colonia"]["titulo"] = "Colonia";
-        $columns["dp_direccion_pendiente_descripcion_colonia_postal"]["titulo"] = "Colonia Postal";
-        $columns["dp_direccion_pendiente_descripcion_calle"]["titulo"] = "Calle";
         $columns["dp_direccion_pendiente_descripcion_calle_pertenece"]["titulo"] = "Calle Pertenece";
 
         $datatables = new stdClass();
@@ -50,8 +48,6 @@ class controlador_dp_direccion_pendiente extends system {
         $this->asignar_propiedad(identificador:'descripcion_municipio', propiedades: ['place_holder'=> 'Municipio']);
         $this->asignar_propiedad(identificador:'descripcion_cp', propiedades: ['place_holder'=> 'CP']);
         $this->asignar_propiedad(identificador:'descripcion_colonia', propiedades: ['place_holder'=> 'Colonia']);
-        $this->asignar_propiedad(identificador:'descripcion_colonia_postal', propiedades: ['place_holder'=> 'Colonia Postal']);
-        $this->asignar_propiedad(identificador:'descripcion_calle', propiedades: ['place_holder'=> 'Calle']);
         $this->asignar_propiedad(identificador:'descripcion_calle_pertenece', propiedades: ['place_holder'=> 'Calle Pertenece']);
     }
 
