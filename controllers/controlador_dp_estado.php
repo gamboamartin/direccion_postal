@@ -83,7 +83,7 @@ class controlador_dp_estado extends system {
         }
 
         if ($salida->n_registros === 0){
-            $salida = (new dp_estado($this->link))->get_estado_default_id();
+            $salida = (new dp_estado($this->link))->get_estado_default();
             if(errores::$error){
                 return $this->retorno_error(mensaje: 'Error al obtener estado default',data:  $salida,header: $header,ws: $ws);
             }

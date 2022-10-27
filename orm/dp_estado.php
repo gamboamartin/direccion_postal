@@ -46,6 +46,17 @@ class dp_estado extends modelo{
 
     }
 
+    public function get_estado_default(): array|stdClass|int
+    {
+        $filtro["dp_estado.predeterminado"] = 'activo';
+        $registro = $this->filtro_and(filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener el estado predeterminado',data:  $registro);
+        }
+
+        return $registro;
+    }
+
     public function get_estado_default_id(): array|stdClass|int
     {
         $id_predeterminado = $this->id_predeterminado();
@@ -55,6 +66,8 @@ class dp_estado extends modelo{
 
         return (int)$id_predeterminado;
     }
+
+
 
 
 }
