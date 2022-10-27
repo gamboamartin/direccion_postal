@@ -46,5 +46,15 @@ class dp_estado extends modelo{
 
     }
 
+    public function get_estado_default_id(): array|stdClass|int
+    {
+        $id_predeterminado = $this->id_predeterminado();
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener el estado predeterminado',data:  $id_predeterminado);
+        }
+
+        return (int)$id_predeterminado;
+    }
+
 
 }

@@ -80,13 +80,16 @@ class controlador_dp_estado extends system {
         $salida = $this->get_out(header: $header,keys: $keys, ws: $ws);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
-
         }
 
+        if ($salida->n_registros === 0){
+            $salida = (new dp_estado($this->link))->get_estado_default_id();
+            if(errores::$error){
+                return $this->retorno_error(mensaje: 'Error al obtener estado default',data:  $salida,header: $header,ws: $ws);
+            }
+        }
 
         return $salida;
-
-
     }
 
     public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true,
