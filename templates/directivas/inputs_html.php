@@ -83,7 +83,7 @@ class inputs_html {
             return $this->error->error(mensaje: 'Error campo debe tener info', data: $campo);
         }
 
-        $html =$directivas->input_text_required(disable: false,name: $campo,place_holder: $campo,
+        $html =$directivas->input_text_required(disabled: false,name: $campo,place_holder: $campo,
             row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
