@@ -82,13 +82,6 @@ class controlador_dp_estado extends system {
             return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
         }
 
-        if ($salida->n_registros === 0){
-            $salida = (new dp_estado($this->link))->get_estado_default();
-            if(errores::$error){
-                return $this->retorno_error(mensaje: 'Error al obtener estado default',data:  $salida,header: $header,ws: $ws);
-            }
-        }
-
         return $salida;
     }
 
