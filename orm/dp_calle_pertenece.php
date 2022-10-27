@@ -63,6 +63,16 @@ class dp_calle_pertenece extends modelo{
         return $r_alta_bd;
     }
 
+    public function get_calle_pertenece_default_id(): array|stdClass|int
+    {
+        $id_predeterminado = $this->id_predeterminado();
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener el puesto predeterminado',data:  $id_predeterminado);
+        }
+
+        return (int)$id_predeterminado;
+    }
+
 
     /**
      * Genera un objeto con todos los elementos de una calle como elemento atomico de domicilios a nivel datos
