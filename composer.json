@@ -16,6 +16,7 @@
           "config\\": "config/",
           "gamboamartin\\direccion_postal\\models\\": "orm",
           "gamboamartin\\direccion_postal\\tests\\": "tests",
+          "gamboamartin\\direccion_postal\\src\\": "src",
           "html\\": "templates/directivas/"
 
         }
