@@ -11,9 +11,16 @@ class dp_colonia_postal extends modelo{
         $columnas = array($tabla=>false,'dp_cp'=>$tabla,'dp_colonia'=>$tabla,'dp_municipio'=>'dp_cp',
             'dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado');
         $campos_obligatorios[] = 'descripcion';
+        $campos_view['dp_pais_id'] = array('type' => 'selects', 'model' => new dp_pais($link));
+        $campos_view['dp_estado_id'] = array('type' => 'selects', 'model' => new dp_estado($link));
+        $campos_view['dp_municipio_id'] = array('type' => 'selects', 'model' => new dp_municipio($link));
+        $campos_view['dp_cp_id'] = array('type' => 'selects', 'model' => new dp_cp($link));
+        $campos_view['dp_colonia_id'] = array('type' => 'selects', 'model' => new dp_colonia($link));
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas);
+            columnas: $columnas,campos_view: $campos_view);
+
+        $this->NAMESPACE = __NAMESPACE__;
     }
 
     public function alta_bd(): array|stdClass
