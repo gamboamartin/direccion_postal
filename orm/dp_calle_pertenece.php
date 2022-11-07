@@ -15,8 +15,19 @@ class dp_calle_pertenece extends modelo{
         $campos_obligatorios[] = 'dp_calle_id';
         $campos_obligatorios[] = 'dp_colonia_postal_id';
 
+        $campos_obligatorios[] = 'descripcion';
+        $campos_view['dp_pais_id'] = array('type' => 'selects', 'model' => new dp_pais($link));
+        $campos_view['dp_estado_id'] = array('type' => 'selects', 'model' => new dp_estado($link));
+        $campos_view['dp_municipio_id'] = array('type' => 'selects', 'model' => new dp_municipio($link));
+        $campos_view['dp_cp_id'] = array('type' => 'selects', 'model' => new dp_cp($link));
+        $campos_view['dp_colonia_postal_id'] = array('type' => 'selects', 'model' => new dp_colonia_postal($link));
+        $campos_view['dp_calle_id'] = array('type' => 'selects', 'model' => new dp_calle($link));
+        $campos_view['georeferencia'] = array('type' => 'inputs');
+
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas);
+            columnas: $columnas,campos_view: $campos_view);
+
+        $this->NAMESPACE = __NAMESPACE__;
     }
 
     public function alta_bd(): array|stdClass
