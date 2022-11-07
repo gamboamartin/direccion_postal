@@ -22,12 +22,10 @@ class controlador_dp_pais extends system {
         $modelo = new dp_pais(link: $link);
         $html_base = new html();
         $html = new dp_pais_html(html: $html_base);
-        $obj_link = new links_menu($this->registro_id);
+        $obj_link = new links_menu(link: $link,registro_id:  $this->registro_id);
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Paises';
-
     }
-
 
 }
