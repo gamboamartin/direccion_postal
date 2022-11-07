@@ -25,7 +25,7 @@ class controlador_dp_direccion_pendiente extends system {
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
         $modelo = new dp_direccion_pendiente(link: $link);
         $html = new dp_direccion_pendiente_html(html: new html());
-        $obj_link = new links_menu($this->registro_id);
+        $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
 
         $columns["dp_direccion_pendiente_id"]["titulo"] = "Id";
         $columns["dp_direccion_pendiente_descripcion_pais"]["titulo"] = "Pais";
