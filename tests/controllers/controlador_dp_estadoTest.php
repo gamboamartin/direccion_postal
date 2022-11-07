@@ -29,6 +29,7 @@ class controlador_dp_estadoTest extends test {
         errores::$error = false;
         $_GET['session_id'] = 1;
         $_GET['seccion'] = 'dp_estado';
+        $_SESSION['grupo_id'] = 2;
         $ctl = new controlador_dp_estado(link: $this->link,paths_conf: $this->paths_conf);
 
         $_GET['pais_id'] = 1;

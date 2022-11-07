@@ -13,8 +13,12 @@ class dp_estado extends modelo{
         $campos_obligatorios[] = 'descripcion_select';
         $campos_obligatorios[] = 'dp_pais_id';
 
+        $campos_view['dp_pais_id'] = array('type' => 'selects', 'model' => new dp_pais($link));
+
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas);
+            columnas: $columnas,campos_view: $campos_view);
+
+        $this->NAMESPACE = __NAMESPACE__;
     }
 
     public function alta_bd(): array|stdClass
