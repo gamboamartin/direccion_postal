@@ -6,6 +6,7 @@ use PDO;
 use stdClass;
 
 class dp_cp extends modelo{
+
     public function __construct(PDO $link){
         $tabla = 'dp_cp';
         $columnas = array($tabla=>false,'dp_municipio'=>$tabla,'dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado');
@@ -15,12 +16,23 @@ class dp_cp extends modelo{
         $tipo_campos['codigo'] = 'cod_int_0_5_numbers';
         $tipo_campos['descripcion'] = 'cod_int_0_5_numbers';
 
+        $campos_view['dp_pais_id'] = array('type' => 'selects', 'model' => new dp_pais($link));
+        $campos_view['dp_estado_id'] = array('type' => 'selects', 'model' => new dp_estado($link));
+        $campos_view['dp_municipio_id'] = array('type' => 'selects', 'model' => new dp_municipio($link));
+        $campos_view['georeferencia'] = array('type' => 'inputs');
+
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas, tipo_campos: $tipo_campos);
+            columnas: $columnas,campos_view: $campos_view);
+
+        $this->NAMESPACE = __NAMESPACE__;
     }
 
     public function alta_bd(): array|stdClass
     {
+        if(isset($this->registro['dp_estado_id'])){
+            unset($this->registro['dp_estado_id']);
+        }
+
         if(!isset($this->registro['descripcion'])){
             $this->registro['descripcion'] = $this->registro['codigo'];
         }
@@ -48,5 +60,19 @@ class dp_cp extends modelo{
         }
 
         return $r_alta_bd;
+    }
+
+    public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
+    {
+        if(isset($registro['dp_estado_id'])){
+            unset($registro['dp_estado_id']);
+        }
+
+        $r_modifica_bd = parent::modifica_bd($registro, $id, $reactiva);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al modificar cp',data:  $r_modifica_bd);
+        }
+
+        return $r_modifica_bd;
     }
 }
