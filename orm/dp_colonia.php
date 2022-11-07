@@ -9,7 +9,11 @@ class dp_colonia extends modelo{
         $columnas = array($tabla=>false);
         $campos_obligatorios[] = 'descripcion';
 
+        $campos_view['georeferencia'] = array('type' => 'inputs');
+
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas);
+            columnas: $columnas,campos_view: $campos_view);
+
+        $this->NAMESPACE = __NAMESPACE__;
     }
 }
