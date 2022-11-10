@@ -45,6 +45,24 @@ class dp_estado extends modelo{
         return $r_alta_bd;
     }
 
+    private function campos_base(array $data): array
+    {
+        if(!isset($data['codigo_bis'])){
+            $data['codigo_bis'] =  $data['codigo'];
+        }
+
+        if(!isset($data['descripcion_select'])){
+            $ds = str_replace("_"," ",$data['descripcion']);
+            $ds = ucwords($ds);
+            $data['descripcion_select'] =  "{$data['codigo']} - {$ds}";
+        }
+
+        if(!isset($data['alias'])){
+            $data['alias'] = $data['codigo'];
+        }
+        return $data;
+    }
+
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
         $registro = $this->campos_base(data:$registro);
@@ -57,24 +75,6 @@ class dp_estado extends modelo{
             return $this->error->error(mensaje: 'Error al modificar estado',data:  $r_modifica_bd);
         }
         return $r_modifica_bd;
-    }
-
-    private function campos_base(array $data): array
-    {
-        if(!isset($data['codigo_bis'])){
-            $data['codigo_bis'] =  $data['codigo'];
-        }
-
-        if(!isset($data['descripcion_select'])){
-            $ds = ucwords($data['descripcion']);
-            $ds = str_replace("-"," ",$ds);
-            $data['descripcion_select'] =  "{$data['codigo']} - {$ds}";
-        }
-
-        if(!isset($data['alias'])){
-            $data['alias'] = $data['codigo'];
-        }
-        return $data;
     }
 
     public function get_estado_default(): array|stdClass|int

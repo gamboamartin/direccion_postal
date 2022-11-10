@@ -23,7 +23,6 @@ use stdClass;
 class controlador_dp_municipio extends system {
 
     public array $keys_selects = array();
-    public string $link_dp_estado_alta = "";
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
         $modelo = new dp_municipio(link: $link);
@@ -32,12 +31,9 @@ class controlador_dp_municipio extends system {
 
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
 
-
-
-
         $columns["dp_municipio_id"]["titulo"] = "Id";
-        $columns["dp_municipio_codigo"]["titulo"] = "Codigo";
-        $columns["dp_pais_descripcion"]["titulo"] = "Pais";
+        $columns["dp_municipio_codigo"]["titulo"] = "Código";
+        $columns["dp_pais_descripcion"]["titulo"] = "País";
         $columns["dp_estado_descripcion"]["titulo"] = "Estado";
         $columns["dp_municipio_descripcion"]["titulo"] = "Municipio";
 
@@ -54,13 +50,6 @@ class controlador_dp_municipio extends system {
         
         $this->titulo_lista = 'Municipio';
 
-        $links = $this->inicializa_links();
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al inicializar links',data:  $links);
-            print_r($error);
-            die('Error');
-        }
-
         $propiedades = $this->inicializa_priedades();
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al inicializar propiedades',data:  $propiedades);
@@ -71,7 +60,7 @@ class controlador_dp_municipio extends system {
 
     public function alta(bool $header, bool $ws = false): array|string
     {
-        $r_alta =  parent::alta(header: false, ws: false);
+        $r_alta =  parent::alta(header: false);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
         }
@@ -118,48 +107,6 @@ class controlador_dp_municipio extends system {
         return $data;
     }
 
-    private function inicializa_links(): array|string
-    {
-        $this->obj_link->genera_links($this);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al generar links para factura',data:  $this->obj_link);
-        }
-
-        $link = $this->obj_link->get_link("dp_estado","alta");
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al obtener link partida alta',data:  $link);
-        }
-        $this->link_dp_estado_alta = $link;
-
-        return $link;
-    }
-
-    private function inicializa_priedades(): array
-    {
-        $identificador = "dp_pais_id";
-        $propiedades = array("label" => "Pais");
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
-        $identificador = "dp_estado_id";
-        $propiedades = array("label" => "Estado");
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
-        return $this->keys_selects;
-    }
-
-    public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true,
-                             bool $muestra_btn = true): array|string
-    {
-        $base = $this->base();
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
-                header: $header,ws:$ws);
-        }
-
-        return $base->template;
-    }
-
-
     /**
      * Función que obtiene los campos de dp_pais, dp_estado y dp_municipio por medio de
      * un arreglo $keys con los nombres de sus respectivos campos.
@@ -183,5 +130,38 @@ class controlador_dp_municipio extends system {
 
         }
         return $salida;
+    }
+
+    private function inicializa_priedades(): array
+    {
+        $identificador = "dp_pais_id";
+        $propiedades = array("label" => "Pais");
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "dp_estado_id";
+        $propiedades = array("label" => "Estado", "con_registros" => false);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "codigo";
+        $propiedades = array("place_holder" => "Código", "cols" => 4);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "descripcion";
+        $propiedades = array("place_holder" => "Municipio", "cols" => 8);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        return $this->keys_selects;
+    }
+
+    public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true,
+                             bool $muestra_btn = true): array|string
+    {
+        $base = $this->base();
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
+                header: $header,ws:$ws);
+        }
+
+        return $base->template;
     }
 }
