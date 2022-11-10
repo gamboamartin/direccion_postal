@@ -35,7 +35,7 @@ class controlador_dp_cp extends system {
         $columns["dp_pais_descripcion"]["titulo"] = "Pais";
         $columns["dp_estado_descripcion"]["titulo"] = "Estado";
         $columns["dp_municipio_descripcion"]["titulo"] = "Municipio";
-        $columns["dp_cp_descripcion"]["titulo"] = "Municipio";
+        $columns["dp_cp_descripcion"]["titulo"] = "CP";
 
         $filtro = array("dp_cp.id","dp_cp.codigo","dp_cp.descripcion","dp_pais.descripcion",
             "dp_estado.descripcion","dp_municipio.descripcion");

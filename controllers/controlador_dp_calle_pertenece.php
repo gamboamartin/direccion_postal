@@ -34,14 +34,12 @@ class controlador_dp_calle_pertenece extends system {
         $columns["dp_pais_descripcion"]["titulo"] = "Pais";
         $columns["dp_estado_descripcion"]["titulo"] = "Estado";
         $columns["dp_municipio_descripcion"]["titulo"] = "Municipio";
-        $columns["dp_cp_descripcion"]["titulo"] = "CP";
         $columns["dp_colonia_postal_descripcion"]["titulo"] = "Colonia Postal";
-        $columns["dp_calle_descripcion"]["titulo"] = "Calle";
         $columns["dp_calle_pertenece_descripcion"]["titulo"] = "Calle Pertenece";
 
         $filtro = array("dp_calle_pertenece.id","dp_calle_pertenece.codigo","dp_calle_pertenece.descripcion",
             "dp_pais.descripcion", "dp_estado.descripcion","dp_municipio.descripcion","dp_cp.descripcion",
-            "dp_dp_colonia_postal.descripcion","dp_calle.descripcion");
+            "dp_colonia_postal.descripcion","dp_calle.descripcion");
 
         $datatables = new stdClass();
         $datatables->columns = $columns;

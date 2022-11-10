@@ -24,7 +24,19 @@ class controlador_dp_calle extends system {
         $html_base = new html();
         $html = new dp_calle_html(html: $html_base);
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
-        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
+
+        $columns["dp_calle_id"]["titulo"] = "Id";
+        $columns["dp_calle_codigo"]["titulo"] = "Código";
+        $columns["dp_calle_descripcion"]["titulo"] = "Calle";
+
+        $filtro = array("dp_calle.id","dp_calle.codigo","dp_calle.descripcion");
+
+        $datatables = new stdClass();
+        $datatables->columns = $columns;
+        $datatables->filtro = $filtro;
+
+        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
+            paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Calles';
 
