@@ -32,7 +32,7 @@ class controlador_dp_estado extends system {
         $obj_link = new links_menu(link: $link,registro_id:  $this->registro_id);
 
         $columns["dp_estado_id"]["titulo"] = "Id";
-        $columns["dp_estado_codigo"]["titulo"] = "Codigo";
+        $columns["dp_estado_codigo"]["titulo"] = "Código";
         $columns["dp_pais_descripcion"]["titulo"] = "Pais";
         $columns["dp_estado_descripcion"]["titulo"] = "Estado";
 
@@ -97,8 +97,7 @@ class controlador_dp_estado extends system {
             return $this->errores->error(mensaje: 'Error al generar template',data:  $r_modifica);
         }
 
-        $this->asignar_propiedad(identificador:'dp_pais_id', propiedades: ["id_selected"=>$this->row_upd->dp_pais_id,
-            "cols" => 12]);
+        $this->asignar_propiedad(identificador:'dp_pais_id', propiedades: ["id_selected"=>$this->row_upd->dp_pais_id]);
 
         $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
         if(errores::$error){
@@ -153,7 +152,15 @@ class controlador_dp_estado extends system {
     private function inicializa_priedades(): array
     {
         $identificador = "dp_pais_id";
-        $propiedades = array("label" => "Pais");
+        $propiedades = array("label" => "País");
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "codigo";
+        $propiedades = array("place_holder" => "Código");
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "descripcion";
+        $propiedades = array("place_holder" => "Estado", "cols" => 12);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         return $this->keys_selects;
