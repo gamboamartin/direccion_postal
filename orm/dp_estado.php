@@ -77,6 +77,16 @@ class dp_estado extends modelo{
         return $r_modifica_bd;
     }
 
+    public function get_estado(int $dp_estado_id): array|stdClass|int
+    {
+        $registro = $this->registro(registro_id: $dp_estado_id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener estado',data:  $registro);
+        }
+
+        return $registro;
+    }
+
     public function get_estado_default(): array|stdClass|int
     {
         $filtro["dp_estado.predeterminado"] = 'activo';
@@ -97,8 +107,5 @@ class dp_estado extends modelo{
 
         return (int)$id_predeterminado;
     }
-
-
-
 
 }

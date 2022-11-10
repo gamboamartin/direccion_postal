@@ -8,6 +8,7 @@
  */
 namespace controllers;
 
+use gamboamartin\direccion_postal\models\dp_estado;
 use gamboamartin\direccion_postal\models\dp_municipio;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
@@ -93,7 +94,19 @@ class controlador_dp_municipio extends system {
             return $this->errores->error(mensaje: 'Error al generar template',data:  $r_modifica);
         }
 
-        $this->asignar_propiedad(identificador:'dp_estado_id', propiedades: ["id_selected"=>$this->row_upd->dp_estado_id]);
+        $estado = (new dp_estado($this->link))->get_estado($this->row_upd->dp_estado_id);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener estado',data:  $estado);
+        }
+
+        $identificador = "dp_pais_id";
+        $propiedades = array("id_selected" => $estado['dp_pais_id']);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "dp_estado_id";
+        $propiedades = array("id_selected" => $this->row_upd->dp_estado_id, "con_registros" => true,
+            "filtro" => array('dp_pais.id' => $estado['dp_pais_id']));
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
         if(errores::$error){

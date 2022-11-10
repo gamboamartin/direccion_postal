@@ -31,6 +31,11 @@ class dp_municipio extends modelo{
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $this->registro);
         }
 
+        $this->registro = $this->limpia_campos(registro: $this->registro, campos_limpiar: array('dp_pais_id'));
+        if (errores::$error) {
+            return $this->error->error(mensaje: 'Error al limpiar campos', data: $this->registro);
+        }
+
         if(!isset($this->registro['dp_estado_id'])){
             $dp_estado_id = (new dp_estado($this->link))->id_predeterminado();
             if(errores::$error){
@@ -64,11 +69,26 @@ class dp_municipio extends modelo{
         return $data;
     }
 
+    private function limpia_campos(array $registro, array $campos_limpiar): array
+    {
+        foreach ($campos_limpiar as $valor) {
+            if (isset($registro[$valor])) {
+                unset($registro[$valor]);
+            }
+        }
+        return $registro;
+    }
+
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
         $registro = $this->campos_base(data:$registro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
+        }
+
+        $registro = $this->limpia_campos(registro: $registro, campos_limpiar: array('dp_pais_id'));
+        if (errores::$error) {
+            return $this->error->error(mensaje: 'Error al limpiar campos', data: $registro);
         }
 
         $r_modifica_bd = parent::modifica_bd($registro, $id, $reactiva);
