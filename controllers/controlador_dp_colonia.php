@@ -30,6 +30,7 @@ class controlador_dp_colonia extends system {
         $columns["dp_colonia_id"]["titulo"] = "Id";
         $columns["dp_colonia_codigo"]["titulo"] = "Codigo";
         $columns["dp_colonia_descripcion"]["titulo"] = "Colonia";
+        $columns["dp_colonia_georeferencia"]["titulo"] = "Georeferencia";
 
         $filtro = array("dp_colonia.id","dp_colonia.codigo","dp_colonia.descripcion");
 
@@ -80,7 +81,7 @@ class controlador_dp_colonia extends system {
 
     private function base(): array|stdClass
     {
-        $r_modifica =  parent::modifica(header: false,aplica_form:  false);
+        $r_modifica =  parent::modifica(header: false);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al generar template',data:  $r_modifica);
         }
@@ -121,6 +122,14 @@ class controlador_dp_colonia extends system {
 
     private function inicializa_priedades(): array
     {
+        $identificador = "codigo";
+        $propiedades = array("place_holder" => "Código", "cols" => 4);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "descripcion";
+        $propiedades = array("place_holder" => "Colonia", "cols" => 8);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
         $identificador = "georeferencia";
         $propiedades = array("place_holder" => "Georeferencia", "cols" => 12);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
@@ -129,7 +138,7 @@ class controlador_dp_colonia extends system {
     }
 
     public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true,
-                             bool $muestra_btn = true): array|string
+                             bool $muestra_btn = true): stdClass|array
     {
         $base = $this->base();
         if(errores::$error){
