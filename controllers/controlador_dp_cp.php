@@ -14,8 +14,6 @@ use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template_1\html;
 use html\dp_cp_html;
-use html\dp_estado_html;
-use html\dp_municipio_html;
 use PDO;
 use stdClass;
 
@@ -36,6 +34,7 @@ class controlador_dp_cp extends system {
         $columns["dp_estado_descripcion"]["titulo"] = "Estado";
         $columns["dp_municipio_descripcion"]["titulo"] = "Municipio";
         $columns["dp_cp_descripcion"]["titulo"] = "CP";
+        $columns["dp_cp_georeferencia"]["titulo"] = "Georeferencia";
 
         $filtro = array("dp_cp.id","dp_cp.codigo","dp_cp.descripcion","dp_pais.descripcion",
             "dp_estado.descripcion","dp_municipio.descripcion");
@@ -88,7 +87,7 @@ class controlador_dp_cp extends system {
 
     private function base(): array|stdClass
     {
-        $r_modifica =  parent::modifica(header: false,aplica_form:  false);
+        $r_modifica =  parent::modifica(header: false);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al generar template',data:  $r_modifica);
         }
@@ -136,27 +135,27 @@ class controlador_dp_cp extends system {
 
     private function inicializa_priedades(): array
     {
-        $identificador = "dp_pais_id";
-        $propiedades = array("label" => "Pais");
+        $identificador = "codigo";
+        $propiedades = array("place_holder" => "Código", "cols" => 4);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
-        $identificador = "dp_estado_id";
-        $propiedades = array("label" => "Estado");
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
-        $identificador = "dp_municipio_id";
-        $propiedades = array("label" => "Municipio");
+        $identificador = "descripcion";
+        $propiedades = array("place_holder" => "Dirección postal", "cols" => 8);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "georeferencia";
         $propiedades = array("place_holder" => "Georeferencia", "cols" => 12);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
+        $identificador = "dp_municipio_id";
+        $propiedades = array("label" => "Municipio");
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
         return $this->keys_selects;
     }
 
     public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true,
-                             bool $muestra_btn = true): array|string
+                             bool $muestra_btn = true): stdClass|array
     {
         $base = $this->base();
         if(errores::$error){
