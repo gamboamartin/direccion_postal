@@ -9,6 +9,7 @@
 namespace controllers;
 
 use gamboamartin\direccion_postal\models\dp_pais;
+use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template_1\html;
@@ -17,6 +18,8 @@ use PDO;
 use stdClass;
 
 class controlador_dp_pais extends system {
+
+    public array $keys_selects = array();
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
         $modelo = new dp_pais(link: $link);
@@ -38,6 +41,71 @@ class controlador_dp_pais extends system {
             paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Paises';
+
+        $propiedades = $this->inicializa_priedades();
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al inicializar propiedades',data:  $propiedades);
+            print_r($error);
+            die('Error');
+        }
+    }
+
+    public function alta(bool $header, bool $ws = false): array|string
+    {
+        $r_alta =  parent::alta(header: false, ws: false);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
+        }
+
+        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
+            print_r($error);
+            die('Error');
+        }
+
+        return $r_alta;
+    }
+
+    public function asignar_propiedad(string $identificador, mixed $propiedades)
+    {
+        if (!array_key_exists($identificador,$this->keys_selects)){
+            $this->keys_selects[$identificador] = new stdClass();
+        }
+
+        foreach ($propiedades as $key => $value){
+            $this->keys_selects[$identificador]->$key = $value;
+        }
+    }
+
+    private function inicializa_priedades(): array
+    {
+        $identificador = "codigo";
+        $propiedades = array("place_holder" => "Código", "cols" => 4);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "descripcion";
+        $propiedades = array("place_holder" => "País", "cols" => 8);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        return $this->keys_selects;
+    }
+
+    public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true, bool $muestra_btn = true): array|string|stdClass
+    {
+        $r_modifica =  parent::modifica(header: false, ws: false);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
+        }
+
+        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
+            print_r($error);
+            die('Error');
+        }
+
+        return $r_modifica;
     }
 
 }
