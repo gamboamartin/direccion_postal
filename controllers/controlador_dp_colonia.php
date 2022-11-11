@@ -28,11 +28,11 @@ class controlador_dp_colonia extends system {
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
 
         $columns["dp_colonia_id"]["titulo"] = "Id";
-        $columns["dp_colonia_codigo"]["titulo"] = "Codigo";
+        $columns["dp_colonia_codigo"]["titulo"] = "Código";
         $columns["dp_colonia_descripcion"]["titulo"] = "Colonia";
         $columns["dp_colonia_georeferencia"]["titulo"] = "Georeferencia";
 
-        $filtro = array("dp_colonia.id","dp_colonia.codigo","dp_colonia.descripcion");
+        $filtro = array("dp_colonia.id","dp_colonia.codigo","dp_colonia.descripcion","dp_colonia.georeferencia");
 
         $datatables = new stdClass();
         $datatables->columns = $columns;

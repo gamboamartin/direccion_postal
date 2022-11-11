@@ -9,6 +9,7 @@
 namespace controllers;
 
 use gamboamartin\direccion_postal\models\dp_cp;
+use gamboamartin\direccion_postal\models\dp_municipio;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
@@ -29,15 +30,15 @@ class controlador_dp_cp extends system {
         $obj_link = new links_menu(link: $link,registro_id:  $this->registro_id);
 
         $columns["dp_cp_id"]["titulo"] = "Id";
-        $columns["dp_cp_codigo"]["titulo"] = "Codigo";
-        $columns["dp_pais_descripcion"]["titulo"] = "Pais";
+        $columns["dp_cp_codigo"]["titulo"] = "Código";
+        $columns["dp_pais_descripcion"]["titulo"] = "País";
         $columns["dp_estado_descripcion"]["titulo"] = "Estado";
         $columns["dp_municipio_descripcion"]["titulo"] = "Municipio";
-        $columns["dp_cp_descripcion"]["titulo"] = "CP";
+        $columns["dp_cp_descripcion"]["titulo"] = "Código Postal";
         $columns["dp_cp_georeferencia"]["titulo"] = "Georeferencia";
 
         $filtro = array("dp_cp.id","dp_cp.codigo","dp_cp.descripcion","dp_pais.descripcion",
-            "dp_estado.descripcion","dp_municipio.descripcion");
+            "dp_estado.descripcion","dp_municipio.descripcion","dp_cp.georeferencia");
 
         $datatables = new stdClass();
         $datatables->columns = $columns;
@@ -46,7 +47,7 @@ class controlador_dp_cp extends system {
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
             paths_conf: $paths_conf);
 
-        $this->titulo_lista = 'Códigos Postáles';
+        $this->titulo_lista = 'Códigos Postales';
 
         $propiedades = $this->inicializa_priedades();
         if(errores::$error){
@@ -85,28 +86,6 @@ class controlador_dp_cp extends system {
         }
     }
 
-    private function base(): array|stdClass
-    {
-        $r_modifica =  parent::modifica(header: false);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al generar template',data:  $r_modifica);
-        }
-
-        $this->asignar_propiedad(identificador:'dp_municipio_id', propiedades:
-            ["id_selected" => $this->row_upd->dp_municipio_id]);
-
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializar inputs',data:  $inputs);
-        }
-
-        $data = new stdClass();
-        $data->template = $r_modifica;
-        $data->inputs = $inputs;
-
-        return $data;
-    }
-
     /**
      * Función que obtiene los campos de dp_pais, dp_estado, dp_municipio y dp_cp por medio de
      * un arreglo $keys con los nombres de sus respectivos campos.
@@ -135,34 +114,64 @@ class controlador_dp_cp extends system {
 
     private function inicializa_priedades(): array
     {
+        $identificador = "dp_pais_id";
+        $propiedades = array("label" => "Pais");
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "dp_estado_id";
+        $propiedades = array("label" => "Estado", "con_registros" => false);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "dp_municipio_id";
+        $propiedades = array("label" => "Municipio", "con_registros" => false);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
         $identificador = "codigo";
-        $propiedades = array("place_holder" => "Código", "cols" => 4);
+        $propiedades = array("place_holder" => "Código");
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "descripcion";
-        $propiedades = array("place_holder" => "Dirección postal", "cols" => 8);
+        $propiedades = array("place_holder" => "Código Postal", "cols" => 12);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "georeferencia";
         $propiedades = array("place_holder" => "Georeferencia", "cols" => 12);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
-        $identificador = "dp_municipio_id";
-        $propiedades = array("label" => "Municipio");
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
         return $this->keys_selects;
     }
 
-    public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true,
-                             bool $muestra_btn = true): stdClass|array
+    public function modifica(bool $header, bool $ws = false): array|stdClass
     {
-        $base = $this->base();
+        $r_modifica =  parent::modifica(header: false);
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
-                header: $header,ws:$ws);
+            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
         }
 
-        return $base->template;
+        $municipio = (new dp_municipio($this->link))->get_municipio($this->row_upd->dp_municipio_id);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener municipio',data:  $municipio);
+        }
+
+        $identificador = "dp_pais_id";
+        $propiedades = array("id_selected" => $municipio['dp_pais_id']);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "dp_estado_id";
+        $propiedades = array("id_selected" => $municipio['dp_estado_id'], "con_registros" => true,
+            "filtro" => array('dp_pais.id' => $municipio['dp_pais_id']));
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "dp_municipio_id";
+        $propiedades = array("id_selected" => $this->row_upd->dp_municipio_id, "con_registros" => true,
+            "filtro" => array('dp_estado.id' => $municipio['dp_estado_id']));
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al inicializar inputs',data:  $inputs);
+        }
+
+        return $r_modifica;
     }
 }

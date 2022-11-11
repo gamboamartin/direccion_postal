@@ -52,7 +52,7 @@ class controlador_dp_pais extends system {
 
     public function alta(bool $header, bool $ws = false): array|string
     {
-        $r_alta =  parent::alta(header: false, ws: false);
+        $r_alta =  parent::alta(header: false);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
         }
@@ -91,9 +91,9 @@ class controlador_dp_pais extends system {
         return $this->keys_selects;
     }
 
-    public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true, bool $muestra_btn = true): array|string|stdClass
+    public function modifica(bool $header, bool $ws = false): array|stdClass
     {
-        $r_modifica =  parent::modifica(header: false, ws: false);
+        $r_modifica =  parent::modifica(header: false);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
         }

@@ -23,7 +23,6 @@ class dp_colonia extends modelo{
 
     public function alta_bd(): array|stdClass
     {
-
         $this->registro = $this->campos_base(data:$this->registro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $this->registro);
@@ -43,7 +42,7 @@ class dp_colonia extends modelo{
         }
 
         if(!isset($data['descripcion_select'])){
-            $ds = str_replace("-"," ",$data['descripcion']);
+            $ds = str_replace("_"," ",$data['descripcion']);
             $ds = ucwords($ds);
             $data['descripcion_select'] =  "{$data['codigo']} - {$ds}";
         }
@@ -52,6 +51,16 @@ class dp_colonia extends modelo{
             $data['alias'] = $data['codigo'];
         }
         return $data;
+    }
+
+    public function get_colonia(int $dp_colonia_id): array|stdClass
+    {
+        $registro = $this->registro(registro_id: $dp_colonia_id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener colonia',data:  $registro);
+        }
+
+        return $registro;
     }
 
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass

@@ -49,7 +49,7 @@ class controlador_dp_municipio extends system {
             paths_conf: $paths_conf);
 
         
-        $this->titulo_lista = 'Municipio';
+        $this->titulo_lista = 'Municipios';
 
         $propiedades = $this->inicializa_priedades();
         if(errores::$error){
@@ -85,39 +85,6 @@ class controlador_dp_municipio extends system {
         foreach ($propiedades as $key => $value){
             $this->keys_selects[$identificador]->$key = $value;
         }
-    }
-
-    private function base(): array|stdClass
-    {
-        $r_modifica =  parent::modifica(header: false,aplica_form:  false);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al generar template',data:  $r_modifica);
-        }
-
-        $estado = (new dp_estado($this->link))->get_estado($this->row_upd->dp_estado_id);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al obtener estado',data:  $estado);
-        }
-
-        $identificador = "dp_pais_id";
-        $propiedades = array("id_selected" => $estado['dp_pais_id']);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
-        $identificador = "dp_estado_id";
-        $propiedades = array("id_selected" => $this->row_upd->dp_estado_id, "con_registros" => true,
-            "filtro" => array('dp_pais.id' => $estado['dp_pais_id']));
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializar inputs',data:  $inputs);
-        }
-
-        $data = new stdClass();
-        $data->template = $r_modifica;
-        $data->inputs = $inputs;
-
-        return $data;
     }
 
     /**
@@ -166,15 +133,32 @@ class controlador_dp_municipio extends system {
         return $this->keys_selects;
     }
 
-    public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true,
-                             bool $muestra_btn = true): array|string
+    public function modifica(bool $header, bool $ws = false): array|stdClass
     {
-        $base = $this->base();
+        $r_modifica =  parent::modifica(header: false);
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
-                header: $header,ws:$ws);
+            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
         }
 
-        return $base->template;
+        $estado = (new dp_estado($this->link))->get_estado($this->row_upd->dp_estado_id);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener estado',data:  $estado);
+        }
+
+        $identificador = "dp_pais_id";
+        $propiedades = array("id_selected" => $estado['dp_pais_id']);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "dp_estado_id";
+        $propiedades = array("id_selected" => $this->row_upd->dp_estado_id, "con_registros" => true,
+            "filtro" => array('dp_pais.id' => $estado['dp_pais_id']));
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al inicializar inputs',data:  $inputs);
+        }
+
+        return $r_modifica;
     }
 }

@@ -80,27 +80,6 @@ class controlador_dp_estado extends system {
         }
     }
 
-    private function base(): array|stdClass
-    {
-        $r_modifica =  parent::modifica(header: false,aplica_form:  false);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al generar template',data:  $r_modifica);
-        }
-
-        $this->asignar_propiedad(identificador:'dp_pais_id', propiedades: ["id_selected"=>$this->row_upd->dp_pais_id]);
-
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializar inputs',data:  $inputs);
-        }
-
-        $data = new stdClass();
-        $data->template = $r_modifica;
-        $data->inputs = $inputs;
-
-        return $data;
-    }
-
     /**
      * @param bool $header If header muestra directo en aplicacion
      * @param bool $ws If ws retorna un obj en forma JSON
@@ -140,14 +119,22 @@ class controlador_dp_estado extends system {
         return $this->keys_selects;
     }
 
-    public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true,
-                             bool $muestra_btn = true): array|string
+    public function modifica(bool $header, bool $ws = false): array|stdClass
     {
-        $base = $this->base();
+        $r_modifica =  parent::modifica(header: false);
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
-                header: $header,ws:$ws);
+            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
         }
-        return $base->template;
+
+        $this->asignar_propiedad(identificador:'dp_pais_id', propiedades: ["id_selected"=>$this->row_upd->dp_pais_id]);
+
+        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
+            print_r($error);
+            die('Error');
+        }
+
+        return $r_modifica;
     }
 }
