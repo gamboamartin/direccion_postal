@@ -19,6 +19,8 @@ use stdClass;
 
 class controlador_dp_calle extends system {
 
+    public array $keys_selects = array();
+
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
         $modelo = new dp_calle(link: $link);
         $html_base = new html();
@@ -40,6 +42,60 @@ class controlador_dp_calle extends system {
 
         $this->titulo_lista = 'Calles';
 
+        $propiedades = $this->inicializa_priedades();
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al inicializar propiedades',data:  $propiedades);
+            print_r($error);
+            die('Error');
+        }
+
+    }
+
+    public function alta(bool $header, bool $ws = false): array|string
+    {
+        $r_alta =  parent::alta(header: false, ws: false);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
+        }
+
+        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
+            print_r($error);
+            die('Error');
+        }
+
+        return $r_alta;
+    }
+
+    public function asignar_propiedad(string $identificador, mixed $propiedades)
+    {
+        if (!array_key_exists($identificador,$this->keys_selects)){
+            $this->keys_selects[$identificador] = new stdClass();
+        }
+
+        foreach ($propiedades as $key => $value){
+            $this->keys_selects[$identificador]->$key = $value;
+        }
+    }
+
+    private function base(): array|stdClass
+    {
+        $r_modifica =  parent::modifica(header: false);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar template',data:  $r_modifica);
+        }
+
+        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al inicializar inputs',data:  $inputs);
+        }
+
+        $data = new stdClass();
+        $data->template = $r_modifica;
+        $data->inputs = $inputs;
+
+        return $data;
     }
 
     /**
@@ -67,6 +123,31 @@ class controlador_dp_calle extends system {
         return $salida;
 
 
+    }
+
+    private function inicializa_priedades(): array
+    {
+        $identificador = "codigo";
+        $propiedades = array("place_holder" => "Código", "cols" => 4);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "descripcion";
+        $propiedades = array("place_holder" => "Calle", "cols" => 8);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        return $this->keys_selects;
+    }
+
+    public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true,
+                             bool $muestra_btn = true): stdClass|array
+    {
+        $base = $this->base();
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
+                header: $header,ws:$ws);
+        }
+
+        return $base->template;
     }
 
 
