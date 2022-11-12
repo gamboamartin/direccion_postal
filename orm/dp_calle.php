@@ -53,6 +53,16 @@ class dp_calle extends modelo{
         return $data;
     }
 
+    public function get_calle(int $dp_calle_id): array|stdClass
+    {
+        $registro = $this->registro(registro_id: $dp_calle_id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener calle',data:  $registro);
+        }
+
+        return $registro;
+    }
+
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
 

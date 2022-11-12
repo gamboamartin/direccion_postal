@@ -30,8 +30,8 @@ class controlador_dp_calle_pertenece extends system {
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
 
         $columns["dp_calle_pertenece_id"]["titulo"] = "Id";
-        $columns["dp_calle_pertenece_codigo"]["titulo"] = "Codigo";
-        $columns["dp_pais_descripcion"]["titulo"] = "Pais";
+        $columns["dp_calle_pertenece_codigo"]["titulo"] = "Código";
+        $columns["dp_pais_descripcion"]["titulo"] = "País";
         $columns["dp_estado_descripcion"]["titulo"] = "Estado";
         $columns["dp_municipio_descripcion"]["titulo"] = "Municipio";
         $columns["dp_colonia_postal_descripcion"]["titulo"] = "Colonia Postal";
@@ -88,7 +88,7 @@ class controlador_dp_calle_pertenece extends system {
 
     private function base(): array|stdClass
     {
-        $r_modifica =  parent::modifica(header: false,aplica_form:  false);
+        $r_modifica =  parent::modifica(header: false);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al generar template',data:  $r_modifica);
         }
@@ -144,7 +144,7 @@ class controlador_dp_calle_pertenece extends system {
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "dp_cp_id";
-        $propiedades = array("label" => "CP");
+        $propiedades = array("label" => "Código Postal");
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "dp_colonia_postal_id";

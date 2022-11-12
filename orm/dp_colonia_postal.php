@@ -95,6 +95,16 @@ class dp_colonia_postal extends modelo{
         return $data;
     }
 
+    public function get_colonia_postal(int $dp_colonia_postal_id): array|stdClass
+    {
+        $registro = $this->registro(registro_id: $dp_colonia_postal_id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener colonia',data:  $registro);
+        }
+
+        return $registro;
+    }
+
     private function limpia_campos(array $registro, array $campos_limpiar): array
     {
         foreach ($campos_limpiar as $valor) {
