@@ -37,7 +37,7 @@ class dp_colonia_postal extends _model_base {
 
         $r_alta_bd = parent::alta_bd();
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al  insertar municipio',data:  $r_alta_bd);
+            return $this->error->error(mensaje: 'Error al  insertar colonia postal',data:  $r_alta_bd);
         }
         return $r_alta_bd;
     }
