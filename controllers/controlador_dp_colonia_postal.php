@@ -83,30 +83,6 @@ class controlador_dp_colonia_postal extends system {
         }
     }
 
-    private function base(): array|stdClass
-    {
-        $r_modifica =  parent::modifica(header: false,aplica_form:  false);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al generar template',data:  $r_modifica);
-        }
-
-        $this->asignar_propiedad(identificador:'dp_cp_id', propiedades:
-            ["id_selected" => $this->row_upd->dp_cp_id]);
-        $this->asignar_propiedad(identificador:'dp_colonia_id', propiedades:
-            ["id_selected" => $this->row_upd->dp_colonia_id]);
-
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializar inputs',data:  $inputs);
-        }
-
-        $data = new stdClass();
-        $data->template = $r_modifica;
-        $data->inputs = $inputs;
-
-        return $data;
-    }
-
     /**
      * Función que obtiene los campos de dp_colonia, dp_pais, dp_estado, dp_municipio y dp_cp por medio de
      * un arreglo $keys con los nombres de sus respectivos campos.
@@ -119,7 +95,6 @@ class controlador_dp_colonia_postal extends system {
      */
     public function get_colonia_postal(bool $header, bool $ws = true): array|stdClass
     {
-
         $keys['dp_colonia'] = array('id','descripcion','codigo','codigo_bis');
         $keys['dp_pais'] = array('id','descripcion','codigo','codigo_bis');
         $keys['dp_estado'] = array('id','descripcion','codigo','codigo_bis');
@@ -131,11 +106,7 @@ class controlador_dp_colonia_postal extends system {
             return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
 
         }
-
-
         return $salida;
-
-
     }
 
     private function inicializa_priedades(): array

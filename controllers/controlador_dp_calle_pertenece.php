@@ -9,13 +9,12 @@
 namespace controllers;
 
 use gamboamartin\direccion_postal\models\dp_calle_pertenece;
+use gamboamartin\direccion_postal\models\dp_colonia_postal;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template_1\html;
-use html\dp_calle_html;
 use html\dp_calle_pertenece_html;
-use html\dp_colonia_postal_html;
 use PDO;
 use stdClass;
 
@@ -35,11 +34,11 @@ class controlador_dp_calle_pertenece extends system {
         $columns["dp_estado_descripcion"]["titulo"] = "Estado";
         $columns["dp_municipio_descripcion"]["titulo"] = "Municipio";
         $columns["dp_colonia_postal_descripcion"]["titulo"] = "Colonia Postal";
-        $columns["dp_calle_pertenece_descripcion"]["titulo"] = "Calle Pertenece";
+        $columns["dp_calle_pertenece_descripcion"]["titulo"] = "Calle";
 
         $filtro = array("dp_calle_pertenece.id","dp_calle_pertenece.codigo","dp_calle_pertenece.descripcion",
-            "dp_pais.descripcion", "dp_estado.descripcion","dp_municipio.descripcion","dp_cp.descripcion",
-            "dp_colonia_postal.descripcion","dp_calle.descripcion");
+            "dp_pais.descripcion", "dp_estado.descripcion","dp_municipio.descripcion",
+            "dp_colonia_postal.descripcion");
 
         $datatables = new stdClass();
         $datatables->columns = $columns;
@@ -60,7 +59,7 @@ class controlador_dp_calle_pertenece extends system {
 
     public function alta(bool $header, bool $ws = false): array|string
     {
-        $r_alta =  parent::alta(header: false, ws: false);
+        $r_alta =  parent::alta(header: false);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
         }
@@ -84,30 +83,6 @@ class controlador_dp_calle_pertenece extends system {
         foreach ($propiedades as $key => $value){
             $this->keys_selects[$identificador]->$key = $value;
         }
-    }
-
-    private function base(): array|stdClass
-    {
-        $r_modifica =  parent::modifica(header: false);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al generar template',data:  $r_modifica);
-        }
-
-        $this->asignar_propiedad(identificador:'dp_calle_id', propiedades:
-            ["id_selected" => $this->row_upd->dp_calle_id]);
-        $this->asignar_propiedad(identificador:'dp_colonia_postal_id', propiedades:
-            ["id_selected" => $this->row_upd->dp_colonia_postal_id]);
-
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializar inputs',data:  $inputs);
-        }
-
-        $data = new stdClass();
-        $data->template = $r_modifica;
-        $data->inputs = $inputs;
-
-        return $data;
     }
 
     public function get_calle_pertenece(bool $header, bool $ws = true): array|stdClass
@@ -136,23 +111,27 @@ class controlador_dp_calle_pertenece extends system {
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "dp_estado_id";
-        $propiedades = array("label" => "Estado");
+        $propiedades = array("label" => "Estado", "con_registros" => false);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "dp_municipio_id";
-        $propiedades = array("label" => "Municipio");
+        $propiedades = array("label" => "Municipio", "con_registros" => false);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "dp_cp_id";
-        $propiedades = array("label" => "Código Postal");
+        $propiedades = array("label" => "Código Postal", "con_registros" => false);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "dp_colonia_postal_id";
-        $propiedades = array("label" => "Colonia Postal");
+        $propiedades = array("label" => "Colonia Postal", "con_registros" => false);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "dp_calle_id";
         $propiedades = array("label" => "Calle");
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "codigo";
+        $propiedades = array("place_holder" => "Código");
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "georeferencia";
@@ -162,15 +141,51 @@ class controlador_dp_calle_pertenece extends system {
         return $this->keys_selects;
     }
 
-    public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true,
-                             bool $muestra_btn = true): array|stdClass
+    public function modifica(bool $header, bool $ws = false): array|stdClass
     {
-        $base = $this->base();
+        $r_modifica =  parent::modifica(header: false);
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
-                header: $header,ws:$ws);
+            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
         }
 
-        return $base->template;
+        $colonia_postal = (new dp_colonia_postal($this->link))->get_colonia_postal($this->row_upd->dp_colonia_postal_id);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener colonia_postal',data:  $colonia_postal);
+        }
+
+        $identificador = "dp_pais_id";
+        $propiedades = array("id_selected" => $colonia_postal['dp_pais_id']);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "dp_estado_id";
+        $propiedades = array("id_selected" => $colonia_postal['dp_estado_id'], "con_registros" => true,
+            "filtro" => array('dp_pais.id' => $colonia_postal['dp_pais_id']));
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "dp_municipio_id";
+        $propiedades = array("id_selected" => $colonia_postal['dp_municipio_id'], "con_registros" => true,
+            "filtro" => array('dp_estado.id' => $colonia_postal['dp_estado_id']));
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "dp_cp_id";
+        $propiedades = array("id_selected" => $colonia_postal['dp_cp_id'], "con_registros" => true,
+            "filtro" => array('dp_estado.id' => $colonia_postal['dp_estado_id']));
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "dp_colonia_postal_id";
+        $propiedades = array("id_selected" => $colonia_postal['dp_colonia_postal_id'], "con_registros" => true,
+            "filtro" => array('dp_cp.id' => $colonia_postal['dp_cp_id']));
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "dp_calle_id";
+        $propiedades = array("id_selected" => $this->row_upd->dp_calle_id);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al inicializar inputs',data:  $inputs);
+        }
+
+        return $r_modifica;
     }
 }
