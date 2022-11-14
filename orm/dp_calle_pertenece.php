@@ -1,11 +1,10 @@
 <?php
 namespace gamboamartin\direccion_postal\models;
-use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
 use stdClass;
 
-class dp_calle_pertenece extends modelo{
+class dp_calle_pertenece extends _model_base {
     public function __construct(PDO $link){
         $tabla = 'dp_calle_pertenece';
         $columnas = array($tabla=>false,'dp_colonia_postal'=>$tabla,'dp_calle'=>$tabla,'dp_cp'=>'dp_colonia_postal',
@@ -29,34 +28,14 @@ class dp_calle_pertenece extends modelo{
 
     public function alta_bd(): array|stdClass
     {
-        $this->registro = $this->campos_base(data:$this->registro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al inicializar campo base',data: $this->registro);
-        }
 
-        if(!isset($this->registro['dp_calle_id']) || (int)$this->registro['dp_calle_id'] === -1){
-            $dp_calle_id = (new dp_calle($this->link))->id_predeterminado();
-            if(errores::$error){
-                return $this->error->error(
-                    mensaje: 'Error al obtener dp_calle_id predeterminado',data:  $dp_calle_id);
-            }
-            $this->registro['dp_calle_id'] = $dp_calle_id;
+        $registro = $this->init_alta_bd(registro: $this->registro);
+        if(errores::$error) {
+            return $this->error->error(
+                mensaje: 'Error al integrar predeterminados', data: $registro);
         }
+        $this->registro = $registro;
 
-        if(!isset($this->registro['dp_colonia_postal_id']) || (int)$this->registro['dp_colonia_postal_id'] === -1){
-            $dp_colonia_postal_id = (new dp_colonia_postal($this->link))->id_predeterminado();
-            if(errores::$error){
-                return $this->error->error(
-                    mensaje: 'Error al obtener dp_colonia_postal_id predeterminado',data:  $dp_colonia_postal_id);
-            }
-            $this->registro['dp_colonia_postal_id'] = $dp_colonia_postal_id;
-        }
-
-        $this->registro = $this->limpia_campos(registro: $this->registro, campos_limpiar: array('dp_pais_id',
-            'dp_estado_id', 'dp_municipio_id','dp_cp_id'));
-        if (errores::$error) {
-            return $this->error->error(mensaje: 'Error al limpiar campos', data: $this->registro);
-        }
 
         $r_alta_bd = parent::alta_bd();
         if(errores::$error){
@@ -65,16 +44,23 @@ class dp_calle_pertenece extends modelo{
         return $r_alta_bd;
     }
 
-    private function campos_base(array $data): array
+    protected function campos_base(array $data): array
     {
+
+        $keys = array('dp_calle_id','dp_colonia_postal_id');
+        $valida = $this->validacion->valida_ids(keys: $keys, registro: $data);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar data',data:  $valida);
+        }
+
         $colonia_postal = (new dp_colonia_postal($this->link))->get_colonia_postal($data['dp_colonia_postal_id']);
         if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al obtener colonia postal',data:  $colonia_postal);
+            return $this->error->error(mensaje: 'Error al obtener colonia postal',data:  $colonia_postal);
         }
 
         $calle = (new dp_calle($this->link))->get_calle($data['dp_calle_id']);
         if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al obtener calle',data:  $calle);
+            return $this->error->error(mensaje: 'Error al obtener calle',data:  $calle);
         }
 
         if(!isset($data['codigo_bis'])){
@@ -85,16 +71,37 @@ class dp_calle_pertenece extends modelo{
             $data['descripcion'] =  "{$calle['dp_calle_descripcion']} - {$colonia_postal['dp_colonia_postal_descripcion']}";
         }
 
-        if(!isset($data['descripcion_select'])){
-            $ds = str_replace("_"," ",$data['descripcion']);
-            $ds = ucwords($ds);
-            $data['descripcion_select'] =  "{$data['codigo']} - {$ds}";
+        $data = $this->data_base(data: $data);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar data base', data: $data);
         }
 
-        if(!isset($data['alias'])){
-            $data['alias'] = $data['codigo'];
-        }
         return $data;
+    }
+
+    private function dp_calle_id_predeterminado(array $registro): array
+    {
+
+        if(!isset($registro['dp_calle_id']) || (int)$registro['dp_calle_id'] === -1){
+            $registro = $this->integra_dp_calle_id_predeterminado(registro: $registro);
+            if(errores::$error){
+                return $this->error->error(
+                    mensaje: 'Error al integrar dp_calle_id predeterminado',data:  $registro);
+            }
+        }
+        return $registro;
+    }
+
+    private function dp_colonia_postal_id_predeterminado(array $registro): array
+    {
+        if(!isset($registro['dp_colonia_postal_id']) || (int)$registro['dp_colonia_postal_id'] === -1){
+            $registro = $this->integra_dp_colonia_postal_id_predeterminado(registro: $this->registro);
+            if(errores::$error){
+                return $this->error->error(
+                    mensaje: 'Error al integrar dp_colonia_postal_id predeterminado',data:  $registro);
+            }
+        }
+        return $registro;
     }
 
     public function get_calle_pertenece_default_id(): array|stdClass|int
@@ -105,6 +112,55 @@ class dp_calle_pertenece extends modelo{
         }
 
         return (int)$id_predeterminado;
+    }
+
+    private function init_alta_bd(array $registro): array
+    {
+        $registro = $this->predeterminados(registro: $registro);
+        if(errores::$error) {
+            return $this->error->error(
+                mensaje: 'Error al integrar predeterminados', data: $registro);
+        }
+
+        $keys = array('dp_calle_id','dp_colonia_postal_id');
+        $valida = $this->validacion->valida_ids(keys: $keys, registro: $registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar modelo->registro',data:  $valida);
+        }
+
+        $registro = $this->campos_base(data:$registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
+        }
+
+        $registro = $this->limpia_campos(registro: $registro, campos_limpiar: array('dp_pais_id',
+            'dp_estado_id', 'dp_municipio_id','dp_cp_id'));
+        if (errores::$error) {
+            return $this->error->error(mensaje: 'Error al limpiar campos', data: $registro);
+        }
+        return $registro;
+    }
+
+    private function integra_dp_calle_id_predeterminado(array $registro): array
+    {
+        $dp_calle_id = (new dp_calle($this->link))->id_predeterminado();
+        if(errores::$error){
+            return $this->error->error(
+                mensaje: 'Error al obtener dp_calle_id predeterminado',data:  $dp_calle_id);
+        }
+        $registro['dp_calle_id'] = $dp_calle_id;
+        return $registro;
+    }
+
+    private function integra_dp_colonia_postal_id_predeterminado(array $registro): array
+    {
+        $dp_colonia_postal_id = (new dp_colonia_postal($this->link))->id_predeterminado();
+        if(errores::$error){
+            return $this->error->error(
+                mensaje: 'Error al obtener dp_colonia_postal_id predeterminado',data:  $dp_colonia_postal_id);
+        }
+        $registro['dp_colonia_postal_id'] = $dp_colonia_postal_id;
+        return $registro;
     }
 
     private function limpia_campos(array $registro, array $campos_limpiar): array
@@ -119,6 +175,13 @@ class dp_calle_pertenece extends modelo{
 
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
+
+        $keys = array('dp_calle_id','dp_colonia_postal_id');
+        $valida = $this->validacion->valida_ids(keys: $keys, registro: $registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar registro',data:  $valida);
+        }
+
         $registro = $this->campos_base(data:$registro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
@@ -212,6 +275,22 @@ class dp_calle_pertenece extends modelo{
 
         return $data;
 
+    }
+
+    private function predeterminados(array $registro): array
+    {
+        $registro = $this->dp_calle_id_predeterminado(registro: $registro);
+        if(errores::$error) {
+            return $this->error->error(
+                mensaje: 'Error al integrar dp_calle_id predeterminado', data: $registro);
+        }
+
+        $registro = $this->dp_colonia_postal_id_predeterminado(registro: $registro);
+        if(errores::$error) {
+            return $this->error->error(
+                mensaje: 'Error al integrar dp_colonia_postal_id predeterminado', data: $registro);
+        }
+        return $registro;
     }
 
 

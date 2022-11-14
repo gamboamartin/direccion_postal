@@ -33,6 +33,7 @@ class controlador_dp_calleTest extends test {
         $_GET['dp_calle_id'] = 1;
         $resultado = $ctl->get_calle(header: false,ws: false);
 
+
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
 

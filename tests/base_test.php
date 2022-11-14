@@ -37,7 +37,7 @@ class base_test{
     }
 
     public function alta_dp_calle_pertenece(PDO $link, string $codigo = '1',string $descripcion = '1',
-                                            int $dp_calle_id = -1, int $dp_colonia_postal_id = -1, int $id = 1,
+                                            int $dp_calle_id = 1, int $dp_colonia_postal_id = 1, int $id = 1,
                                             bool $predeterminado = false): array|\stdClass
     {
 
@@ -47,68 +47,32 @@ class base_test{
             return (new errores())->error(mensaje: 'Error al generar registro', data: $registro);
         }
 
-        if($dp_calle_id === -1) {
-
-
-            $existe = (new dp_calle($link))->existe_predeterminado();
-            if (errores::$error) {
-                return (new errores())->error('Error al validar si existe', $existe);
-
-            }
-            if(!$existe) {
-
-                $alta = (new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_calle(link: $link, predeterminado: true);
-                if (errores::$error) {
-                    return (new errores())->error('Error al dar de alta', $alta);
-
-                }
-            }
-
-        }
-        if($dp_calle_id > 0){
-
-            $registro['dp_calle_id'] = $dp_calle_id;
-
-            $existe = (new dp_calle($link))->existe_by_id(registro_id: $dp_calle_id);
-            if (errores::$error) {
-                return (new errores())->error('Error al validar si existe', $existe);
-            }
-
-            if(!$existe) {
-                $alta = (new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_calle(link: $link, id: $dp_calle_id);
-                if (errores::$error) {
-                    return (new errores())->error('Error al dar de alta', $alta);
-                }
-            }
-
+        $existe = (new dp_calle($link))->existe_by_id(registro_id: $dp_calle_id);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al validar si existe', data: $existe);
         }
 
-        if($dp_colonia_postal_id === -1) {
-
-            $alta = $this->alta_dp_colonia_postal(link:$link, predeterminado: true);
+        if(!$existe){
+            $alta = $this->alta_dp_calle(link: $link,id: $dp_calle_id);
             if(errores::$error){
-                return (new errores())->error('Error al dar de alta', $alta);
-
+                return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
             }
-
-        }
-        if($dp_colonia_postal_id > 0){
-            $registro['dp_colonia_postal_id'] = $dp_colonia_postal_id;
-
-            $existe = (new dp_colonia_postal($link))->existe_by_id(registro_id: $dp_colonia_postal_id);
-            if (errores::$error) {
-                return (new errores())->error('Error al validar si existe', $existe);
-            }
-
-            if(!$existe) {
-                $alta = $this->alta_dp_colonia_postal(link: $link, id: $dp_colonia_postal_id);
-                if (errores::$error) {
-                    return (new errores())->error('Error al dar de alta', $alta);
-                }
-            }
-
         }
 
+        $existe = (new dp_colonia_postal($link))->existe_by_id(registro_id: $dp_colonia_postal_id);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al validar si existe', data: $existe);
+        }
+
+        if(!$existe){
+            $alta = $this->alta_dp_colonia_postal(link: $link,id: $dp_colonia_postal_id);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            }
+        }
+
+        $registro['dp_calle_id'] = $dp_calle_id;
+        $registro['dp_colonia_postal_id'] = $dp_colonia_postal_id;
 
 
         $alta = (new dp_calle_pertenece($link))->alta_registro($registro);
@@ -138,7 +102,7 @@ class base_test{
     }
 
     public function alta_dp_colonia_postal(PDO $link, string $codigo = '1', string $descripcion = '1',
-                                           int $dp_colonia_id = -1, int $dp_cp_id = -1, int $id = 1,
+                                           int $dp_colonia_id = 1, int $dp_cp_id = 1, int $id = 1,
                                            bool $predeterminado = false): array|\stdClass
     {
 
@@ -150,24 +114,6 @@ class base_test{
         }
 
 
-        if($dp_colonia_id === -1) {
-
-
-            $existe = (new dp_colonia($link))->existe_predeterminado();
-            if (errores::$error) {
-                return (new errores())->error('Error al validar si existe', $existe);
-
-            }
-            if(!$existe) {
-
-                $alta = (new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_colonia(link: $link, predeterminado: true);
-                if (errores::$error) {
-                    return (new errores())->error('Error al dar de alta', $alta);
-
-                }
-            }
-
-        }
         if($dp_colonia_id > 0){
 
             $registro['dp_colonia_id'] = $dp_colonia_id;
@@ -186,24 +132,7 @@ class base_test{
 
         }
 
-        if($dp_cp_id === -1) {
 
-
-            $existe = (new dp_cp($link))->existe_predeterminado();
-            if (errores::$error) {
-                return (new errores())->error('Error al validar si existe', $existe);
-
-            }
-            if(!$existe) {
-
-                $alta = (new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_cp(link: $link, predeterminado: true);
-                if (errores::$error) {
-                    return (new errores())->error('Error al dar de alta', $alta);
-
-                }
-            }
-
-        }
         if($dp_cp_id > 0){
 
             $registro['dp_cp_id'] = $dp_cp_id;
@@ -235,7 +164,7 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_cp(PDO $link, string $codigo = '00099',string $descripcion = '00099' , int $dp_municipio_id = -1,
+    public function alta_dp_cp(PDO $link, string $codigo = '00099',string $descripcion = '00099' , int $dp_municipio_id = 1,
                                int $id = 1, bool $predeterminado = false): array|\stdClass
     {
 
@@ -245,13 +174,7 @@ class base_test{
             return (new errores())->error(mensaje: 'Error al generar registro', data: $registro);
         }
 
-        if($dp_municipio_id === -1) {
-            $alta = $this->alta_dp_municipio(link: $link, predeterminado: true);
-            if (errores::$error) {
-                return (new errores())->error('Error al dar de alta', $alta);
 
-            }
-        }
         if($dp_municipio_id > 0){
             $registro['dp_municipio_id'] = $dp_municipio_id;
 
@@ -276,7 +199,7 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_estado(PDO $link, string $codigo = '1', string $descripcion = '1', int $dp_pais_id = -1,
+    public function alta_dp_estado(PDO $link, string $codigo = '1', string $descripcion = '1', int $dp_pais_id = 1,
                                    int $id = 1, bool $predeterminado = false): array|\stdClass
     {
 
@@ -287,41 +210,21 @@ class base_test{
             return (new errores())->error(mensaje: 'Error al generar registro', data: $registro);
         }
 
-        if($dp_pais_id === -1) {
-
-
-            $existe = (new dp_pais($link))->existe_predeterminado();
-            if (errores::$error) {
-                return (new errores())->error('Error al validar si existe', $existe);
-
-            }
-            if(!$existe) {
-
-                $alta = (new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_pais(link: $link, predeterminado: true);
-                if (errores::$error) {
-                    return (new errores())->error('Error al dar de alta', $alta);
-
-                }
-            }
-
+        $existe = (new dp_pais($link))->existe_by_id(registro_id: $dp_pais_id);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al validar si existe', data: $existe);
         }
-        if($dp_pais_id > 0){
 
-            $registro['dp_pais_id'] = $dp_pais_id;
-
-            $existe = (new dp_pais($link))->existe_by_id(registro_id: $dp_pais_id);
-            if (errores::$error) {
-                return (new errores())->error('Error al validar si existe', $existe);
+        if(!$existe){
+            $alta = $this->alta_dp_pais(link: $link,id: $dp_pais_id);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
             }
-
-            if(!$existe) {
-                $alta = (new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_pais(link: $link, id: $dp_pais_id);
-                if (errores::$error) {
-                    return (new errores())->error('Error al dar de alta', $alta);
-                }
-            }
-
         }
+
+
+
+        $registro['dp_pais_id'] = $dp_pais_id;
 
 
         $alta = (new dp_estado($link))->alta_registro($registro);
@@ -332,38 +235,30 @@ class base_test{
     }
 
     public function alta_dp_municipio(PDO $link, string $codigo = '1', string $descripcion = '1',
-                                      int $dp_estado_id = -1, int $id = 1, bool $predeterminado = false): array|stdClass{
+                                      int $dp_estado_id = 1, int $id = 1,
+                                      string $predeterminado = 'inactivo'): array|stdClass{
 
 
         $registro = (new test())->registro(
-            codigo: $codigo,descripcion:  $descripcion,id:  $id,predeterminado:  $predeterminado);
+            codigo: $codigo,descripcion:  $descripcion,id:  $id,predeterminado:  false);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al generar registro', data: $registro);
         }
 
-        if($dp_estado_id === -1) {
-            $alta = $this->alta_dp_estado(link: $link, predeterminado: true);
-            if (errores::$error) {
-                return (new errores())->error('Error al dar de alta', $alta);
+        $existe = (new dp_estado($link))->existe_by_id(registro_id: $dp_estado_id);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al validar si existe', data: $existe);
+        }
+
+        if(!$existe){
+            $alta = $this->alta_dp_estado(link: $link,id: $dp_estado_id);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
             }
         }
 
-
-        if($dp_estado_id > 0) {
-            $registro['dp_estado_id'] = $dp_estado_id;
-
-            $existe = (new dp_estado($link))->existe_by_id(registro_id: $dp_estado_id);
-            if (errores::$error) {
-                return (new errores())->error('Error al validar si existe', $existe);
-            }
-
-            if(!$existe) {
-                $alta = $this->alta_dp_estado(link: $link, id: $dp_estado_id);
-                if (errores::$error) {
-                    return (new errores())->error('Error al dar de alta', $alta);
-                }
-            }
-        }
+        $registro['dp_estado_id'] = $dp_estado_id;
+        $registro['predeterminado'] = $predeterminado;
 
 
         $alta = (new dp_municipio($link))->alta_registro($registro);
@@ -373,12 +268,11 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_pais(PDO $link, string $codigo = '1', string $descripcion = '1', int $id = 1,
-                                 bool $predeterminado = false): array|\stdClass
+    public function alta_dp_pais(PDO $link, string $codigo = '1', string $descripcion = '1', int $id = 1): array|\stdClass
     {
 
         $registro = (new test())->registro(
-            codigo: $codigo,descripcion:  $descripcion,id:  $id,predeterminado:  $predeterminado);
+            codigo: $codigo,descripcion:  $descripcion,id:  $id,predeterminado:  false);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al generar registro', data: $registro);
         }

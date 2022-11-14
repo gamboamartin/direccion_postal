@@ -1,11 +1,10 @@
 <?php
 namespace gamboamartin\direccion_postal\models;
-use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
 use stdClass;
 
-class dp_pais extends modelo{
+class dp_pais extends _model_base {
     public function __construct(PDO $link){
         $tabla = 'dp_pais';
         $columnas = array($tabla=>false);
@@ -34,23 +33,7 @@ class dp_pais extends modelo{
         return $r_alta_bd;
     }
 
-    private function campos_base(array $data): array
-    {
-        if(!isset($data['codigo_bis'])){
-            $data['codigo_bis'] =  $data['codigo'];
-        }
 
-        if(!isset($data['descripcion_select'])){
-            $ds = str_replace("_"," ",$data['descripcion']);
-            $ds = ucwords($ds);
-            $data['descripcion_select'] =  "{$data['codigo']} - {$ds}";
-        }
-
-        if(!isset($data['alias'])){
-            $data['alias'] = $data['codigo'];
-        }
-        return $data;
-    }
 
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {

@@ -30,27 +30,15 @@ class dp_calle_perteneceTest extends test {
         $_SESSION['usuario_id'] = 1;
         $modelo = new dp_calle_pertenece($this->link);
 
-        $del = (new base_test())->del_dp_calle(link: $this->link);
+
+        $del = (new base_test())->del_dp_calle_pertenece(link: $this->link);
+
         if(errores::$error){
             $error = (new errores())->error('Error al eliminar', $del);
             print_r($error);
             exit;
         }
 
-
-        $del = (new base_test())->del_dp_colonia(link: $this->link);
-        if(errores::$error){
-            $error  = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
-
-        $del = (new base_test())->del_dp_pais(link: $this->link);
-        if(errores::$error){
-            $error  = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
 
         $alta = (new base_test())->alta_dp_calle_pertenece(link: $this->link);
 
@@ -69,28 +57,8 @@ class dp_calle_perteneceTest extends test {
 
         errores::$error = false;
 
-        $del = (new base_test())->del_dp_calle(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
+        $del = (new base_test())->del_dp_calle_pertenece(link: $this->link);
 
-        $del = (new base_test())->del_dp_cp(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
-
-        $del = (new base_test())->del_dp_colonia(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
-
-        $del = (new base_test())->del_dp_pais(link: $this->link);
         if(errores::$error){
             $error = (new errores())->error('Error al eliminar', $del);
             print_r($error);

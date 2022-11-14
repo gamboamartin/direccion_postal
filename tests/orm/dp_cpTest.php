@@ -39,7 +39,7 @@ class dp_cpTest extends test {
         }
 
 
-        $alta = (new base_test())->alta_dp_municipio(link: $this->link,  predeterminado : 'activo');
+        $alta = (new base_test())->alta_dp_municipio(link: $this->link, predeterminado: 'activo');
         if(errores::$error){
             $error  = (new errores())->error('Error al insertar', $alta);
             print_r($error);
@@ -47,9 +47,11 @@ class dp_cpTest extends test {
         }
 
 
+        $modelo->registro['descripcion'] = '01125';
         $modelo->registro['codigo'] = '01125';
 
         $resultado = $modelo->alta_bd();
+
 
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
