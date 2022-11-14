@@ -6,4 +6,4 @@
 <?php echo $controlador->inputs->dp_cp_id; ?>
 <?php echo $controlador->inputs->dp_colonia_id; ?>
 <?php echo $controlador->inputs->codigo; ?>
-<?php include (new views())->ruta_templates.'botons/submit/alta_bd_otro.php';?>
+<?php include (new views())->ruta_templates.'botons/submit/alta_bd.php';?>
