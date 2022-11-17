@@ -51,7 +51,7 @@ class dp_cpTest extends test {
         $modelo->registro['codigo'] = '01125';
 
         $resultado = $modelo->alta_bd();
-        
+
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
 

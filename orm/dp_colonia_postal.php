@@ -42,7 +42,7 @@ class dp_colonia_postal extends _model_base {
         return $r_alta_bd;
     }
 
-    protected function campos_base(array $data): array
+    protected function campos_base(array $data, int $id = -1): array
     {
 
         $keys = array('dp_cp_id','dp_colonia_id');
@@ -180,7 +180,7 @@ class dp_colonia_postal extends _model_base {
             return $this->error->error(mensaje: 'Error al validar registro',data:  $valida);
         }
 
-        $registro = $this->campos_base(data:$registro);
+        $registro = $this->campos_base(data:$registro, id: $id);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
         }

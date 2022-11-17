@@ -48,7 +48,7 @@ class dp_colonia extends _model_base {
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
 
-        $registro = $this->campos_base(data:$registro);
+        $registro = $this->campos_base(data:$registro, id: $id);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
         }

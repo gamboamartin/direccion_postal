@@ -47,12 +47,12 @@ class dp_estado extends _model_base {
 
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
-        $registro = $this->campos_base(data:$registro);
+        $registro = $this->campos_base(data:$registro, id: $id);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
         }
 
-        $r_modifica_bd = parent::modifica_bd($registro, $id, $reactiva);
+        $r_modifica_bd = parent::modifica_bd(registro: $registro,id: $id,reactiva:  $reactiva);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al modificar estado',data:  $r_modifica_bd);
         }
