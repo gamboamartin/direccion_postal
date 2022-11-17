@@ -6,8 +6,21 @@ use gamboamartin\errores\errores;
 
 class _model_base extends modelo {
 
+    /**
+     * Asigna un campo de un elemento que no exista en el registro
+     * @param array $data Registro en proceso
+     * @param string $key Campo a asignar y validar
+     * @param array $registro_previo Registro precargado
+     * @return array
+     * @version 1.2.1
+     */
     private function asigna_data_no_existe(array $data, string $key, array $registro_previo): array
     {
+        $valida = $this->valida_init_data(key: $key,registro_previo:  $registro_previo);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar registro previo',data: $valida);
+        }
+
         if(!isset($data[$key])){
             $data[$key] = $registro_previo[$key];
         }
@@ -42,6 +55,12 @@ class _model_base extends modelo {
     private function asigna_datas_no_existe(array $data, array $keys, array $registro_previo): array
     {
         foreach ($keys as $key){
+
+            $valida = $this->valida_init_data(key: $key,registro_previo:  $registro_previo);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al validar registro previo',data: $valida);
+            }
+
             $data = $this->asigna_data_no_existe(data: $data,key:  $key,registro_previo:  $registro_previo);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al asigna data',data: $data);
@@ -105,6 +124,24 @@ class _model_base extends modelo {
             }
         }
         return $data;
+    }
+
+    private function valida_init_data(mixed $key, array $registro_previo): bool|array
+    {
+        if(!is_string($key)){
+            return $this->error->error(mensaje: 'Error key debe ser un string',data: $key);
+        }
+        $key = trim($key);
+        if($key === ''){
+            return $this->error->error(mensaje: 'Error key esta vacio',data: $key);
+        }
+
+        $keys = array($key);
+        $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $registro_previo);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar registro previo',data: $valida);
+        }
+        return true;
     }
 
 }
