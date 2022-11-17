@@ -1,10 +1,11 @@
 <?php
 namespace gamboamartin\direccion_postal\models;
+use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
 use stdClass;
 
-class dp_estado extends _model_base {
+class dp_estado extends modelo {
     public function __construct(PDO $link){
         $tabla = 'dp_estado';
         $columnas = array($tabla=>false,'dp_pais'=>$tabla);
@@ -24,7 +25,7 @@ class dp_estado extends _model_base {
 
     public function alta_bd(): array|stdClass
     {
-        $this->registro = $this->campos_base(data:$this->registro);
+        $this->registro = $this->campos_base(data:$this->registro, modelo: $this);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $this->registro);
         }

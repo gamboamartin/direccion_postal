@@ -1,10 +1,11 @@
 <?php
 namespace gamboamartin\direccion_postal\models;
+use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
 use stdClass;
 
-class dp_colonia_postal extends _model_base {
+class dp_colonia_postal extends modelo {
     public function __construct(PDO $link){
         $tabla = 'dp_colonia_postal';
         $columnas = array($tabla=>false,'dp_cp'=>$tabla,'dp_colonia'=>$tabla,'dp_municipio'=>'dp_cp',
@@ -42,7 +43,7 @@ class dp_colonia_postal extends _model_base {
         return $r_alta_bd;
     }
 
-    protected function campos_base(array $data, int $id = -1): array
+    protected function campos_base(array $data, modelo $modelo, int $id = -1): array
     {
 
         $keys = array('dp_cp_id','dp_colonia_id');
@@ -126,7 +127,7 @@ class dp_colonia_postal extends _model_base {
             return $this->error->error(mensaje: 'Error al validar modelo->registro',data:  $valida);
         }
 
-        $registro = $this->campos_base(data:$registro);
+        $registro = $this->campos_base(data:$registro, modelo: $this);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
         }
