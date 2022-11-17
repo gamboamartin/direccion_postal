@@ -40,7 +40,7 @@ class dp_pais extends modelo {
     {
 
 
-        $registro = $this->campos_base(data:$registro, id: $id);
+        $registro = $this->campos_base(data: $registro, modelo: $this, id: $id);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
         }
