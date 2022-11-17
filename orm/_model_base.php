@@ -5,21 +5,57 @@ use base\orm\modelo;
 use gamboamartin\errores\errores;
 
 class _model_base extends modelo {
+
+    private function asigna_data_no_existe(array $data, string $key, array $registro_previo): array
+    {
+        if(!isset($data[$key])){
+            $data[$key] = $registro_previo[$key];
+        }
+        return $data;
+    }
+
+    private function asigna_data_row_previo(array $data, int $id): array
+    {
+        $registro_previo = $this->registro(registro_id: $id, columnas_en_bruto: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener registro previo',data: $registro_previo);
+        }
+        $data = $this->asigna_datas_base(data: $data,registro_previo:  $registro_previo);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al asigna data',data: $data);
+        }
+
+        return $data;
+    }
+
+    private function asigna_datas_base(array $data, array $registro_previo): array
+    {
+        $keys = array('descripcion','codigo');
+
+        $data = $this->asigna_datas_no_existe(data: $data,keys:  $keys,registro_previo:  $registro_previo);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al asigna data',data: $data);
+        }
+        return $data;
+    }
+
+    private function asigna_datas_no_existe(array $data, array $keys, array $registro_previo): array
+    {
+        foreach ($keys as $key){
+            $data = $this->asigna_data_no_existe(data: $data,key:  $key,registro_previo:  $registro_previo);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al asigna data',data: $data);
+            }
+        }
+        return $data;
+    }
+
     protected function campos_base(array $data, int $id = -1): array
     {
 
-        if((!isset($data['descripcion']) || !isset($data['codigo'])) && $id > 0){
-            $registro_previo = $this->registro(registro_id: $id, columnas_en_bruto: true);
-            if(errores::$error){
-                return $this->error->error(mensaje: 'Error al obtener registro previo',data: $registro_previo);
-            }
-            if(!isset($data['descripcion'])){
-                $data['descripcion'] = $registro_previo['descripcion'];
-            }
-            if(!isset($data['codigo'])){
-                $data['codigo'] = $registro_previo['codigo'];
-            }
-
+        $data = $this->init_data_base(data: $data,id: $id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener registro previo',data: $data);
         }
 
         $keys = array('descripcion','codigo');
@@ -56,6 +92,17 @@ class _model_base extends modelo {
 
         if(!isset($data['alias'])){
             $data['alias'] = $data['codigo'];
+        }
+        return $data;
+    }
+
+    private function init_data_base(array $data, int $id): array
+    {
+        if((!isset($data['descripcion']) || !isset($data['codigo'])) && $id > 0){
+            $data = $this->asigna_data_row_previo(data:$data,id :$id);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al obtener registro previo',data: $data);
+            }
         }
         return $data;
     }
