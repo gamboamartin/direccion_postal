@@ -105,6 +105,16 @@ class dp_calle_pertenece extends modelo {
         return $registro;
     }
 
+    public function get_calle_pertenece(int $dp_calle_pertenece_id): array|stdClass
+    {
+        $registro = $this->registro(registro_id: $dp_calle_pertenece_id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener calle pertenece',data:  $registro);
+        }
+
+        return $registro;
+    }
+
     public function get_calle_pertenece_default_id(): array|stdClass|int
     {
         $id_predeterminado = $this->id_predeterminado();
@@ -183,7 +193,7 @@ class dp_calle_pertenece extends modelo {
             return $this->error->error(mensaje: 'Error al validar registro',data:  $valida);
         }
 
-        $registro = $this->campos_base(data:$registro, id: $id);
+        $registro = $this->campos_base(data:$registro, modelo: $this,id: $id);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
         }
