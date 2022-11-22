@@ -75,7 +75,12 @@ class dp_calle_perteneceTest extends test {
         $resultado = $modelo->id_predeterminado();
         $this->assertIsInt($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals(1, $resultado);
+
+        $resultado = $modelo->registro($resultado);
+        $this->assertIsArray($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('activo', $resultado['dp_calle_pertenece_predeterminado']);
+
 
         errores::$error = false;
 
@@ -130,7 +135,7 @@ class dp_calle_perteneceTest extends test {
 
         errores::$error = false;
 
-        $alta = (new base_test())->alta_dp_calle_pertenece(link:$this->link);
+        $alta = (new base_test())->alta_dp_calle_pertenece(link:$this->link, id: 1);
         if(errores::$error){
             $error = (new errores())->error('Error al insertar', $alta);
             print_r($error);

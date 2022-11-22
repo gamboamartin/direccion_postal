@@ -30,6 +30,12 @@ class dp_calle_pertenece extends modelo {
     public function alta_bd(): array|stdClass
     {
 
+        $keys = array('codigo');
+        $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $this->registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar data',data:  $valida);
+        }
+
         $registro = $this->init_alta_bd(registro: $this->registro);
         if(errores::$error) {
             return $this->error->error(
@@ -50,6 +56,12 @@ class dp_calle_pertenece extends modelo {
 
         $keys = array('dp_calle_id','dp_colonia_postal_id');
         $valida = $this->validacion->valida_ids(keys: $keys, registro: $data);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar data',data:  $valida);
+        }
+
+        $keys = array('codigo');
+        $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $data);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar data',data:  $valida);
         }
@@ -137,6 +149,11 @@ class dp_calle_pertenece extends modelo {
         $valida = $this->validacion->valida_ids(keys: $keys, registro: $registro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar modelo->registro',data:  $valida);
+        }
+        $keys = array('codigo');
+        $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar data',data:  $valida);
         }
 
         $registro = $this->campos_base(data:$registro, modelo: $this);
