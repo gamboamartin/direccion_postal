@@ -60,6 +60,41 @@ class dp_cpTest extends test {
 
     }
 
+    public function test_get_cp(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_cp';
+        $_SESSION['usuario_id'] = 1;
+
+        $del = (new base_test())->del_dp_cp(link: $this->link);
+        if(errores::$error){
+            $error  = (new errores())->error('Error al eliminar', $del);
+            print_r($error);
+            exit;
+        }
+
+        $alta = (new base_test())->alta_dp_cp(link: $this->link);
+        if(errores::$error){
+            $error  = (new errores())->error('Error al insertar', $alta);
+            print_r($error);
+            exit;
+        }
+
+
+
+        $modelo = new dp_cp($this->link);
+
+        $dp_cp_id = 1;
+        $resultado = $modelo->get_cp($dp_cp_id);
+
+
+        $this->assertIsArray($resultado);
+        $this->assertNotTrue(errores::$error);
+
+        errores::$error = false;
+    }
+
 
     public function test_objs_direcciones(): void
     {

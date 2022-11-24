@@ -68,8 +68,17 @@ class dp_cp extends modelo {
         return $registro;
     }
 
+    /**
+     * Obtiene el codigo postal desde un id
+     * @param int $dp_cp_id Identificador cd cp
+     * @return array|stdClass
+     * @version 1.6.6
+     */
     public function get_cp(int $dp_cp_id): array|stdClass
     {
+        if($dp_cp_id <= 0){
+            return $this->error->error(mensaje: 'Error dp_cp_id debe ser mayor a 0',data:  $dp_cp_id);
+        }
         $registro = $this->registro(registro_id: $dp_cp_id);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener CP',data:  $registro);

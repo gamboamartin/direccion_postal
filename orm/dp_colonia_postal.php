@@ -52,8 +52,6 @@ class dp_colonia_postal extends modelo {
             return $this->error->error(mensaje: 'Error al validar data',data:  $valida);
         }
 
-
-
         $cp = (new dp_cp($this->link))->get_cp(dp_cp_id: $data['dp_cp_id']);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener CP',data:  $cp);
