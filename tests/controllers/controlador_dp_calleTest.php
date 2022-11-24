@@ -26,7 +26,7 @@ class controlador_dp_calleTest extends test {
     {
         errores::$error = false;
         $_GET['session_id'] = 1;
-        $_GET['seccion'] = 'dp_estado';
+        $_GET['seccion'] = 'dp_calle';
         $_SESSION['grupo_id'] = '1';
         $ctl = new controlador_dp_calle(link: $this->link,paths_conf: $this->paths_conf);
 

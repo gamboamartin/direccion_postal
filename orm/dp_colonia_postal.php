@@ -52,6 +52,8 @@ class dp_colonia_postal extends modelo {
             return $this->error->error(mensaje: 'Error al validar data',data:  $valida);
         }
 
+
+
         $cp = (new dp_cp($this->link))->get_cp(dp_cp_id: $data['dp_cp_id']);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener CP',data:  $cp);
@@ -63,10 +65,18 @@ class dp_colonia_postal extends modelo {
         }
 
         if(!isset($data['codigo_bis'])){
+            $keys = array('codigo');
+            $valida = $this->validacion->valida_existencia_keys(keys:$keys,registro:  $data);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al validar data',data:  $valida);
+            }
+
             $data['codigo_bis'] =  $data['codigo'];
         }
 
         if(!isset($data['descripcion'])){
+
+
             $data['descripcion'] =  "{$colonia['dp_colonia_descripcion']} - {$cp['dp_cp_descripcion']}";
         }
 
@@ -174,6 +184,27 @@ class dp_colonia_postal extends modelo {
 
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
+
+        $registro_previo = $this->registro(registro_id: $id, retorno_obj: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener registro',data:  $registro_previo);
+        }
+
+        if(!isset($registro['dp_cp_id'])){
+            $registro['dp_cp_id'] = $registro_previo->dp_cp_id;
+        }
+
+        if(!isset($registro['dp_colonia_id'])){
+            $registro['dp_colonia_id'] = $registro_previo->dp_colonia_id;
+        }
+
+        if(!isset($registro['codigo'])){
+            $registro['codigo'] = $registro_previo->dp_colonia_postal_codigo;
+        }
+        if(!isset($registro['descripcion'])){
+            $registro['descripcion'] = $registro_previo->dp_colonia_postal_descripcion;
+        }
+
 
         $keys = array('dp_cp_id','dp_colonia_id');
         $valida = $this->validacion->valida_ids(keys:$keys,registro:  $registro);
