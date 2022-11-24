@@ -148,6 +148,32 @@ class dp_colonia_postal extends modelo {
         return $registro;
     }
 
+    private function init_upd(int $id, array $registro): array
+    {
+        $registro = $this->modifica_bd_init_data(id: $id, registro: $registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al incializar registro',data:  $registro);
+        }
+
+        $keys = array('dp_cp_id','dp_colonia_id');
+        $valida = $this->validacion->valida_ids(keys:$keys,registro:  $registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar registro',data:  $valida);
+        }
+
+        $registro = $this->campos_base(data:$registro, modelo: $this, id: $id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
+        }
+
+        $registro = $this->limpia_campos(registro: $registro, campos_limpiar: array('dp_pais_id','dp_estado_id',
+            'dp_municipio_id'));
+        if (errores::$error) {
+            return $this->error->error(mensaje: 'Error al limpiar campos', data: $registro);
+        }
+        return $registro;
+    }
+
     private function integra_dp_colonia_id_predeterminado(array $registro): array
     {
         $dp_colonia_id = (new dp_colonia($this->link))->id_predeterminado();
@@ -182,43 +208,9 @@ class dp_colonia_postal extends modelo {
 
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
-
-        $registro_previo = $this->registro(registro_id: $id, retorno_obj: true);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al obtener registro',data:  $registro_previo);
-        }
-
-        if(!isset($registro['dp_cp_id'])){
-            $registro['dp_cp_id'] = $registro_previo->dp_cp_id;
-        }
-
-        if(!isset($registro['dp_colonia_id'])){
-            $registro['dp_colonia_id'] = $registro_previo->dp_colonia_id;
-        }
-
-        if(!isset($registro['codigo'])){
-            $registro['codigo'] = $registro_previo->dp_colonia_postal_codigo;
-        }
-        if(!isset($registro['descripcion'])){
-            $registro['descripcion'] = $registro_previo->dp_colonia_postal_descripcion;
-        }
-
-
-        $keys = array('dp_cp_id','dp_colonia_id');
-        $valida = $this->validacion->valida_ids(keys:$keys,registro:  $registro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al validar registro',data:  $valida);
-        }
-
-        $registro = $this->campos_base(data:$registro, modelo: $this, id: $id);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
-        }
-
-        $registro = $this->limpia_campos(registro: $registro, campos_limpiar: array('dp_pais_id','dp_estado_id',
-            'dp_municipio_id'));
+        $registro = $this->init_upd(id: $id,registro:  $registro);
         if (errores::$error) {
-            return $this->error->error(mensaje: 'Error al limpiar campos', data: $registro);
+            return $this->error->error(mensaje: 'Error al inicializar campos', data: $registro);
         }
 
         $r_modifica_bd = parent::modifica_bd($registro, $id, $reactiva);
@@ -227,6 +219,37 @@ class dp_colonia_postal extends modelo {
         }
 
         return $r_modifica_bd;
+    }
+
+    private function modifica_bd_init(array $registro, stdClass $registro_previo): array
+    {
+        if(!isset($registro['dp_cp_id'])){
+            $registro['dp_cp_id'] = $registro_previo->dp_cp_id;
+        }
+        if(!isset($registro['dp_colonia_id'])){
+            $registro['dp_colonia_id'] = $registro_previo->dp_colonia_id;
+        }
+        if(!isset($registro['codigo'])){
+            $registro['codigo'] = $registro_previo->dp_colonia_postal_codigo;
+        }
+        if(!isset($registro['descripcion'])){
+            $registro['descripcion'] = $registro_previo->dp_colonia_postal_descripcion;
+        }
+        return  $registro;
+    }
+
+    private function modifica_bd_init_data(int $id, array $registro): array
+    {
+        $registro_previo = $this->registro(registro_id: $id, retorno_obj: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener registro',data:  $registro_previo);
+        }
+
+        $registro = $this->modifica_bd_init(registro: $registro,registro_previo:  $registro_previo);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al incializar registro',data:  $registro);
+        }
+        return $registro;
     }
 
     private function predeterminados(array $registro): array
