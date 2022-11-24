@@ -181,7 +181,7 @@ class dp_colonia_postal extends modelo {
             return $this->error->error(mensaje: 'Error al validar registro',data:  $valida);
         }
 
-        $registro = $this->campos_base(data:$registro, id: $id);
+        $registro = $this->campos_base(data:$registro, modelo: $this, id: $id);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
         }
