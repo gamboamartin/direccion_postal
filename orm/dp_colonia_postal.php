@@ -43,7 +43,8 @@ class dp_colonia_postal extends modelo {
         return $r_alta_bd;
     }
 
-    protected function campos_base(array $data, modelo $modelo, int $id = -1): array
+    protected function campos_base(array $data, modelo $modelo, int $id = -1,
+                                   array  $keys_integra_ds = array('codigo','descripcion')): array
     {
 
         $keys = array('dp_cp_id','dp_colonia_id');

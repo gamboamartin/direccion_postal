@@ -51,7 +51,7 @@ class dp_calle_pertenece extends modelo {
         return $r_alta_bd;
     }
 
-    protected function campos_base(array $data, modelo $modelo, int $id = -1): array
+    protected function campos_base(array $data, modelo $modelo, int $id = -1, array $keys_integra_ds = array()): array
     {
 
         $keys = array('dp_calle_id','dp_colonia_postal_id');
