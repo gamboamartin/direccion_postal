@@ -22,8 +22,17 @@ class dp_colonia extends _modelo_parent {
     }
 
 
+    /**
+     * Obtiene una colonia en base a su id
+     * @param int $dp_colonia_id Identificador de colonia
+     * @return array|stdClass
+     * @version 1.9.6
+     */
     public function get_colonia(int $dp_colonia_id): array|stdClass
     {
+        if($dp_colonia_id <=0 ){
+            return $this->error->error(mensaje: 'Error dp_colonia_id debe ser mayor a 0',data:  $dp_colonia_id);
+        }
         $registro = $this->registro(registro_id: $dp_colonia_id);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener colonia',data:  $registro);
