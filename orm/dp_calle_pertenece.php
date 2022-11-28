@@ -5,17 +5,14 @@ use gamboamartin\errores\errores;
 use PDO;
 use stdClass;
 
-class dp_calle_pertenece extends modelo {
+class dp_calle_pertenece extends _base {
     public function __construct(PDO $link){
         $tabla = 'dp_calle_pertenece';
         $columnas = array($tabla=>false,'dp_colonia_postal'=>$tabla,'dp_calle'=>$tabla,'dp_cp'=>'dp_colonia_postal',
             'dp_colonia'=>'dp_colonia_postal','dp_municipio'=>'dp_cp','dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado');
         $campos_obligatorios[] = 'descripcion';
 
-        $campos_view['dp_pais_id'] = array('type' => 'selects', 'model' => new dp_pais($link));
-        $campos_view['dp_estado_id'] = array('type' => 'selects', 'model' => new dp_estado($link));
-        $campos_view['dp_municipio_id'] = array('type' => 'selects', 'model' => new dp_municipio($link));
-        $campos_view['dp_cp_id'] = array('type' => 'selects', 'model' => new dp_cp($link));
+
         $campos_view['dp_colonia_postal_id'] = array('type' => 'selects', 'model' => new dp_colonia_postal($link));
         $campos_view['dp_calle_id'] = array('type' => 'selects', 'model' => new dp_calle($link));
         $campos_view['codigo'] = array('type' => 'inputs');

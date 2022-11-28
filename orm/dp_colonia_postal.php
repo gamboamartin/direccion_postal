@@ -5,17 +5,13 @@ use gamboamartin\errores\errores;
 use PDO;
 use stdClass;
 
-class dp_colonia_postal extends modelo {
+class dp_colonia_postal extends _base {
     public function __construct(PDO $link){
         $tabla = 'dp_colonia_postal';
         $columnas = array($tabla=>false,'dp_cp'=>$tabla,'dp_colonia'=>$tabla,'dp_municipio'=>'dp_cp',
             'dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado');
         $campos_obligatorios[] = 'descripcion';
 
-        $campos_view['dp_pais_id'] = array('type' => 'selects', 'model' => new dp_pais($link));
-        $campos_view['dp_estado_id'] = array('type' => 'selects', 'model' => new dp_estado($link));
-        $campos_view['dp_municipio_id'] = array('type' => 'selects', 'model' => new dp_municipio($link));
-        $campos_view['dp_cp_id'] = array('type' => 'selects', 'model' => new dp_cp($link));
         $campos_view['dp_colonia_id'] = array('type' => 'selects', 'model' => new dp_colonia($link));
         $campos_view['codigo'] = array('type' => 'inputs');
         $campos_view['descripcion'] = array('type' => 'inputs');
