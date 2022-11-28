@@ -112,8 +112,18 @@ class dp_colonia_postal extends modelo {
         return $registro;
     }
 
+    /**
+     * Obtiene los datos de colonia postal
+     * @param int $dp_colonia_postal_id Identificar
+     * @return array|stdClass
+     * @version 1.10.7
+     */
     public function get_colonia_postal(int $dp_colonia_postal_id): array|stdClass
     {
+        if($dp_colonia_postal_id <= 0){
+            return $this->error->error(
+                mensaje: 'Error al dp_colonia_postal_id debe ser mayor a 0',data:  $dp_colonia_postal_id);
+        }
         $registro = $this->registro(registro_id: $dp_colonia_postal_id);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener colonia',data:  $registro);
