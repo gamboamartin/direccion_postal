@@ -204,6 +204,21 @@ class dp_calle_pertenece extends modelo {
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
 
+        $registro_previo = $this->registro(registro_id: $id, retorno_obj: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener registro_previo',data:  $registro_previo);
+        }
+
+        if(!isset($registro['dp_calle_id'])){
+            $registro['dp_calle_id'] = $registro_previo->dp_calle_id;
+        }
+        if(!isset($registro['dp_colonia_postal_id'])){
+            $registro['dp_colonia_postal_id'] = $registro_previo->dp_colonia_postal_id;
+        }
+        if(!isset($registro['codigo'])){
+            $registro['codigo'] = $registro_previo->dp_calle_pertenece_codigo;
+        }
+
         $keys = array('dp_calle_id','dp_colonia_postal_id');
         $valida = $this->validacion->valida_ids(keys: $keys, registro: $registro);
         if(errores::$error){
