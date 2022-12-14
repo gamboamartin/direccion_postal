@@ -168,6 +168,22 @@ class dp_calle_pertenece extends _base {
 
     private function integra_dp_calle_id_predeterminado(array $registro): array
     {
+        $existe = (new dp_calle(link: $this->link))->existe_predeterminado();
+        if(errores::$error){
+            return $this->error->error(
+                mensaje: 'Error al validar si existe predeterminado',data:  $existe);
+        }
+
+        if(!$existe){
+            $dp_calle_pred['predeterminado'] = 'activo';
+            $dp_calle_pred['codigo'] = 'PRED';
+            $r_dp_calle_pred = (new dp_calle(link: $this->link))->alta_registro(registro: $dp_calle_pred);
+            if(errores::$error){
+                return $this->error->error(
+                    mensaje: 'Error al insertar prederminado',data:  $r_dp_calle_pred);
+            }
+        }
+
         $dp_calle_id = (new dp_calle($this->link))->id_predeterminado();
         if(errores::$error){
             return $this->error->error(
