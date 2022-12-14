@@ -177,6 +177,7 @@ class dp_calle_pertenece extends _base {
         if(!$existe){
             $dp_calle_pred['predeterminado'] = 'activo';
             $dp_calle_pred['codigo'] = 'PRED';
+            $dp_calle_pred['descripcion'] = 'PREDETERMINADO';
             $r_dp_calle_pred = (new dp_calle(link: $this->link))->alta_registro(registro: $dp_calle_pred);
             if(errores::$error){
                 return $this->error->error(
