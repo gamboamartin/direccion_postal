@@ -1,7 +1,9 @@
 <?php
 namespace gamboamartin\direccion_postal\models;
 use base\orm\modelo;
+use gamboamartin\errores\errores;
 use PDO;
+use stdClass;
 
 class _base extends modelo{
     public function __construct(PDO $link, string $tabla, bool $aplica_bitacora = false, bool $aplica_seguridad = false,
@@ -27,5 +29,7 @@ class _base extends modelo{
             validation: $validation, campos_no_upd: $campos_no_upd,parents:  $parents, temp: $temp,
             childrens: $childrens,defaults:  $defaults, parents_data: $parents_data);
     }
+
+
 
 }
