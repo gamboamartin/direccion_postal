@@ -31,6 +31,12 @@ class dp_estado extends modelo {
         }
 
         if(!isset($this->registro['dp_pais_id'])){
+
+            $r_pred = (new dp_pais(link: $this->link))->inserta_predeterminado();
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al insertar prederminado',data:  $r_pred);
+            }
+
             $dp_pais_id = (new dp_pais($this->link))->id_predeterminado();
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al obtener pais predeterminado',data:  $dp_pais_id);

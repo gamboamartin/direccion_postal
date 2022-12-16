@@ -37,6 +37,12 @@ class dp_municipio extends modelo {
         }
 
         if(!isset($this->registro['dp_estado_id'])){
+
+            $r_pred = (new dp_estado(link: $this->link))->inserta_predeterminado();
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al insertar prederminado',data:  $r_pred);
+            }
+
             $dp_estado_id = (new dp_estado($this->link))->id_predeterminado();
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al obtener estado predeterminado',data:  $dp_estado_id);
