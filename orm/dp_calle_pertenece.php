@@ -105,7 +105,7 @@ class dp_calle_pertenece extends _base {
     private function dp_colonia_postal_id_predeterminado(array $registro): array
     {
         if(!isset($registro['dp_colonia_postal_id']) || (int)$registro['dp_colonia_postal_id'] === -1){
-            $registro = $this->integra_dp_colonia_postal_id_predeterminado(registro: $this->registro);
+            $registro = $this->integra_dp_colonia_postal_id_predeterminado(registro: $registro);
             if(errores::$error){
                 return $this->error->error(
                     mensaje: 'Error al integrar dp_colonia_postal_id predeterminado',data:  $registro);
