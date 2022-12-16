@@ -194,6 +194,12 @@ class dp_colonia_postal extends _base {
 
     private function integra_dp_cp_id_predeterminado(array $registro): array
     {
+
+        $r_pred = (new dp_cp(link: $this->link))->inserta_predeterminado();
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al insertar prederminado',data:  $r_pred);
+        }
+
         $dp_cp_id = (new dp_cp($this->link))->id_predeterminado();
         if(errores::$error){
             return $this->error->error(
