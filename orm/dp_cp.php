@@ -123,6 +123,11 @@ class dp_cp extends modelo {
 
     private function integra_dp_municipio_id_predeterminado(array $registro): array
     {
+        $r_pred = (new dp_municipio(link: $this->link))->inserta_predeterminado();
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al insertar prederminado',data:  $r_pred);
+        }
+
         $dp_municipio_id = (new dp_municipio($this->link))->id_predeterminado();
         if(errores::$error){
             return $this->error->error(
