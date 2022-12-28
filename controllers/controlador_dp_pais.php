@@ -48,6 +48,8 @@ class controlador_dp_pais extends system {
             print_r($error);
             die('Error');
         }
+
+        $this->lista_get_data = true;
     }
 
     public function alta(bool $header, bool $ws = false): array|string
