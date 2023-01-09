@@ -14,16 +14,13 @@ use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template_1\html;
-use html\dp_estado_html;
 use html\dp_municipio_html;
-use html\dp_pais_html;
 
 use PDO;
 use stdClass;
 
-class controlador_dp_municipio extends system {
-
-    public array $keys_selects = array();
+class controlador_dp_municipio extends _ctl_dps {
+    
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
         $modelo = new dp_municipio(link: $link);
@@ -57,23 +54,6 @@ class controlador_dp_municipio extends system {
             print_r($error);
             die('Error');
         }
-    }
-
-    public function alta(bool $header, bool $ws = false): array|string
-    {
-        $r_alta =  parent::alta(header: false);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
-        }
-
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
-            print_r($error);
-            die('Error');
-        }
-
-        return $r_alta;
     }
 
     public function asignar_propiedad(string $identificador, mixed $propiedades)

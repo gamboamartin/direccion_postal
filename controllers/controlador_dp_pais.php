@@ -11,15 +11,12 @@ namespace controllers;
 use gamboamartin\direccion_postal\models\dp_pais;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
-use gamboamartin\system\system;
 use gamboamartin\template_1\html;
 use html\dp_pais_html;
 use PDO;
 use stdClass;
 
-class controlador_dp_pais extends system {
-
-    public array $keys_selects = array();
+class controlador_dp_pais extends _ctl_dps {
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
         $modelo = new dp_pais(link: $link);
@@ -52,22 +49,6 @@ class controlador_dp_pais extends system {
         $this->lista_get_data = true;
     }
 
-    public function alta(bool $header, bool $ws = false): array|string
-    {
-        $r_alta =  parent::alta(header: false);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
-        }
-
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
-            print_r($error);
-            die('Error');
-        }
-
-        return $r_alta;
-    }
 
     public function asignar_propiedad(string $identificador, mixed $propiedades)
     {
