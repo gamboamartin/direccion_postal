@@ -20,7 +20,7 @@ use PDO;
 use stdClass;
 
 class controlador_dp_municipio extends _ctl_dps {
-    
+
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
         $modelo = new dp_municipio(link: $link);

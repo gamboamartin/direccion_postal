@@ -18,9 +18,8 @@ use html\dp_colonia_postal_html;
 use PDO;
 use stdClass;
 
-class controlador_dp_colonia_postal extends system {
+class controlador_dp_colonia_postal extends _ctl_dps {
 
-    public array $keys_selects = array();
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
         $modelo = new dp_colonia_postal(link: $link);
@@ -55,22 +54,6 @@ class controlador_dp_colonia_postal extends system {
         }
     }
 
-    public function alta(bool $header, bool $ws = false): array|string
-    {
-        $r_alta =  parent::alta(header: false, ws: false);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
-        }
-
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
-            print_r($error);
-            die('Error');
-        }
-
-        return $r_alta;
-    }
 
     public function asignar_propiedad(string $identificador, mixed $propiedades)
     {

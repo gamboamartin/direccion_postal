@@ -11,13 +11,12 @@ namespace controllers;
 use gamboamartin\direccion_postal\models\dp_colonia;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
-use gamboamartin\system\system;
 use gamboamartin\template_1\html;
 use html\dp_colonia_html;
 use PDO;
 use stdClass;
 
-class controlador_dp_colonia extends system {
+class controlador_dp_colonia extends _ctl_dps {
 
     public array $keys_selects = array();
 
@@ -51,22 +50,6 @@ class controlador_dp_colonia extends system {
         }
     }
 
-    public function alta(bool $header, bool $ws = false): array|string
-    {
-        $r_alta =  parent::alta(header: false, ws: false);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
-        }
-
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
-            print_r($error);
-            die('Error');
-        }
-
-        return $r_alta;
-    }
 
     public function asignar_propiedad(string $identificador, mixed $propiedades)
     {
