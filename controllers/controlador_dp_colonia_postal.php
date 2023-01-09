@@ -94,21 +94,10 @@ class controlador_dp_colonia_postal extends _ctl_dps {
 
     private function inicializa_priedades(): array
     {
-        $identificador = "dp_pais_id";
-        $propiedades = array("label" => "Pais");
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
-        $identificador = "dp_estado_id";
-        $propiedades = array("label" => "Estado", "con_registros" => false);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
-        $identificador = "dp_municipio_id";
-        $propiedades = array("label" => "Municipio", "con_registros" => false);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
-        $identificador = "dp_cp_id";
-        $propiedades = array("label" => "Código Postal", "con_registros" => false);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $propiedades_base = (new _init_dps())->asigna_propiedades_base(controlador: $this);
+        if(errores::$error){
+            return $this->errores->error('Error al asignar propiedades',data: $propiedades_base);
+        }
 
         $identificador = "dp_colonia_id";
         $propiedades = array("label" => "Colonia");

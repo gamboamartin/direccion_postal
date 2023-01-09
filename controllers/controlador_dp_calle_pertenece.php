@@ -17,7 +17,7 @@ use html\dp_calle_pertenece_html;
 use PDO;
 use stdClass;
 
-class controlador_dp_calle_pertenece extends _ctl_dps {
+class controlador_dp_calle_pertenece extends _ctl_calles {
 
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
@@ -38,21 +38,8 @@ class controlador_dp_calle_pertenece extends _ctl_dps {
             "dp_pais.descripcion", "dp_estado.descripcion","dp_municipio.descripcion",
             "dp_colonia_postal.descripcion");
 
-        $datatables = new stdClass();
-        $datatables->columns = $columns;
-        $datatables->filtro = $filtro;
-
-        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
-            paths_conf: $paths_conf);
-
-        $this->titulo_lista = 'Calles';
-
-        $propiedades = $this->inicializa_priedades();
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al inicializar propiedades',data:  $propiedades);
-            print_r($error);
-            die('Error');
-        }
+        parent::__construct(html: $html, link: $link, modelo: $modelo, obj_link: $obj_link, columns: $columns,
+            filtro: $filtro, paths_conf: $paths_conf);
     }
 
 
@@ -86,23 +73,14 @@ class controlador_dp_calle_pertenece extends _ctl_dps {
         return $salida;
     }
 
-    private function inicializa_priedades(): array
+    public function inicializa_priedades(): array
     {
-        $identificador = "dp_pais_id";
-        $propiedades = array("label" => "Pais");
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
-        $identificador = "dp_estado_id";
-        $propiedades = array("label" => "Estado", "con_registros" => false);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
-        $identificador = "dp_municipio_id";
-        $propiedades = array("label" => "Municipio", "con_registros" => false);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
-        $identificador = "dp_cp_id";
-        $propiedades = array("label" => "Código Postal", "con_registros" => false);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $propiedades_base = (new _init_dps())->asigna_propiedades_base(controlador: $this);
+        if(errores::$error){
+            return $this->errores->error('Error al asignar propiedades',data: $propiedades_base);
+        }
 
         $identificador = "dp_colonia_postal_id";
         $propiedades = array("label" => "Colonia Postal", "con_registros" => false);

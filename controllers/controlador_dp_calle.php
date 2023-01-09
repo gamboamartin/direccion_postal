@@ -16,7 +16,7 @@ use html\dp_calle_html;
 use PDO;
 use stdClass;
 
-class controlador_dp_calle extends _ctl_dps {
+class controlador_dp_calle extends _ctl_calles {
 
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
@@ -31,23 +31,10 @@ class controlador_dp_calle extends _ctl_dps {
 
         $filtro = array("dp_calle.id","dp_calle.codigo","dp_calle.descripcion");
 
-        $datatables = new stdClass();
-        $datatables->columns = $columns;
-        $datatables->filtro = $filtro;
 
-        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
-            paths_conf: $paths_conf);
+        parent::__construct(html: $html, link: $link, modelo: $modelo, obj_link: $obj_link, columns: $columns,
+            filtro: $filtro, paths_conf: $paths_conf);
 
-        $this->titulo_lista = 'Calles';
-
-        $propiedades = $this->inicializa_priedades();
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al inicializar propiedades',data:  $propiedades);
-            print_r($error);
-            die('Error');
-        }
-
-        $this->lista_get_data = true;
 
     }
 
@@ -109,7 +96,7 @@ class controlador_dp_calle extends _ctl_dps {
 
     }
 
-    private function inicializa_priedades(): array
+    public function inicializa_priedades(): array
     {
         $identificador = "codigo";
         $propiedades = array("place_holder" => "Código", "cols" => 4);
