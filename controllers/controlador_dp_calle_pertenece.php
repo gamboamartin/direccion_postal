@@ -43,6 +43,11 @@ class controlador_dp_calle_pertenece extends _ctl_calles {
     }
 
 
+    /**
+     * @param string $identificador
+     * @param mixed $propiedades
+     * @return void
+     */
     public function asignar_propiedad(string $identificador, mixed $propiedades)
     {
         if (!array_key_exists($identificador,$this->keys_selects)){
