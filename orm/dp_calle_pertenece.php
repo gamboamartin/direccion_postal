@@ -114,6 +114,11 @@ class dp_calle_pertenece extends _base {
         return $registro;
     }
 
+    /**
+     * Obtiene una calle basada en el id
+     * @param int $dp_calle_pertenece_id
+     * @return array|stdClass
+     */
     public function get_calle_pertenece(int $dp_calle_pertenece_id): array|stdClass
     {
         $registro = $this->registro(registro_id: $dp_calle_pertenece_id);
