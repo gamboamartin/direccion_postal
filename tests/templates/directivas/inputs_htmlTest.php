@@ -78,7 +78,7 @@ class inputs_htmlTest extends test {
         $resultado = $inp->input($cols, $directivas, $row_upd, $value_vacio, $campo);
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals("<div class='control-group col-sm-3'><label class='control-label' for='a'>a</label><div class='controls'><input type='text' name='a' value='' class='form-control'  required id='a' placeholder='a' /></div></div>",$resultado);
+        $this->assertEquals("<div class='control-group col-sm-3'><label class='control-label' for='a'>a</label><div class='controls'><input type='text' name='a' value='' class='form-control' required id='a' placeholder='a' title='a' /></div></div>",$resultado);
         errores::$error = false;
     }
 

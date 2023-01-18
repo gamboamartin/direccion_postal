@@ -33,6 +33,13 @@ class _init_dps{
 
         return $controlador;
     }
+
+    /**
+     * Inicializa datatables
+     * @param array $columns Columnas para front
+     * @param array $filtro Filtros aplicables datatables
+     * @return stdClass
+     */
     public function init_datatables(array $columns, array $filtro): stdClass
     {
         $datatables = new stdClass();
