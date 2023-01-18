@@ -26,7 +26,7 @@ final class controlador_adm_session extends \gamboamartin\controllers\controlado
      * @param bool $ws Si ws es true retornara el resultado en formato de json
      * @return array vacio siempre
      */
-    public function denegado(bool $header, bool $ws = false): array
+    final public function denegado(bool $header, bool $ws = false): array
     {
 
         $this->include_menu = (new generales())->path_base;
