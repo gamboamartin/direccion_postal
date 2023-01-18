@@ -54,7 +54,8 @@
         "gamboa.martin/template_1": "^6.0.0",
         "gamboa.martin/system": "^6.0.0",
         "gamboa.martin/services": "^5.0.0",
-        "gamboa.martin/js_base": "^1.0.0"
+        "gamboa.martin/js_base": "^1.0.0",
+        "gamboa.martin/acl": "^6.0.0"
 
     },
     "require-dev": {
