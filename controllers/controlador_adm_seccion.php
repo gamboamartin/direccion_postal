@@ -8,4 +8,4 @@
  */
 namespace controllers;
 
-class controlador_adm_seccion extends \gamboamartin\acl\controllers\controlador_adm_seccion {}
+final class controlador_adm_seccion extends \gamboamartin\acl\controllers\controlador_adm_seccion {}
