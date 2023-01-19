@@ -49,7 +49,7 @@ class _init_dps{
         return $datatables;
     }
 
-    public function init_propiedades_ctl(controlador_dp_calle|controlador_dp_calle_pertenece|_ctl_calles $controler){
+    final public function init_propiedades_ctl(controlador_dp_calle|controlador_dp_calle_pertenece|_ctl_calles $controler){
         $controler->titulo_lista = 'Calles';
 
         $propiedades = $controler->inicializa_priedades();

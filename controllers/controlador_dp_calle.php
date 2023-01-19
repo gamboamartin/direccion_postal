@@ -96,6 +96,10 @@ class controlador_dp_calle extends _ctl_calles {
 
     }
 
+    /**
+     * @return array
+     * @final revisada
+     */
     public function inicializa_priedades(): array
     {
         $identificador = "codigo";
