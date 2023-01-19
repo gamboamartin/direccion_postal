@@ -40,7 +40,7 @@ class _init_dps{
      * @param array $filtro Filtros aplicables datatables
      * @return stdClass
      */
-    public function init_datatables(array $columns, array $filtro): stdClass
+    final public function init_datatables(array $columns, array $filtro): stdClass
     {
         $datatables = new stdClass();
         $datatables->columns = $columns;
