@@ -48,7 +48,7 @@ class dp_calle_pertenece extends _base {
         return $r_alta_bd;
     }
 
-    protected function campos_base(array $data, modelo $modelo, int $id = -1, array $keys_integra_ds = array()): array
+    protected function campos_base_temp(array $data, modelo $modelo, int $id = -1, array $keys_integra_ds = array()): array
     {
 
         $keys = array('dp_calle_id','dp_colonia_postal_id');
@@ -159,7 +159,7 @@ class dp_calle_pertenece extends _base {
             return $this->error->error(mensaje: 'Error al validar data',data:  $valida);
         }
 
-        $registro = $this->campos_base(data:$registro, modelo: $this);
+        $registro = $this->campos_base_temp(data:$registro, modelo: $this);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
         }
@@ -240,7 +240,7 @@ class dp_calle_pertenece extends _base {
             return $this->error->error(mensaje: 'Error al validar registro',data:  $valida);
         }
 
-        $registro = $this->campos_base(data:$registro, modelo: $this,id: $id);
+        $registro = $this->campos_base_temp(data:$registro, modelo: $this,id: $id);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
         }
