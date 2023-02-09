@@ -26,7 +26,7 @@ class inputs_html {
      * @fecha 2022-08-08 13:39
      * @author mgamboa
      */
-    public function base_direcciones_asignacion(system $controler, stdClass $inputs): stdClass|array
+    final public function base_direcciones_asignacion(system $controler, stdClass $inputs): stdClass|array
     {
 
         $keys = array('selects');
@@ -68,7 +68,7 @@ class inputs_html {
      * @return array|string
      * @version 0.148.10
      */
-    public function input(int $cols, directivas $directivas, stdClass $row_upd, bool $value_vacio,
+    final public function input(int $cols, directivas $directivas, stdClass $row_upd, bool $value_vacio,
                           string $campo): array|string
     {
 
