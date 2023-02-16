@@ -9,6 +9,7 @@
 namespace controllers;
 
 use gamboamartin\direccion_postal\models\dp_estado;
+use gamboamartin\direccion_postal\models\dp_pais;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\template_1\html;
@@ -48,6 +49,9 @@ class controlador_dp_estado extends _ctl_dps {
             print_r($error);
             die('Error');
         }
+
+        $this->parents_verifica[] = (new dp_pais(link: $this->link));
+
     }
 
     public function asignar_propiedad(string $identificador, mixed $propiedades)

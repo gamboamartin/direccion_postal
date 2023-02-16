@@ -8,6 +8,7 @@
  */
 namespace controllers;
 
+use gamboamartin\direccion_postal\models\dp_colonia;
 use gamboamartin\direccion_postal\models\dp_colonia_postal;
 use gamboamartin\direccion_postal\models\dp_cp;
 use gamboamartin\errores\errores;
@@ -52,7 +53,11 @@ class controlador_dp_colonia_postal extends _ctl_dps {
             print_r($error);
             die('Error');
         }
+
+        $this->parents_verifica[] = (new dp_colonia(link: $this->link));
+        $this->parents_verifica[] = (new dp_cp(link: $this->link));
     }
+
 
 
     public function asignar_propiedad(string $identificador, mixed $propiedades)

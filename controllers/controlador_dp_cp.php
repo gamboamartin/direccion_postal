@@ -54,6 +54,8 @@ class controlador_dp_cp extends _ctl_dps {
             print_r($error);
             die('Error');
         }
+
+        $this->parents_verifica[] = (new dp_municipio(link: $this->link));
     }
 
 

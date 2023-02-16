@@ -53,6 +53,8 @@ class controlador_dp_municipio extends _ctl_dps {
             print_r($error);
             die('Error');
         }
+
+        $this->parents_verifica[] = (new dp_estado(link: $this->link));
     }
 
     public function asignar_propiedad(string $identificador, mixed $propiedades)

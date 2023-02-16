@@ -8,6 +8,7 @@
  */
 namespace controllers;
 
+use gamboamartin\direccion_postal\models\dp_calle;
 use gamboamartin\direccion_postal\models\dp_calle_pertenece;
 use gamboamartin\direccion_postal\models\dp_colonia_postal;
 use gamboamartin\errores\errores;
@@ -40,6 +41,9 @@ class controlador_dp_calle_pertenece extends _ctl_calles {
 
         parent::__construct(html: $html, link: $link, modelo: $modelo, obj_link: $obj_link, columns: $columns,
             filtro: $filtro, paths_conf: $paths_conf);
+
+        $this->parents_verifica[] = (new dp_colonia_postal(link: $this->link));
+        $this->parents_verifica[] = (new dp_calle(link: $this->link));
     }
 
 
@@ -105,6 +109,7 @@ class controlador_dp_calle_pertenece extends _ctl_calles {
 
         return $this->keys_selects;
     }
+
 
     public function modifica(bool $header, bool $ws = false): array|stdClass
     {
