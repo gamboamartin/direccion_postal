@@ -13,7 +13,6 @@ use gamboamartin\direccion_postal\models\dp_colonia_postal;
 use gamboamartin\direccion_postal\models\dp_cp;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
-use gamboamartin\system\system;
 use gamboamartin\template_1\html;
 use html\dp_colonia_postal_html;
 use PDO;

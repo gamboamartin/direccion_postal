@@ -20,7 +20,7 @@ use stdClass;
 
 class controlador_dp_cp extends _ctl_dps {
 
-    public array $keys_selects = array();
+    public array|stdClass $keys_selects = array();
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
         $modelo = new dp_cp(link: $link);
