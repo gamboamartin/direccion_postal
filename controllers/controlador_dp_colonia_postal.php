@@ -56,6 +56,8 @@ class controlador_dp_colonia_postal extends _ctl_dps {
 
         $this->parents_verifica[] = (new dp_colonia(link: $this->link));
         $this->parents_verifica[] = (new dp_cp(link: $this->link));
+
+        $this->verifica_parents_alta = true;
     }
 
 

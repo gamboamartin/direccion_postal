@@ -44,6 +44,8 @@ class controlador_dp_calle_pertenece extends _ctl_calles {
 
         $this->parents_verifica[] = (new dp_colonia_postal(link: $this->link));
         $this->parents_verifica[] = (new dp_calle(link: $this->link));
+
+        $this->verifica_parents_alta = true;
     }
 
 

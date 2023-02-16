@@ -51,6 +51,7 @@ class controlador_dp_estado extends _ctl_dps {
         }
 
         $this->parents_verifica[] = (new dp_pais(link: $this->link));
+        $this->verifica_parents_alta = true;
 
     }
 

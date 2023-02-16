@@ -56,6 +56,7 @@ class controlador_dp_cp extends _ctl_dps {
         }
 
         $this->parents_verifica[] = (new dp_municipio(link: $this->link));
+        $this->verifica_parents_alta = true;
     }
 
 
