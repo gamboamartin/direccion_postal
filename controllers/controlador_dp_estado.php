@@ -55,17 +55,6 @@ class controlador_dp_estado extends _ctl_dps {
 
     }
 
-    public function asignar_propiedad(string $identificador, mixed $propiedades)
-    {
-        if (!array_key_exists($identificador,$this->keys_selects)){
-            $this->keys_selects[$identificador] = new stdClass();
-        }
-
-        foreach ($propiedades as $key => $value){
-            $this->keys_selects[$identificador]->$key = $value;
-        }
-    }
-
     /**
      * @param bool $header If header muestra directo en aplicacion
      * @param bool $ws If ws retorna un obj en forma JSON

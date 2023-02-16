@@ -50,16 +50,6 @@ class controlador_dp_pais extends _ctl_dps {
     }
 
 
-    public function asignar_propiedad(string $identificador, mixed $propiedades)
-    {
-        if (!array_key_exists($identificador,$this->keys_selects)){
-            $this->keys_selects[$identificador] = new stdClass();
-        }
-
-        foreach ($propiedades as $key => $value){
-            $this->keys_selects[$identificador]->$key = $value;
-        }
-    }
 
     private function inicializa_priedades(): array
     {

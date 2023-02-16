@@ -4,10 +4,11 @@ namespace controllers;
 
 use gamboamartin\errores\errores;
 use gamboamartin\system\system;
+use stdClass;
 
 class _ctl_dps extends system{
 
-    public array $keys_selects = array();
+    public array|stdClass $keys_selects = array();
 
     public function alta(bool $header, bool $ws = false): array|string
     {

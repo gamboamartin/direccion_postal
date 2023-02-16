@@ -58,16 +58,6 @@ class controlador_dp_municipio extends _ctl_dps {
         $this->verifica_parents_alta = true;
     }
 
-    public function asignar_propiedad(string $identificador, mixed $propiedades)
-    {
-        if (!array_key_exists($identificador,$this->keys_selects)){
-            $this->keys_selects[$identificador] = new stdClass();
-        }
-
-        foreach ($propiedades as $key => $value){
-            $this->keys_selects[$identificador]->$key = $value;
-        }
-    }
 
     /**
      * Función que obtiene los campos de dp_pais, dp_estado y dp_municipio por medio de

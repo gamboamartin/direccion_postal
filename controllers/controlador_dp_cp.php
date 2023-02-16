@@ -60,18 +60,6 @@ class controlador_dp_cp extends _ctl_dps {
     }
 
 
-
-    public function asignar_propiedad(string $identificador, mixed $propiedades)
-    {
-        if (!array_key_exists($identificador,$this->keys_selects)){
-            $this->keys_selects[$identificador] = new stdClass();
-        }
-
-        foreach ($propiedades as $key => $value){
-            $this->keys_selects[$identificador]->$key = $value;
-        }
-    }
-
     /**
      * Función que obtiene los campos de dp_pais, dp_estado, dp_municipio y dp_cp por medio de
      * un arreglo $keys con los nombres de sus respectivos campos.
