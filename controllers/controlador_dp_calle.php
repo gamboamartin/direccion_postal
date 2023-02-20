@@ -9,6 +9,7 @@
 namespace controllers;
 
 use gamboamartin\direccion_postal\models\dp_calle;
+use gamboamartin\direccion_postal\models\dp_pais;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\template_1\html;
@@ -34,6 +35,8 @@ class controlador_dp_calle extends _ctl_calles {
 
         parent::__construct(html: $html, link: $link, modelo: $modelo, obj_link: $obj_link, columns: $columns,
             filtro: $filtro, paths_conf: $paths_conf);
+
+        $this->childrens_data['dp_calle_pertenece']['title'] = 'Calle Pertenece';
 
 
     }
@@ -105,6 +108,8 @@ class controlador_dp_calle extends _ctl_calles {
     public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true,
                              bool $muestra_btn = true): stdClass|array
     {
+
+        $this->parents_verifica[] = (new dp_pais(link: $this->link));
         $base = $this->base();
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,

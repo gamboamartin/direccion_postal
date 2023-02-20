@@ -59,6 +59,8 @@ class controlador_dp_cp extends _ctl_dps {
 
         $this->parents_verifica[] = (new dp_municipio(link: $this->link));
         $this->verifica_parents_alta = true;
+
+        $this->childrens_data['dp_colonia_postal']['title'] = 'Colonias';
     }
 
     public function alta(bool $header, bool $ws = false): array|string
@@ -141,6 +143,11 @@ class controlador_dp_cp extends _ctl_dps {
 
     public function modifica(bool $header, bool $ws = false): array|stdClass
     {
+
+        $this->parents_verifica[] = (new dp_pais(link: $this->link));
+        $this->parents_verifica[] = (new dp_estado(link: $this->link));
+        $this->parents_verifica[] = (new dp_municipio(link: $this->link));
+
         $r_modifica =  parent::modifica(header: false);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);

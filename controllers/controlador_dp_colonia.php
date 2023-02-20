@@ -48,6 +48,8 @@ class controlador_dp_colonia extends _ctl_dps {
             print_r($error);
             die('Error');
         }
+
+        $this->childrens_data['dp_colonia_postal']['title'] = 'Colonia Postal';
     }
 
 
