@@ -55,6 +55,7 @@ class controlador_dp_colonia extends _ctl_dps {
 
     private function base(): array|stdClass
     {
+
         $r_modifica =  parent::modifica(header: false);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al generar template',data:  $r_modifica);
