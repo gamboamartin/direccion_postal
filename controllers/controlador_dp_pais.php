@@ -47,6 +47,8 @@ class controlador_dp_pais extends _ctl_dps {
         }
 
         $this->lista_get_data = true;
+
+        $this->childrens_data['dp_estado']['title'] = 'Estado';
     }
 
 
@@ -77,6 +79,8 @@ class controlador_dp_pais extends _ctl_dps {
             print_r($error);
             die('Error');
         }
+
+
 
         return $r_modifica;
     }

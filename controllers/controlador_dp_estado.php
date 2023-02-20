@@ -53,6 +53,10 @@ class controlador_dp_estado extends _ctl_dps {
         $this->parents_verifica[] = (new dp_pais(link: $this->link));
         $this->verifica_parents_alta = true;
 
+        $this->childrens_data['dp_municipio']['title'] = 'Municipio';
+
+
+
     }
 
     /**
@@ -96,6 +100,7 @@ class controlador_dp_estado extends _ctl_dps {
 
     public function modifica(bool $header, bool $ws = false): array|stdClass
     {
+
         $r_modifica =  parent::modifica(header: false);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
