@@ -50,7 +50,8 @@ class controlador_dp_estado extends _ctl_dps {
             die('Error');
         }
 
-        $this->parents_verifica[] = (new dp_pais(link: $this->link));
+        $this->parents_verifica['dp_pais']['model_parent'] = (new dp_pais(link: $this->link));
+        $this->parents_verifica['dp_pais']['etiqueta'] = 'Alta Pais';
         $this->verifica_parents_alta = true;
 
         $this->childrens_data['dp_municipio']['title'] = 'Municipio';

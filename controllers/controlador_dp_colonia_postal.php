@@ -56,8 +56,10 @@ class controlador_dp_colonia_postal extends _ctl_dps {
             die('Error');
         }
 
-        $this->parents_verifica[] = (new dp_colonia(link: $this->link));
-        $this->parents_verifica[] = (new dp_cp(link: $this->link));
+        $this->parents_verifica['dp_colonia']['model_parent'] = (new dp_colonia(link: $this->link));
+        $this->parents_verifica['dp_colonia']['etiqueta'] = 'Alta Colonia';
+        $this->parents_verifica['dp_cp']['model_parent'] = (new dp_cp(link: $this->link));
+        $this->parents_verifica['dp_cp']['etiqueta'] = 'Alta CP';
 
         $this->verifica_parents_alta = true;
 
@@ -66,9 +68,12 @@ class controlador_dp_colonia_postal extends _ctl_dps {
 
     public function alta(bool $header, bool $ws = false): array|string
     {
-        $this->parents_verifica[] = (new dp_pais(link: $this->link));
-        $this->parents_verifica[] = (new dp_estado(link: $this->link));
-        $this->parents_verifica[] = (new dp_municipio(link: $this->link));
+        $this->parents_verifica['dp_pais']['model_parent'] = (new dp_pais(link: $this->link));
+        $this->parents_verifica['dp_pais']['etiqueta'] = 'Alta Pais';
+        $this->parents_verifica['dp_estado']['model_parent'] = (new dp_estado(link: $this->link));
+        $this->parents_verifica['dp_estado']['etiqueta'] ='Alta Estado';
+        $this->parents_verifica['dp_municipio']['model_parent'] = (new dp_municipio(link: $this->link));
+        $this->parents_verifica['dp_municipio']['etiqueta'] ='Alta Municipio';
 
 
 
