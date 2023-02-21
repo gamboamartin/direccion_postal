@@ -85,15 +85,24 @@ class controlador_dp_estado extends _ctl_dps {
     {
         $identificador = "dp_pais_id";
         $propiedades = array("label" => "País");
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $prop = $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al asignar propiedad',data:  $prop);
+        }
 
         $identificador = "codigo";
         $propiedades = array("place_holder" => "Código");
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al asignar propiedad',data:  $prop);
+        }
 
         $identificador = "descripcion";
         $propiedades = array("place_holder" => "Estado", "cols" => 12);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $prop = $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al asignar propiedad',data:  $prop);
+        }
 
         return $this->keys_selects;
     }
