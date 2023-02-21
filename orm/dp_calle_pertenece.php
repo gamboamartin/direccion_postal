@@ -22,6 +22,8 @@ class dp_calle_pertenece extends _base {
             columnas: $columnas,campos_view: $campos_view);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Calle Pertenece';
     }
 
     public function alta_bd(): array|stdClass

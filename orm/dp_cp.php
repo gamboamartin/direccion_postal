@@ -27,6 +27,8 @@ class dp_cp extends modelo {
             columnas: $columnas,campos_view: $campos_view);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'CP';
     }
 
     public function alta_bd(): array|stdClass

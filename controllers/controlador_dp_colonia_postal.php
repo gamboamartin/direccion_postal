@@ -70,8 +70,10 @@ class controlador_dp_colonia_postal extends _ctl_dps {
     {
         $this->parents_verifica['dp_pais']['model_parent'] = (new dp_pais(link: $this->link));
         $this->parents_verifica['dp_pais']['etiqueta'] = 'Alta Pais';
+
         $this->parents_verifica['dp_estado']['model_parent'] = (new dp_estado(link: $this->link));
         $this->parents_verifica['dp_estado']['etiqueta'] ='Alta Estado';
+
         $this->parents_verifica['dp_municipio']['model_parent'] = (new dp_municipio(link: $this->link));
         $this->parents_verifica['dp_municipio']['etiqueta'] ='Alta Municipio';
 

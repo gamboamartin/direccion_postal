@@ -19,6 +19,8 @@ class dp_direccion_pendiente extends modelo{
 
         parent::__construct(link: $link,tabla:  $tabla, columnas: $columnas, campos_view: $campos_view);
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Direccion Pendiente';
     }
 
     public function alta_bd(): array|stdClass

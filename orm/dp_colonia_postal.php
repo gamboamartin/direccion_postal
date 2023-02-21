@@ -20,6 +20,8 @@ class dp_colonia_postal extends _base {
             columnas: $columnas,campos_view: $campos_view);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Colonia Postal';
     }
 
     public function alta_bd(): array|stdClass

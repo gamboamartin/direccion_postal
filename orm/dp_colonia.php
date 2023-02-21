@@ -19,6 +19,8 @@ class dp_colonia extends _modelo_parent {
             columnas: $columnas,campos_view: $campos_view);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Colonia';
     }
 
 

@@ -16,6 +16,7 @@ class dp_pais extends _modelo_parent {
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas, campos_view: $campos_view);
         $this->NAMESPACE = __NAMESPACE__;
+        $this->etiqueta = 'Pais';
     }
 
 }

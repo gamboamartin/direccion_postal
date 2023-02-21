@@ -21,6 +21,7 @@ class dp_estado extends modelo {
             columnas: $columnas,campos_view: $campos_view);
 
         $this->NAMESPACE = __NAMESPACE__;
+        $this->etiqueta = 'Estado';
     }
 
     public function alta_bd(): array|stdClass
