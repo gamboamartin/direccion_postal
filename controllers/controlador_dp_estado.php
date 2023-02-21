@@ -81,6 +81,10 @@ class controlador_dp_estado extends _ctl_dps {
         return $salida;
     }
 
+    /**
+     * Inicializa propiedades
+     * @return array
+     */
     private function inicializa_priedades(): array
     {
         $identificador = "dp_pais_id";
