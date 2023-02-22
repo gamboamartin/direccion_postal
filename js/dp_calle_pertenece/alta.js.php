@@ -77,7 +77,7 @@ let asigna_colonias_postales = (dp_cp_id = '') => {
         integra_new_option(sl_colonia_postal,'Seleccione una colonia postal','-1');
 
         $.each(data.registros, function( index, dp_colonia_postal ) {
-            integra_new_option(sl_colonia_postal,dp_colonia_postal.dp_colonia_postal_descripcion_select,dp_colonia_postal.dp_colonia_postal_id);
+            integra_new_option(sl_colonia_postal,dp_colonia_postal.<?php echo $controlador->key_dp_colonia_postal_descripcion_select ?>,dp_colonia_postal.dp_colonia_postal_id);
         });
         sl_colonia_postal.selectpicker('refresh');
     });
