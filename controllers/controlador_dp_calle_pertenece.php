@@ -24,7 +24,7 @@ use stdClass;
 
 class controlador_dp_calle_pertenece extends _ctl_calles {
 
-
+    public string $key_dp_cp_descripcion_select = 'dp_cp_descripcion';
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
         $modelo = new dp_calle_pertenece(link: $link);
         $html_base = new html();

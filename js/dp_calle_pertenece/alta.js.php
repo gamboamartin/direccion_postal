@@ -1,3 +1,4 @@
+<?php /** @var controllers\controlador_dp_calle_pertenece $controlador  controlador en ejecucion */ ?>
 <script>
 let sl_dp_pais = $("#dp_pais_id");
 let sl_dp_estado = $("#dp_estado_id");
@@ -61,7 +62,7 @@ let asigna_codigos_postales = (dp_municipio_id = '') => {
         integra_new_option(sl_colonia_postal,'Seleccione una colonia postal','-1');
 
         $.each(data.registros, function( index, dp_cp ) {
-            integra_new_option(sl_dp_cp,dp_cp.dp_cp_descripcion_select,dp_cp.dp_cp_id);
+            integra_new_option(sl_dp_cp,dp_cp.<?php echo $controlador->key_dp_cp_descripcion_select ?>,dp_cp.dp_cp_id);
         });
         sl_dp_cp.selectpicker('refresh');
         sl_colonia_postal.selectpicker('refresh');
