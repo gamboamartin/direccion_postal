@@ -1,3 +1,4 @@
+<script>
 let sl_dp_pais = $("#dp_pais_id");
 let sl_dp_estado = $("#dp_estado_id");
 let sl_dp_municipio = $("#dp_municipio_id");
@@ -100,3 +101,4 @@ sl_dp_cp.change(function () {
     let selected = $(this).find('option:selected');
     asigna_colonias_postales(selected.val());
 });
+</script>
