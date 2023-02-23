@@ -37,57 +37,7 @@ class _ctl_calles extends _ctl_dps {
         }
     }
 
-    /**
-     * Genera el elemento necesario para integrar en java la obtencion de una url
-     * @param string $accion Accion a ejecutar
-     * @param string $seccion Seccion a ejecutar
-     * @param string $extra_params Params GET
-     * @return string
-     */
-    private function url_servicio(string $accion, string $seccion, string $extra_params = ''): string
-    {
 
-
-        return "get_url('$seccion','$accion', $extra_params);";
-    }
-
-    private function url_servicio_extra_param(string $accion, string $seccion, string $seccion_param): array|string
-    {
-        $extra_param_js = '{'.$seccion_param.'_id: '.$seccion_param.'_id}';
-        $url = $this->url_servicio(accion: $accion,seccion:  $seccion,extra_params:  $extra_param_js);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al generar url',data: $url);
-        }
-        return $url;
-    }
-
-    private function url_servicio_get(string $seccion_limpia, string $seccion_param): array|string
-    {
-        $accion = "get_$seccion_limpia";
-        $seccion = "dp_$seccion_limpia";
-
-        $url = $this->url_servicio_extra_param(accion: $accion,seccion:  $seccion, seccion_param: $seccion_param);
-
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar url js',data:  $url,header: $header,ws: $ws);
-
-        }
-        return $url;
-    }
-
-    protected function urls(array $urls): array
-    {
-        $urls_js = array();
-        foreach ($urls as $seccion_limpia=>$seccion_param){
-            $url = $this->url_servicio_get(seccion_limpia: $seccion_limpia, seccion_param: $seccion_param);
-            if(errores::$error){
-                return $this->errores->error(mensaje: 'Error al generar url js',data:  $url);
-            }
-            $key = "dp_$seccion_limpia";
-            $urls_js[$key] = $url;
-        }
-        return $urls_js;
-    }
 
 
 }
