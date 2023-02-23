@@ -75,10 +75,16 @@ class _init_dps{
         return $controler;
     }
 
-    protected function new_option(string $entidad_key, string $key_option, string $seccion): string
+    private function new_option(string $entidad_key, string $key_option, string $seccion): string
     {
         return 'integra_new_option(sl_'.$seccion.','.$seccion.'.'.$entidad_key.'_'.$key_option.','.$seccion.'.'.$seccion.'_id);';
     }
+
+    public function selector(string $entidad): string
+    {
+        return 'let sl_'.$entidad.' = $("#'.$entidad.'_id");';
+    }
+
 
 
     /**
@@ -143,6 +149,8 @@ class _init_dps{
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al generar new_option',data:  $new_option);
             }
+
+
 
             $urls_js[$key]['url'] = $url;
             $urls_js[$key]['new_option'] = $new_option;

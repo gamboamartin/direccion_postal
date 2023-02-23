@@ -126,6 +126,8 @@ class controlador_dp_calle_pertenece extends _ctl_calles {
     private function init_js(): array
     {
         $urls = array();
+
+
         $urls['estado']['seccion_param'] = 'dp_pais';
         $urls['estado']['key_option'] = 'descripcion';
 
@@ -138,6 +140,8 @@ class controlador_dp_calle_pertenece extends _ctl_calles {
         $urls['colonia_postal']['seccion_param'] = 'dp_cp';
         $urls['colonia_postal']['key_option'] = 'descripcion';
         $urls['colonia_postal']['entidad_key'] = 'dp_colonia';
+
+
 
         $urls_js = (new _init_dps())->urls(urls:$urls);
 
