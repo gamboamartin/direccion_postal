@@ -74,16 +74,20 @@ class _init_dps{
 
         $urls['estado']['seccion_param'] = 'dp_pais';
         $urls['estado']['key_option'] = 'descripcion';
+        $urls['estado']['childrens'] = array('estado','municipio','cp','colonia_postal');
 
         $urls['municipio']['seccion_param'] = 'dp_estado';
         $urls['municipio']['key_option'] = 'descripcion';
+        $urls['municipio']['childrens'] = array('municipio','cp','colonia_postal');
 
         $urls['cp']['seccion_param'] = 'dp_municipio';
         $urls['cp']['key_option'] = 'descripcion';
+        $urls['cp']['childrens'] = array('cp','colonia_postal');
 
         $urls['colonia_postal']['seccion_param'] = 'dp_cp';
         $urls['colonia_postal']['key_option'] = 'descripcion';
         $urls['colonia_postal']['entidad_key'] = 'dp_colonia';
+        $urls['colonia_postal']['childrens'] = array('colonia_postal');
 
 
         $urls_js = $this->urls(urls:$urls);
@@ -115,6 +119,26 @@ class _init_dps{
 
         return $empty.$init;
 
+    }
+
+    private function limpia_selectores(array $selectores){
+        $limpia_selectores = '';
+        foreach ($selectores as $selector) {
+
+            $entidad = "dp_$selector";
+
+            $css_id = $this->selector(entidad:$entidad);
+            if (errores::$error) {
+                return $this->error->error(mensaje: 'Error al generar css_id', data: $css_id);
+            }
+
+            $limpia = $this->limpia_selector(css_id: $css_id, entidad_limpia: $selector);
+            if (errores::$error) {
+                return $this->error->error(mensaje: 'Error al generar limpia', data: $limpia);
+            }
+            $limpia_selectores.=$limpia;
+        }
+        return $limpia_selectores;
     }
 
     private function new_option(string $entidad_key, string $key_option, string $seccion): string
@@ -198,10 +222,14 @@ class _init_dps{
                 $key_option = $data['key_option'];
             }
 
-
             $entidad_key = $key;
             if(isset($data['entidad_key'])){
                 $entidad_key = $data['entidad_key'];
+            }
+
+            $childrens = array();
+            if(isset($data['childrens'])){
+                $childrens = $data['childrens'];
             }
 
             $url = $this->url_servicio_get(seccion_limpia: $seccion_limpia, seccion_param: $seccion_param);
@@ -221,7 +249,7 @@ class _init_dps{
             }
 
 
-            $limpia = $this->limpia_selector(css_id: $css_id, entidad_limpia: $seccion_limpia);
+            $limpia = $this->limpia_selectores(selectores: $childrens);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al generar limpia',data:  $limpia);
             }

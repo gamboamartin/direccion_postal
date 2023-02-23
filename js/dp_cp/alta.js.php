@@ -9,9 +9,6 @@ let asigna_estados = (dp_pais_id = '') => {
 
     get_data(url, function (data) {
     <?php echo $controlador->url_servicios['dp_estado']['limpia']; ?>
-    <?php echo $controlador->url_servicios['dp_municipio']['limpia']; ?>
-
-
 
     <?php echo $controlador->url_servicios['dp_estado']['options']; ?>
 
@@ -25,7 +22,6 @@ let asigna_municipios = (dp_estado_id = '') => {
 
     get_data(url, function (data) {
     <?php echo $controlador->url_servicios['dp_municipio']['limpia']; ?>
-
 
     <?php echo $controlador->url_servicios['dp_municipio']['options']; ?>
 
