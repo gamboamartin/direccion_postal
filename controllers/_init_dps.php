@@ -2,6 +2,7 @@
 
 namespace controllers;
 
+use base\controller\controler;
 use gamboamartin\errores\errores;
 use stdClass;
 
@@ -63,6 +64,37 @@ class _init_dps{
         return $datatables;
     }
 
+    final public function init_js(controler $controler): array
+    {
+        $urls = array();
+
+        $urls['pais'] = array();
+
+        $urls['calle'] = array();
+
+        $urls['estado']['seccion_param'] = 'dp_pais';
+        $urls['estado']['key_option'] = 'descripcion';
+
+        $urls['municipio']['seccion_param'] = 'dp_estado';
+        $urls['municipio']['key_option'] = 'descripcion';
+
+        $urls['cp']['seccion_param'] = 'dp_municipio';
+        $urls['cp']['key_option'] = 'descripcion';
+
+        $urls['colonia_postal']['seccion_param'] = 'dp_cp';
+        $urls['colonia_postal']['key_option'] = 'descripcion';
+        $urls['colonia_postal']['entidad_key'] = 'dp_colonia';
+
+
+        $urls_js = $this->urls(urls:$urls);
+
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar url js',data:  $urls_js);
+        }
+        $controler->url_servicios = $urls_js;
+        return $urls_js;
+    }
+
     final public function init_propiedades_ctl(controlador_dp_calle|controlador_dp_calle_pertenece|_ctl_calles $controler){
         $controler->titulo_lista = 'Calles';
 
@@ -82,7 +114,7 @@ class _init_dps{
 
     public function selector(string $entidad): string
     {
-        return 'let sl_'.$entidad.' = $("#'.$entidad.'_id");';
+        return '$("#'.$entidad.'_id");';
     }
 
 
@@ -131,10 +163,18 @@ class _init_dps{
         foreach ($urls as $seccion_limpia=>$data){
             $key = "dp_$seccion_limpia";
 
-            $seccion_param = $data['seccion_param'];
-            $key_option = $data['key_option'];
-            $entidad_key = $key;
+            $seccion_param = '';
+            if(isset($data['seccion_param'])){
+                $seccion_param = $data['seccion_param'];
+            }
 
+            $key_option = '';
+            if(isset($data['key_option'])){
+                $key_option = $data['key_option'];
+            }
+
+
+            $entidad_key = $key;
             if(isset($data['entidad_key'])){
                 $entidad_key = $data['entidad_key'];
             }
@@ -150,10 +190,15 @@ class _init_dps{
                 return $this->error->error(mensaje: 'Error al generar new_option',data:  $new_option);
             }
 
+            $css_id = $this->selector(entidad: $key);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al generar css',data:  $css_id);
+            }
 
 
             $urls_js[$key]['url'] = $url;
             $urls_js[$key]['new_option'] = $new_option;
+            $urls_js[$key]['css_id'] = $css_id;
         }
         return $urls_js;
     }

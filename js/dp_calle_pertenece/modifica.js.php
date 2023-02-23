@@ -1,11 +1,11 @@
 <?php /** @var controllers\controlador_dp_calle_pertenece $controlador  controlador en ejecucion */ ?>
 <script>
-let sl_dp_pais = $("#dp_pais_id");
-let sl_dp_estado = $("#dp_estado_id");
-let sl_dp_municipio = $("#dp_municipio_id");
-let sl_dp_cp = $("#dp_cp_id");
-let sl_dp_colonia_postal = $("#dp_colonia_postal_id");
-let sl_dp_calle = $("#dp_calle_id");
+    let sl_dp_pais = <?php echo $controlador->url_servicios['dp_pais']['css_id']; ?>
+    let sl_dp_estado = <?php echo $controlador->url_servicios['dp_estado']['css_id']; ?>
+    let sl_dp_municipio = <?php echo $controlador->url_servicios['dp_municipio']['css_id']; ?>
+    let sl_dp_cp = <?php echo $controlador->url_servicios['dp_cp']['css_id']; ?>
+    let sl_dp_colonia_postal = <?php echo $controlador->url_servicios['dp_colonia_postal']['css_id']; ?>
+    let sl_dp_calle = <?php echo $controlador->url_servicios['dp_calle']['css_id']; ?>
 
 let asigna_estados = (dp_pais_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_estado']['url']; ?>

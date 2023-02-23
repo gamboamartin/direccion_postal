@@ -60,7 +60,7 @@ class controlador_dp_calle_pertenece extends _ctl_calles {
         $this->parents_verifica['dp_municipio'] = (new dp_municipio(link: $this->link));
         $this->parents_verifica['dp_cp'] = (new dp_cp(link: $this->link));
 
-        $urls_js = $this->init_js();
+        $urls_js = (new _init_dps())->init_js(controler: $this);
 
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar url js',data:  $urls_js,header: $header,ws: $ws);
@@ -123,40 +123,13 @@ class controlador_dp_calle_pertenece extends _ctl_calles {
         return $this->keys_selects;
     }
 
-    private function init_js(): array
-    {
-        $urls = array();
 
-
-        $urls['estado']['seccion_param'] = 'dp_pais';
-        $urls['estado']['key_option'] = 'descripcion';
-
-        $urls['municipio']['seccion_param'] = 'dp_estado';
-        $urls['municipio']['key_option'] = 'descripcion';
-
-        $urls['cp']['seccion_param'] = 'dp_municipio';
-        $urls['cp']['key_option'] = 'descripcion';
-
-        $urls['colonia_postal']['seccion_param'] = 'dp_cp';
-        $urls['colonia_postal']['key_option'] = 'descripcion';
-        $urls['colonia_postal']['entidad_key'] = 'dp_colonia';
-
-
-
-        $urls_js = (new _init_dps())->urls(urls:$urls);
-
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al generar url js',data:  $urls_js);
-        }
-        $this->url_servicios = $urls_js;
-        return $urls_js;
-    }
 
 
     public function modifica(bool $header, bool $ws = false): array|stdClass
     {
 
-        $urls_js = $this->init_js();
+        $urls_js = (new _init_dps())->init_js(controler: $this);
 
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar url js',data:  $urls_js,header: $header,ws: $ws);
