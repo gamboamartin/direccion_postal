@@ -115,7 +115,7 @@ class controlador_dp_calle_pertenece extends _ctl_calles {
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "dp_calle_id";
-        $propiedades = array("label" => "Calle");
+        $propiedades = array("label" => "Calle", 'key_descripcion_select' => 'dp_calle_descripcion');
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "codigo";

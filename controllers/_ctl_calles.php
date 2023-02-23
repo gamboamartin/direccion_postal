@@ -37,6 +37,13 @@ class _ctl_calles extends _ctl_dps {
         }
     }
 
+    /**
+     * Genera el elemento necesario para integrar en java la obtencion de una url
+     * @param string $accion Accion a ejecutar
+     * @param string $seccion Seccion a ejecutar
+     * @param string $extra_params Params GET
+     * @return string
+     */
     private function url_servicio(string $accion, string $seccion, string $extra_params = ''): string
     {
 
