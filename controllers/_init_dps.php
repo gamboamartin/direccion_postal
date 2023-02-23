@@ -107,6 +107,11 @@ class _init_dps{
         return $controler;
     }
 
+    private function limpia_selector(string $entidad): string
+    {
+        return 'sl_'.$entidad.'.empty();';
+    }
+
     private function new_option(string $entidad_key, string $key_option, string $seccion): string
     {
         return 'integra_new_option(sl_'.$seccion.','.$seccion.'.'.$entidad_key.'_'.$key_option.','.$seccion.'.'.$seccion.'_id);';
@@ -195,10 +200,16 @@ class _init_dps{
                 return $this->error->error(mensaje: 'Error al generar css',data:  $css_id);
             }
 
+            $limpia = $this->limpia_selector(entidad: $key);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al generar limpia',data:  $limpia);
+            }
+
 
             $urls_js[$key]['url'] = $url;
             $urls_js[$key]['new_option'] = $new_option;
             $urls_js[$key]['css_id'] = $css_id;
+            $urls_js[$key]['limpia'] = $limpia;
         }
         return $urls_js;
     }

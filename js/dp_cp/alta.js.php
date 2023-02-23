@@ -1,19 +1,21 @@
-let sl_dp_pais = $("#dp_pais_id");
-let sl_dp_estado = $("#dp_estado_id");
-let sl_dp_municipio = $("#dp_municipio_id");
+<?php /** @var controllers\controlador_dp_colonia_postal $controlador  controlador en ejecucion */ ?>
+<script>
+let sl_dp_pais = <?php echo $controlador->url_servicios['dp_pais']['css_id']; ?>
+let sl_dp_estado = <?php echo $controlador->url_servicios['dp_estado']['css_id']; ?>
+let sl_dp_municipio = <?php echo $controlador->url_servicios['dp_municipio']['css_id']; ?>
 
 let asigna_estados = (dp_pais_id = '') => {
-    let url = get_url("dp_estado","get_estado", {dp_pais_id: dp_pais_id});
+    let url = <?php echo $controlador->url_servicios['dp_estado']['url']; ?>
 
     get_data(url, function (data) {
-        sl_dp_estado.empty();
-        sl_dp_municipio.empty();
+    <?php echo $controlador->url_servicios['dp_estado']['limpia']; ?>
+    <?php echo $controlador->url_servicios['dp_municipio']['limpia']; ?>
 
         integra_new_option(sl_dp_estado,'Seleccione un estado','-1');
         integra_new_option(sl_dp_municipio,'Seleccione un municipio','-1');
 
         $.each(data.registros, function( index, dp_estado ) {
-            integra_new_option(sl_dp_estado,dp_estado.dp_estado_descripcion_select,dp_estado.dp_estado_id);
+    <?php echo $controlador->url_servicios['dp_estado']['new_option']; ?>
         });
         sl_dp_estado.selectpicker('refresh');
         sl_dp_municipio.selectpicker('refresh');
@@ -21,14 +23,14 @@ let asigna_estados = (dp_pais_id = '') => {
 }
 
 let asigna_municipios = (dp_estado_id = '') => {
-    let url = get_url("dp_municipio","get_municipio", {dp_estado_id: dp_estado_id});
+    let url = <?php echo $controlador->url_servicios['dp_municipio']['url']; ?>
 
     get_data(url, function (data) {
-        sl_dp_municipio.empty();
+    <?php echo $controlador->url_servicios['dp_municipio']['limpia']; ?>
         integra_new_option(sl_dp_municipio,'Seleccione un municipio','-1');
 
         $.each(data.registros, function( index, dp_municipio ) {
-            integra_new_option(sl_dp_municipio,dp_municipio.dp_municipio_descripcion_select,dp_municipio.dp_municipio_id);
+    <?php echo $controlador->url_servicios['dp_municipio']['new_option']; ?>
         });
         sl_dp_municipio.selectpicker('refresh');
     });
@@ -43,3 +45,4 @@ sl_dp_estado.change(function () {
     let selected = $(this).find('option:selected');
     asigna_municipios(selected.val());
 });
+</script>

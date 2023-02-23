@@ -11,10 +11,11 @@ let asigna_estados = (dp_pais_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_estado']['url']; ?>
 
     get_data(url, function (data) {
-        sl_dp_estado.empty();
-        sl_dp_municipio.empty();
-        sl_dp_cp.empty();
-    sl_dp_colonia_postal.empty();
+    <?php echo $controlador->url_servicios['dp_estado']['limpia']; ?>
+    <?php echo $controlador->url_servicios['dp_municipio']['limpia']; ?>
+    <?php echo $controlador->url_servicios['dp_cp']['limpia']; ?>
+    <?php echo $controlador->url_servicios['dp_colonia_postal']['limpia']; ?>
+
 
         integra_new_option(sl_dp_estado,'Seleccione un estado','-1');
         integra_new_option(sl_dp_municipio,'Seleccione un municipio','-1');
@@ -35,9 +36,10 @@ let asigna_municipios = (dp_estado_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_municipio']['url']; ?>
 
     get_data(url, function (data) {
-        sl_dp_municipio.empty();
-        sl_dp_cp.empty();
-    sl_dp_colonia_postal.empty();
+    <?php echo $controlador->url_servicios['dp_municipio']['limpia']; ?>
+    <?php echo $controlador->url_servicios['dp_cp']['limpia']; ?>
+    <?php echo $controlador->url_servicios['dp_colonia_postal']['limpia']; ?>
+
 
         integra_new_option(sl_dp_municipio,'Seleccione un municipio','-1');
         integra_new_option(sl_dp_cp,'Seleccione un codigo postal','-1');
@@ -56,8 +58,9 @@ let asigna_codigos_postales = (dp_municipio_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_cp']['url']; ?>
 
     get_data(url, function (data) {
-        sl_dp_cp.empty();
-        sl_dp_colonia_postal.empty();
+    <?php echo $controlador->url_servicios['dp_cp']['limpia']; ?>
+    <?php echo $controlador->url_servicios['dp_colonia_postal']['limpia']; ?>
+
         integra_new_option(sl_dp_cp,'Seleccione un codigo postal','-1');
         integra_new_option(sl_dp_colonia_postal,'Seleccione una colonia postal','-1');
 
@@ -73,7 +76,8 @@ let asigna_colonias_postales = (dp_cp_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_colonia_postal']['url']; ?>
 
     get_data(url, function (data) {
-        sl_dp_colonia_postal.empty();
+    <?php echo $controlador->url_servicios['dp_colonia_postal']['limpia']; ?>
+
         integra_new_option(sl_dp_colonia_postal,'Seleccione una colonia postal','-1');
 
         $.each(data.registros, function( index, dp_colonia_postal ) {
