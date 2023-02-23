@@ -107,9 +107,14 @@ class _init_dps{
         return $controler;
     }
 
-    private function limpia_selector(string $entidad): string
+    private function limpia_selector(string $css_id, string $entidad_limpia): string
     {
-        return 'sl_'.$entidad.'.empty();';
+
+        $empty = $css_id.'.empty();';
+        $init = 'integra_new_option('.$css_id.',"Seleccione '.$entidad_limpia.'","-1");';
+
+        return $empty.$init;
+
     }
 
     private function new_option(string $entidad_key, string $key_option, string $seccion): string
@@ -119,7 +124,7 @@ class _init_dps{
 
     public function selector(string $entidad): string
     {
-        return '$("#'.$entidad.'_id");';
+        return '$("#'.$entidad.'_id")';
     }
 
 
@@ -189,18 +194,19 @@ class _init_dps{
                 return $this->error->error(mensaje: 'Error al generar url js',data:  $url);
             }
 
+            $css_id = $this->selector(entidad: $key);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al generar css',data:  $css_id);
+            }
+
 
             $new_option = $this->new_option(entidad_key: $entidad_key, key_option: $key_option,seccion:  $key);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al generar new_option',data:  $new_option);
             }
 
-            $css_id = $this->selector(entidad: $key);
-            if(errores::$error){
-                return $this->error->error(mensaje: 'Error al generar css',data:  $css_id);
-            }
 
-            $limpia = $this->limpia_selector(entidad: $key);
+            $limpia = $this->limpia_selector(css_id: $css_id, entidad_limpia: $seccion_limpia);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al generar limpia',data:  $limpia);
             }
