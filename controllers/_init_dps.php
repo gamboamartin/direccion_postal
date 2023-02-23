@@ -122,6 +122,16 @@ class _init_dps{
         return 'integra_new_option(sl_'.$seccion.','.$seccion.'.'.$entidad_key.'_'.$key_option.','.$seccion.'.'.$seccion.'_id);';
     }
 
+    private function options(string $entidad_key, string $key_option, string $seccion){
+        $new_option = $this->new_option(entidad_key: $entidad_key,key_option:  $key_option,seccion:  $seccion);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar new option', data: $new_option);
+        }
+        return '$.each(data.registros, function( index, '.$seccion.' ) {
+            '.$new_option.'
+        });';
+    }
+
     private function refresh_selectpicker(string $css_id): string
     {
         return $css_id.'.selectpicker("refresh");';
@@ -205,9 +215,9 @@ class _init_dps{
             }
 
 
-            $new_option = $this->new_option(entidad_key: $entidad_key, key_option: $key_option,seccion:  $key);
+            $options = $this->options(entidad_key: $entidad_key,key_option:  $key_option,seccion:  $key);
             if(errores::$error){
-                return $this->error->error(mensaje: 'Error al generar new_option',data:  $new_option);
+                return $this->error->error(mensaje: 'Error al generar options',data:  $options);
             }
 
 
@@ -223,7 +233,7 @@ class _init_dps{
 
 
             $urls_js[$key]['url'] = $url;
-            $urls_js[$key]['new_option'] = $new_option;
+            $urls_js[$key]['options'] = $options;
             $urls_js[$key]['css_id'] = $css_id;
             $urls_js[$key]['limpia'] = $limpia;
             $urls_js[$key]['refresh'] = $refresh;

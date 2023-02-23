@@ -13,9 +13,8 @@ let asigna_estados = (dp_pais_id = '') => {
 
 
 
-        $.each(data.registros, function( index, dp_estado ) {
-    <?php echo $controlador->url_servicios['dp_estado']['new_option']; ?>
-        });
+    <?php echo $controlador->url_servicios['dp_estado']['options']; ?>
+
     <?php echo $controlador->url_servicios['dp_estado']['refresh']; ?>
     <?php echo $controlador->url_servicios['dp_municipio']['refresh']; ?>
     });
@@ -28,9 +27,8 @@ let asigna_municipios = (dp_estado_id = '') => {
     <?php echo $controlador->url_servicios['dp_municipio']['limpia']; ?>
 
 
-        $.each(data.registros, function( index, dp_municipio ) {
-    <?php echo $controlador->url_servicios['dp_municipio']['new_option']; ?>
-        });
+    <?php echo $controlador->url_servicios['dp_municipio']['options']; ?>
+
     <?php echo $controlador->url_servicios['dp_municipio']['refresh']; ?>
     });
 }

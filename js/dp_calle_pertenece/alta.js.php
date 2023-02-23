@@ -16,9 +16,8 @@ let asigna_estados = (dp_pais_id = '') => {
     <?php echo $controlador->url_servicios['dp_cp']['limpia']; ?>
     <?php echo $controlador->url_servicios['dp_colonia_postal']['limpia']; ?>
 
-        $.each(data.registros, function( index, dp_estado ) {
-            <?php echo $controlador->url_servicios['dp_estado']['new_option']; ?>
-        });
+        <?php echo $controlador->url_servicios['dp_estado']['options']; ?>
+
     <?php echo $controlador->url_servicios['dp_estado']['refresh']; ?>
     <?php echo $controlador->url_servicios['dp_municipio']['refresh']; ?>
     <?php echo $controlador->url_servicios['dp_cp']['refresh']; ?>
@@ -35,11 +34,8 @@ let asigna_municipios = (dp_estado_id = '') => {
     <?php echo $controlador->url_servicios['dp_cp']['limpia']; ?>
     <?php echo $controlador->url_servicios['dp_colonia_postal']['limpia']; ?>
 
+        <?php echo $controlador->url_servicios['dp_municipio']['options']; ?>
 
-
-        $.each(data.registros, function( index, dp_municipio ) {
-    <?php echo $controlador->url_servicios['dp_municipio']['new_option']; ?>
-        });
     <?php echo $controlador->url_servicios['dp_municipio']['refresh']; ?>
     <?php echo $controlador->url_servicios['dp_cp']['refresh']; ?>
     <?php echo $controlador->url_servicios['dp_colonia_postal']['refresh']; ?>
@@ -53,10 +49,8 @@ let asigna_codigos_postales = (dp_municipio_id = '') => {
     <?php echo $controlador->url_servicios['dp_cp']['limpia']; ?>
     <?php echo $controlador->url_servicios['dp_colonia_postal']['limpia']; ?>
 
+        <?php echo $controlador->url_servicios['dp_cp']['options']; ?>
 
-        $.each(data.registros, function( index, dp_cp ) {
-    <?php echo $controlador->url_servicios['dp_cp']['new_option']; ?>
-        });
     <?php echo $controlador->url_servicios['dp_cp']['refresh']; ?>
     <?php echo $controlador->url_servicios['dp_colonia_postal']['refresh']; ?>
     });
@@ -68,12 +62,8 @@ let asigna_colonias_postales = (dp_cp_id = '') => {
     get_data(url, function (data) {
     <?php echo $controlador->url_servicios['dp_colonia_postal']['limpia']; ?>
 
+        <?php echo $controlador->url_servicios['dp_colonia_postal']['options']; ?>
 
-
-        $.each(data.registros, function( index, dp_colonia_postal ) {
-    console.log(dp_colonia_postal);
-    <?php echo $controlador->url_servicios['dp_colonia_postal']['new_option']; ?>
-        });
     <?php echo $controlador->url_servicios['dp_colonia_postal']['refresh']; ?>
     });
 }
