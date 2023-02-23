@@ -18,9 +18,9 @@ let asigna_estados = (dp_pais_id = '') => {
         $.each(data.registros, function( index, dp_estado ) {
     <?php echo $controlador->url_servicios['dp_estado']['new_option']; ?>
         });
-        sl_dp_estado.selectpicker('refresh');
-        sl_dp_municipio.selectpicker('refresh');
-        sl_dp_cp.selectpicker('refresh');
+    <?php echo $controlador->url_servicios['dp_estado']['refresh']; ?>
+    <?php echo $controlador->url_servicios['dp_municipio']['refresh']; ?>
+    <?php echo $controlador->url_servicios['dp_cp']['refresh']; ?>
     });
 }
 
@@ -36,8 +36,8 @@ let asigna_municipios = (dp_estado_id = '') => {
         $.each(data.registros, function( index, dp_municipio ) {
     <?php echo $controlador->url_servicios['dp_municipio']['new_option']; ?>
         });
-        sl_dp_municipio.selectpicker('refresh');
-        sl_dp_cp.selectpicker('refresh');
+    <?php echo $controlador->url_servicios['dp_municipio']['refresh']; ?>
+    <?php echo $controlador->url_servicios['dp_cp']['refresh']; ?>
     });
 }
 
@@ -51,7 +51,7 @@ let asigna_codigos_postales = (dp_municipio_id = '') => {
         $.each(data.registros, function( index, dp_cp ) {
     <?php echo $controlador->url_servicios['dp_cp']['new_option']; ?>
         });
-        sl_dp_cp.selectpicker('refresh');
+    <?php echo $controlador->url_servicios['dp_cp']['refresh']; ?>
     });
 }
 

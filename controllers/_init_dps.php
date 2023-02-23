@@ -122,7 +122,12 @@ class _init_dps{
         return 'integra_new_option(sl_'.$seccion.','.$seccion.'.'.$entidad_key.'_'.$key_option.','.$seccion.'.'.$seccion.'_id);';
     }
 
-    public function selector(string $entidad): string
+    private function refresh_selectpicker(string $css_id): string
+    {
+        return $css_id.'.selectpicker("refresh");';
+    }
+
+    private function selector(string $entidad): string
     {
         return '$("#'.$entidad.'_id")';
     }
@@ -211,11 +216,17 @@ class _init_dps{
                 return $this->error->error(mensaje: 'Error al generar limpia',data:  $limpia);
             }
 
+            $refresh = $this->refresh_selectpicker(css_id: $css_id);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al generar refresh',data:  $refresh);
+            }
+
 
             $urls_js[$key]['url'] = $url;
             $urls_js[$key]['new_option'] = $new_option;
             $urls_js[$key]['css_id'] = $css_id;
             $urls_js[$key]['limpia'] = $limpia;
+            $urls_js[$key]['refresh'] = $refresh;
         }
         return $urls_js;
     }
