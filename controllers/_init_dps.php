@@ -156,6 +156,28 @@ class _init_dps{
         });';
     }
 
+    private function refresh_selectores(array $selectores){
+
+        $refreshs = '';
+        foreach ($selectores as $selector) {
+
+            $entidad = "dp_$selector";
+
+            $css_id = $this->selector(entidad:$entidad);
+            if (errores::$error) {
+                return $this->error->error(mensaje: 'Error al generar css_id', data: $css_id);
+            }
+
+            $refresh = $this->refresh_selectpicker(css_id: $css_id);
+            if (errores::$error) {
+                return $this->error->error(mensaje: 'Error al generar refresh', data: $refresh);
+            }
+            $refreshs.=$refresh;
+        }
+        return $refreshs;
+
+    }
+
     private function refresh_selectpicker(string $css_id): string
     {
         return $css_id.'.selectpicker("refresh");';
@@ -254,7 +276,7 @@ class _init_dps{
                 return $this->error->error(mensaje: 'Error al generar limpia',data:  $limpia);
             }
 
-            $refresh = $this->refresh_selectpicker(css_id: $css_id);
+            $refresh = $this->refresh_selectores(selectores: $childrens);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al generar refresh',data:  $refresh);
             }

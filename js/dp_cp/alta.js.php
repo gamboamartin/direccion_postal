@@ -13,7 +13,7 @@ let asigna_estados = (dp_pais_id = '') => {
     <?php echo $controlador->url_servicios['dp_estado']['options']; ?>
 
     <?php echo $controlador->url_servicios['dp_estado']['refresh']; ?>
-    <?php echo $controlador->url_servicios['dp_municipio']['refresh']; ?>
+
     });
 }
 

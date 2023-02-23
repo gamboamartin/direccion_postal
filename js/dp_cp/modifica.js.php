@@ -8,12 +8,11 @@ let asigna_estados = (dp_pais_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_estado']['url']; ?>
 
     get_data(url, function (data) {
+
     <?php echo $controlador->url_servicios['dp_estado']['limpia']; ?>
-
     <?php echo $controlador->url_servicios['dp_estado']['options']; ?>
-
     <?php echo $controlador->url_servicios['dp_estado']['refresh']; ?>
-    <?php echo $controlador->url_servicios['dp_municipio']['refresh']; ?>
+
     });
 }
 
@@ -22,9 +21,7 @@ let asigna_municipios = (dp_estado_id = '') => {
 
     get_data(url, function (data) {
     <?php echo $controlador->url_servicios['dp_municipio']['limpia']; ?>
-
     <?php echo $controlador->url_servicios['dp_municipio']['options']; ?>
-
     <?php echo $controlador->url_servicios['dp_municipio']['refresh']; ?>
     });
 }
