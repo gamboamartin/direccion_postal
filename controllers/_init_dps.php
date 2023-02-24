@@ -98,6 +98,7 @@ class _init_dps{
         });';
     }
 
+
     /**
      * Inicializa datatables
      * @param array $columns Columnas para front
@@ -403,9 +404,15 @@ class _init_dps{
                 return $this->error->error(mensaje: 'Error al generar change',data:  $change);
             }
 
+            $even_full = $css_id.$update.$change;
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al generar evento',data:  $even_full);
+            }
+
             $urls_js[$key]['update'] = $update;
             $urls_js[$key]['css_id'] = $css_id;
             $urls_js[$key]['change'] = $change;
+            $urls_js[$key]['event_full'] = $even_full;
 
         }
         return $urls_js;
