@@ -503,16 +503,14 @@ class _init_dps{
     }
 
 
-
     /**
      * Genera el elemento necesario para integrar en java la obtencion de una url
      * @param string $accion Accion a ejecutar
      * @param string $seccion Seccion a ejecutar
      * @param string $extra_params Params GET
-     * @return string
-     * @version 9.57.1
+     * @return string|array
      */
-    PUBLIC function url_servicio(string $accion, string $seccion, string $extra_params = ''): string
+    private function url_servicio(string $accion, string $seccion, string $extra_params = ''): string|array
     {
         $accion = trim($accion);
         $valida = $this->validacion->valida_texto_pep_8(txt: $accion);
@@ -527,6 +525,7 @@ class _init_dps{
 
         $extra_params = trim($extra_params);
         if($extra_params !== '') {
+
             $valida = $this->validacion->valida_params_json_parentesis(txt: $extra_params);
             if (errores::$error) {
                 return $this->error->error(mensaje: 'Error al validar seccion', data: $valida);
@@ -541,7 +540,11 @@ class _init_dps{
 
     private function url_servicio_extra_param(string $accion, string $seccion, string $seccion_param): array|string
     {
-        $extra_param_js = '{'.$seccion_param.'_id: '.$seccion_param.'_id}';
+        $extra_param_js = '';
+        $seccion_param = trim($seccion_param);
+        if($seccion_param !== '') {
+            $extra_param_js = '{' . $seccion_param . '_id: ' . $seccion_param . '_id}';
+        }
         $url = $this->url_servicio(accion: $accion,seccion:  $seccion,extra_params:  $extra_param_js);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar url',data: $url);

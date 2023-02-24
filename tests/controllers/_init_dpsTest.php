@@ -4,6 +4,7 @@ namespace gamboamartin\direccion_postal\tests\controllers;
 use controllers\_init_dps;
 use controllers\controlador_dp_calle;
 use gamboamartin\errores\errores;
+use gamboamartin\test\liberator;
 use gamboamartin\test\test;
 use stdClass;
 
@@ -30,15 +31,15 @@ class _init_dpsTest extends test {
         $_GET['seccion'] = 'dp_calle';
         $_SESSION['grupo_id'] = '1';
         $init = new _init_dps();
+        $init = new liberator($init);
 
-        $accion = '';
-        $seccion = '';
+        $accion = 'a';
+        $seccion = 'c';
         $resultado = $init->url_servicio($accion, $seccion);
-        print_r($resultado);exit;
 
-
-        $this->assertIsObject($resultado);
+        $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
+        $this->assertEquals("get_url('c','a', {});", $resultado);
 
         errores::$error = false;
     }
