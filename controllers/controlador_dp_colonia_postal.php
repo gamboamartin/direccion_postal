@@ -122,7 +122,7 @@ class controlador_dp_colonia_postal extends _ctl_dps {
         }
 
         $identificador = "dp_colonia_id";
-        $propiedades = array("label" => "Colonia");
+        $propiedades = array("label" => "Colonia",'key_descripcion_select' => 'dp_colonia_descripcion');
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "codigo";
