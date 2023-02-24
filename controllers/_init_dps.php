@@ -4,14 +4,17 @@ namespace controllers;
 
 use base\controller\controler;
 use gamboamartin\errores\errores;
+use gamboamartin\validacion\validacion;
 use stdClass;
 
 class _init_dps{
 
     private errores $error;
+    private validacion $validacion;
 
     public function __construct(){
         $this->error = new errores();
+        $this->validacion = new validacion();
     }
 
     private function asigna_data(array $childrens, string $entidad_key, string $key_option, string $seccion_limpia, string $seccion_param){
@@ -82,9 +85,25 @@ class _init_dps{
         return $selected.$exe_fn;
     }
 
+    private function childrens(array $data){
+        $childrens = array();
+        if(isset($data['childrens'])){
+            $childrens = $data['childrens'];
+        }
+        return $childrens;
+    }
+
     private function ejecuta_funcion(string $entidad): string
     {
         return 'asigna_'.$entidad.'(selected.val());';
+    }
+
+    private function entidad_key(array $data, string $key){
+        $entidad_key = $key;
+        if(isset($data['entidad_key'])){
+            $entidad_key = $data['entidad_key'];
+        }
+        return $entidad_key;
     }
 
     private function event_change(string $entidad, string $exe){
@@ -98,6 +117,44 @@ class _init_dps{
         });';
     }
 
+    private function exe(array $data){
+        $exe = '';
+        if(isset($data['exe'])){
+            $exe = $data['exe'];
+        }
+        return $exe;
+    }
+
+    private function genera_data_java(array $data, string $seccion_limpia, array $urls_js){
+        $params = $this->params(data: $data, seccion_limpia: $seccion_limpia);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar params',data:  $params);
+        }
+
+        $java = $this->genera_java(params: $params);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar java',data:  $java);
+        }
+
+        $urls_js = $this->integra_datas(java: $java,params:  $params,urls_js:  $urls_js);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar java',data:  $java);
+        }
+        return $urls_js;
+    }
+
+    private function genera_java(stdClass $params){
+        $java = $this->java(params: $params);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar java',data:  $java);
+        }
+
+        $java = $this->java_compuesto(java: $java);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar java',data:  $java);
+        }
+        return $java;
+    }
 
     /**
      * Inicializa datatables
@@ -145,7 +202,6 @@ class _init_dps{
 
 
         $urls_js = $this->urls(urls:$urls);
-
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar url js',data:  $urls_js);
         }
@@ -163,6 +219,75 @@ class _init_dps{
         $controler->lista_get_data = true;
 
         return $controler;
+    }
+
+    private function integra_data(stdClass $java, string $key, stdClass $params, array $urls_js): array
+    {
+        $data = $java->$key;
+        $urls_js[$params->key][$key] = "<script> $data </script>";
+        return $urls_js;
+    }
+
+    private function integra_datas(stdClass $java, stdClass $params, array $urls_js){
+        $keys = array('update','css_id','change','event_full','event_change','event_update');
+        foreach ($keys as $key){
+            $urls_js = $this->integra_data(java: $java,key:  $key,params:  $params,urls_js:  $urls_js);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al integrar java',data:  $java);
+            }
+        }
+        return $urls_js;
+    }
+
+
+    private function java(stdClass $params){
+
+        $css_id = $this->select(entidad: $params->key);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar css',data:  $css_id);
+        }
+
+        $update = $this->asigna_data(childrens: $params->childrens,entidad_key:  $params->entidad_key,key_option:  $params->key_option,
+            seccion_limpia: $params->seccion_limpia,seccion_param:  $params->seccion_param);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar update',data:  $update);
+        }
+
+        $change = $this->event_change(entidad: $params->key,exe:  $params->exe);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar change',data:  $change);
+        }
+
+        $data = new stdClass();
+        $data->css_id = $css_id;
+        $data->update = $update;
+        $data->change = $change;
+        return $data;
+
+    }
+
+    private function java_compuesto(stdClass $java): stdClass
+    {
+        $event_full = $java->css_id.$java->update.$java->change;
+        $event_change = $java->css_id.$java->change;
+        $event_update = $java->css_id.$java->update;
+
+        $java->event_full = $event_full;
+        $java->event_change = $event_change;
+        $java->event_update = $event_update;
+        return $java;
+
+    }
+    private function key(string $seccion_limpia): string
+    {
+        return "dp_$seccion_limpia";
+    }
+    private function key_option(array $data){
+        $key_option = '';
+        if(isset($data['key_option'])){
+            $key_option = $data['key_option'];
+        }
+        return $key_option;
     }
 
     private function limpia_selector(string $css_id, string $entidad_limpia): string
@@ -210,6 +335,59 @@ class _init_dps{
         });';
     }
 
+    private function params(array $data, string $seccion_limpia){
+        $key = $this->key(seccion_limpia: $seccion_limpia);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar key',data:  $key);
+        }
+
+        $seccion_param = $this->seccion_param(data: $data);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar seccion_param',data:  $seccion_param);
+        }
+
+        $key_option = $this->key_option(data: $data);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar key_option',data:  $key_option);
+        }
+
+        $entidad_key = $this->entidad_key(data: $data, key: $key );
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar entidad_key',data:  $entidad_key);
+        }
+
+        $childrens = $this->childrens(data: $data);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar childrens',data:  $childrens);
+        }
+
+        $exe = $this->exe(data: $data);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar exe',data:  $exe);
+        }
+
+
+        $css_id = $this->select(entidad: $key);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar css',data:  $css_id);
+        }
+
+
+
+
+        $data = new stdClass();
+        $data->key = $key;
+        $data->seccion_param = $seccion_param;
+        $data->key_option = $key_option;
+        $data->entidad_key = $entidad_key;
+        $data->childrens = $childrens;
+        $data->exe = $exe;
+        $data->css_id = $css_id;
+        $data->seccion_limpia = $seccion_limpia;
+
+        return $data;
+    }
+
     private function refresh_selectores(array $selectores){
 
         $refreshs = '';
@@ -235,6 +413,14 @@ class _init_dps{
     private function refresh_selectpicker(string $css_id): string
     {
         return $css_id.'.selectpicker("refresh");';
+    }
+
+    private function seccion_param(array $data){
+        $seccion_param = '';
+        if(isset($data['seccion_param'])){
+            $seccion_param = $data['seccion_param'];
+        }
+        return $seccion_param;
     }
 
     private function select(string $entidad){
@@ -324,10 +510,31 @@ class _init_dps{
      * @param string $seccion Seccion a ejecutar
      * @param string $extra_params Params GET
      * @return string
+     * @version 9.57.1
      */
-    private function url_servicio(string $accion, string $seccion, string $extra_params = ''): string
+    PUBLIC function url_servicio(string $accion, string $seccion, string $extra_params = ''): string
     {
+        $accion = trim($accion);
+        $valida = $this->validacion->valida_texto_pep_8(txt: $accion);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar accion',data: $valida);
+        }
+        $seccion = trim($seccion);
+        $valida = $this->validacion->valida_texto_pep_8(txt: $seccion);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar seccion',data: $valida);
+        }
 
+        $extra_params = trim($extra_params);
+        if($extra_params !== '') {
+            $valida = $this->validacion->valida_params_json_parentesis(txt: $extra_params);
+            if (errores::$error) {
+                return $this->error->error(mensaje: 'Error al validar seccion', data: $valida);
+            }
+        }
+        else{
+            $extra_params = '{}';
+        }
 
         return "get_url('$seccion','$accion', $extra_params);";
     }
@@ -360,60 +567,11 @@ class _init_dps{
     {
         $urls_js = array();
         foreach ($urls as $seccion_limpia=>$data){
-            $key = "dp_$seccion_limpia";
 
-            $seccion_param = '';
-            if(isset($data['seccion_param'])){
-                $seccion_param = $data['seccion_param'];
-            }
-
-            $key_option = '';
-            if(isset($data['key_option'])){
-                $key_option = $data['key_option'];
-            }
-
-            $entidad_key = $key;
-            if(isset($data['entidad_key'])){
-                $entidad_key = $data['entidad_key'];
-            }
-
-            $childrens = array();
-            if(isset($data['childrens'])){
-                $childrens = $data['childrens'];
-            }
-
-            $exe = '';
-            if(isset($data['exe'])){
-                $exe = $data['exe'];
-            }
-
-            $css_id = $this->select(entidad: $key);
+            $urls_js = $this->genera_data_java(data: $data,seccion_limpia:  $seccion_limpia,urls_js:  $urls_js);
             if(errores::$error){
-                return $this->error->error(mensaje: 'Error al generar css',data:  $css_id);
+                return $this->error->error(mensaje: 'Error al integrar java',data:  $urls_js);
             }
-
-            $update = $this->asigna_data(childrens: $childrens,entidad_key:  $entidad_key,key_option:  $key_option,
-                seccion_limpia: $seccion_limpia,seccion_param:  $seccion_param);
-            if(errores::$error){
-                return $this->error->error(mensaje: 'Error al generar update',data:  $update);
-            }
-
-
-            $change = $this->event_change(entidad: $key,exe:  $exe);
-            if(errores::$error){
-                return $this->error->error(mensaje: 'Error al generar change',data:  $change);
-            }
-
-            $even_full = $css_id.$update.$change;
-            $event_change = $css_id.$change;
-            $event_update = $css_id.$update;
-
-            $urls_js[$key]['update'] = "<script>$update</script>";
-            $urls_js[$key]['css_id'] = "<script>$css_id</script>";
-            $urls_js[$key]['change'] = "<script>$change</script>";
-            $urls_js[$key]['event_full'] = "<script>$even_full</script>";
-            $urls_js[$key]['event_change'] = "<script>$event_change</script>";
-            $urls_js[$key]['event_update'] = "<script>$event_update</script>";
 
         }
         return $urls_js;
