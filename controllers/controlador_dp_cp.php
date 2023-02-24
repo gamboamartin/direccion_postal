@@ -115,15 +115,15 @@ class controlador_dp_cp extends _ctl_dps {
     private function inicializa_priedades(): array
     {
         $identificador = "dp_pais_id";
-        $propiedades = array("label" => "Pais");
+        $propiedades = array("label" => "Pais",'key_descripcion_select'=>'dp_pais_descripcion');
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "dp_estado_id";
-        $propiedades = array("label" => "Estado", "con_registros" => false);
+        $propiedades = array("label" => "Estado", "con_registros" => false,'key_descripcion_select'=>'dp_estado_descripcion');
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "dp_municipio_id";
-        $propiedades = array("label" => "Municipio", "con_registros" => false);
+        $propiedades = array("label" => "Municipio", "con_registros" => false,'key_descripcion_select'=>'dp_municipio_descripcion');
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "codigo";
