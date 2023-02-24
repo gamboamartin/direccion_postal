@@ -8,18 +8,17 @@ let sl_dp_colonia_postal = <?php echo $controlador->url_servicios['dp_colonia_po
 let sl_dp_calle = <?php echo $controlador->url_servicios['dp_calle']['css_id']; ?>;
 
 let asigna_dp_estado = (dp_pais_id = '') => {
-    let url = <?php echo $controlador->url_servicios['dp_estado']['url']; ?>
 
     <?php echo $controlador->url_servicios['dp_estado']['update']; ?>
 }
 
 let asigna_dp_municipio = (dp_estado_id = '') => {
-    let url = <?php echo $controlador->url_servicios['dp_municipio']['url']; ?>
+
     <?php echo $controlador->url_servicios['dp_municipio']['update']; ?>
 }
 
 let asigna_dp_cp = (dp_municipio_id = '') => {
-    let url = <?php echo $controlador->url_servicios['dp_cp']['url']; ?>
+
 
 
         <?php echo $controlador->url_servicios['dp_cp']['update']; ?>
@@ -27,7 +26,7 @@ let asigna_dp_cp = (dp_municipio_id = '') => {
 }
 
 let asigna_dp_colonia_postal = (dp_cp_id = '') => {
-    let url = <?php echo $controlador->url_servicios['dp_colonia_postal']['url']; ?>
+
 
 
     <?php echo $controlador->url_servicios['dp_colonia_postal']['update']; ?>

@@ -222,6 +222,32 @@ class _init_dps{
         });';
     }
 
+    private function update_ejecuta(array $childrens, string $entidad_key, string $key_option,
+                                    string $seccion_limpia, string $seccion_param){
+
+        $key = "dp_$seccion_limpia";
+
+        $url = $this->url_servicio_get(seccion_limpia: $seccion_limpia, seccion_param: $seccion_param);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar url',data:  $url);
+        }
+
+        $url_val = 'let url = '.$url.';';
+
+
+        $update = $this->update_data(childrens: $childrens, entidad_key: $entidad_key,key:  $key,key_option:  $key_option);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar update',data:  $update);
+        }
+
+        $ej_update = $url_val.$update;
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar update',data:  $update);
+        }
+
+        return $ej_update;
+    }
+
 
 
     /**
@@ -288,23 +314,18 @@ class _init_dps{
                 $childrens = $data['childrens'];
             }
 
-            $url = $this->url_servicio_get(seccion_limpia: $seccion_limpia, seccion_param: $seccion_param);
-            if(errores::$error){
-                return $this->error->error(mensaje: 'Error al generar url js',data:  $url);
-            }
-
             $css_id = $this->selector(entidad: $key);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al generar css',data:  $css_id);
             }
 
 
-            $update = $this->update_data(childrens: $childrens, entidad_key: $entidad_key,key:  $key,key_option:  $key_option);
+            $update = $this->update_ejecuta(childrens: $childrens, entidad_key: $entidad_key,key_option:  $key_option,
+                seccion_limpia: $seccion_limpia, seccion_param: $seccion_param);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al generar update',data:  $update);
             }
 
-            $urls_js[$key]['url'] = $url;
             $urls_js[$key]['update'] = $update;
             $urls_js[$key]['css_id'] = $css_id;
 

@@ -1,18 +1,18 @@
 <?php /** @var controllers\controlador_dp_colonia_postal $controlador  controlador en ejecucion */ ?>
 <script>
-let sl_dp_pais = <?php echo $controlador->url_servicios['dp_pais']['css_id']; ?>;
-let sl_dp_estado = <?php echo $controlador->url_servicios['dp_estado']['css_id']; ?>;
+    let sl_dp_pais = <?php echo $controlador->url_servicios['dp_pais']['css_id']; ?>;
+    let sl_dp_estado = <?php echo $controlador->url_servicios['dp_estado']['css_id']; ?>;
 
-let asigna_dp_estado = (dp_pais_id = '') => {
-    let url = <?php echo $controlador->url_servicios['dp_estado']['url']; ?>
+    let asigna_dp_estado = (dp_pais_id = '') => {
 
 
-        <?php echo $controlador->url_servicios['dp_estado']['update']; ?>
+
+    <?php echo $controlador->url_servicios['dp_estado']['update']; ?>
 
 
 }
 
-sl_dp_pais.change(function () {
+    sl_dp_pais.change(function () {
     let selected = $(this).find('option:selected');
     asigna_dp_estado(selected.val());
 });

@@ -4,7 +4,7 @@
     let sl_dp_estado = <?php echo $controlador->url_servicios['dp_estado']['css_id']; ?>;
 
     let asigna_dp_estado = (dp_pais_id = '') => {
-    let url = <?php echo $controlador->url_servicios['dp_estado']['url']; ?>
+
 
 
     <?php echo $controlador->url_servicios['dp_estado']['update']; ?>

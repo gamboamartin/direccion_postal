@@ -9,7 +9,7 @@
 
 
     let asigna_dp_estado = (dp_pais_id = '') => {
-    let url = <?php echo $controlador->url_servicios['dp_estado']['url']; ?>
+
 
 
     <?php echo $controlador->url_servicios['dp_estado']['update']; ?>
@@ -18,7 +18,7 @@
 }
 
     let asigna_dp_municipio = (dp_estado_id = '') => {
-    let url = <?php echo $controlador->url_servicios['dp_municipio']['url']; ?>
+
 
 
     <?php echo $controlador->url_servicios['dp_municipio']['update']; ?>
@@ -27,7 +27,7 @@
 }
 
     let asigna_dp_cp = (dp_municipio_id = '') => {
-    let url = <?php echo $controlador->url_servicios['dp_cp']['url']; ?>
+
 
 
 
