@@ -280,6 +280,12 @@ class _init_dps{
         return $java;
 
     }
+
+    /**
+     * Genera el key del array haciendo referencia a dp
+     * @param string $seccion_limpia Seccion sin prefijo
+     * @return string
+     */
     private function key(string $seccion_limpia): string
     {
         return "dp_$seccion_limpia";
