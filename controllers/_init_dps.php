@@ -14,6 +14,20 @@ class _init_dps{
         $this->error = new errores();
     }
 
+    private function asigna_data(array $childrens, string $entidad_key, string $key_option, string $seccion_limpia, string $seccion_param){
+        $update = $this->update_ejecuta(childrens: $childrens,entidad_key:  $entidad_key,
+            key_option:  $key_option,seccion_limpia:  $seccion_limpia,seccion_param:  $seccion_param);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al asignar update', data: $update);
+        }
+
+        return 'let asigna_'.$entidad_key.' = ('.$seccion_param.'_id = "") => {
+            '.$update.'
+        }
+        ';
+
+    }
+
     public function asigna_propiedades_base(
         controlador_dp_calle_pertenece|controlador_dp_colonia_postal $controlador): controlador_dp_calle_pertenece|controlador_dp_colonia_postal
     {
@@ -49,6 +63,41 @@ class _init_dps{
         return $controlador;
     }
 
+    private function change(string $entidad, string $exe){
+
+        $selected = $this->selected(entidad: $entidad);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar selected',data:  $selected);
+        }
+
+        $exe_fn = '';
+        if($exe !== '') {
+
+            $exe_fn = $this->ejecuta_funcion($exe);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al generar exe',data:  $exe_fn);
+            }
+        }
+
+        return $selected.$exe_fn;
+    }
+
+    private function ejecuta_funcion(string $entidad): string
+    {
+        return 'asigna_'.$entidad.'(selected.val());';
+    }
+
+    private function event_change(string $entidad, string $exe){
+        $change = $this->change(entidad: $entidad, exe: $exe);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar change',data:  $change);
+        }
+
+        return 'sl_'.$entidad.'.change(function () {
+        '.$change.'
+        });';
+    }
+
     /**
      * Inicializa datatables
      * @param array $columns Columnas para front
@@ -69,24 +118,28 @@ class _init_dps{
         $urls = array();
 
         $urls['pais'] = array();
+        $urls['pais']['exe'] = 'dp_estado';
 
         $urls['calle'] = array();
 
         $urls['estado']['seccion_param'] = 'dp_pais';
         $urls['estado']['key_option'] = 'descripcion';
         $urls['estado']['childrens'] = array('estado','municipio','cp','colonia_postal');
+        $urls['estado']['exe'] = 'dp_municipio';
 
         $urls['municipio']['seccion_param'] = 'dp_estado';
         $urls['municipio']['key_option'] = 'descripcion';
         $urls['municipio']['childrens'] = array('municipio','cp','colonia_postal');
+        $urls['municipio']['exe'] = 'dp_cp';
 
         $urls['cp']['seccion_param'] = 'dp_municipio';
         $urls['cp']['key_option'] = 'descripcion';
         $urls['cp']['childrens'] = array('cp','colonia_postal');
+        $urls['cp']['exe'] = 'dp_colonia_postal';
 
         $urls['colonia_postal']['seccion_param'] = 'dp_cp';
         $urls['colonia_postal']['key_option'] = 'descripcion';
-        $urls['colonia_postal']['entidad_key'] = 'dp_colonia';
+        $urls['colonia_postal']['entidad_key'] = 'dp_colonia_postal';
         $urls['colonia_postal']['childrens'] = array('colonia_postal');
 
 
@@ -182,6 +235,20 @@ class _init_dps{
     {
         return $css_id.'.selectpicker("refresh");';
     }
+
+    private function select(string $entidad){
+        $css_id = $this->selector($entidad);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar css',data:  $css_id);
+        }
+        return 'let sl_'.$entidad.' = '.$css_id.';';
+    }
+
+    private function selected(string $entidad): string
+    {
+        return 'let selected = sl_'.$entidad.'.find("option:selected");';
+    }
+
 
     private function selector(string $entidad): string
     {
@@ -314,20 +381,31 @@ class _init_dps{
                 $childrens = $data['childrens'];
             }
 
-            $css_id = $this->selector(entidad: $key);
+            $exe = '';
+            if(isset($data['exe'])){
+                $exe = $data['exe'];
+            }
+
+            $css_id = $this->select(entidad: $key);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al generar css',data:  $css_id);
             }
 
-
-            $update = $this->update_ejecuta(childrens: $childrens, entidad_key: $entidad_key,key_option:  $key_option,
-                seccion_limpia: $seccion_limpia, seccion_param: $seccion_param);
+            $update = $this->asigna_data(childrens: $childrens,entidad_key:  $entidad_key,key_option:  $key_option,
+                seccion_limpia: $seccion_limpia,seccion_param:  $seccion_param);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al generar update',data:  $update);
             }
 
+
+            $change = $this->event_change(entidad: $key,exe:  $exe);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al generar change',data:  $change);
+            }
+
             $urls_js[$key]['update'] = $update;
             $urls_js[$key]['css_id'] = $css_id;
+            $urls_js[$key]['change'] = $change;
 
         }
         return $urls_js;
