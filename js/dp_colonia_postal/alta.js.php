@@ -1,5 +1,5 @@
 <?php /** @var controllers\controlador_dp_colonia_postal $controlador  controlador en ejecucion */ ?>
-<script>
+
 
 
 
@@ -15,4 +15,3 @@
 
 
 
-</script>

@@ -1,5 +1,5 @@
 <?php /** @var controllers\controlador_dp_calle_pertenece $controlador  controlador en ejecucion */ ?>
-<script>
+
 
 
     <?php echo $controlador->url_servicios['dp_pais']['event_change']; ?>
@@ -15,4 +15,3 @@
     <?php echo $controlador->url_servicios['dp_colonia_postal']['event_update']; ?>
 
 
-</script>

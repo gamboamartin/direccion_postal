@@ -408,12 +408,12 @@ class _init_dps{
             $event_change = $css_id.$change;
             $event_update = $css_id.$update;
 
-            $urls_js[$key]['update'] = $update;
-            $urls_js[$key]['css_id'] = $css_id;
-            $urls_js[$key]['change'] = $change;
-            $urls_js[$key]['event_full'] = $even_full;
-            $urls_js[$key]['event_change'] = $event_change;
-            $urls_js[$key]['event_update'] = $event_update;
+            $urls_js[$key]['update'] = "<script>$update</script>";
+            $urls_js[$key]['css_id'] = "<script>$css_id</script>";
+            $urls_js[$key]['change'] = "<script>$change</script>";
+            $urls_js[$key]['event_full'] = "<script>$even_full</script>";
+            $urls_js[$key]['event_change'] = "<script>$event_change</script>";
+            $urls_js[$key]['event_update'] = "<script>$event_update</script>";
 
         }
         return $urls_js;
