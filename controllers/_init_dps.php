@@ -405,14 +405,13 @@ class _init_dps{
             }
 
             $even_full = $css_id.$update.$change;
-            if(errores::$error){
-                return $this->error->error(mensaje: 'Error al generar evento',data:  $even_full);
-            }
+            $event_change = $css_id.$change;
 
             $urls_js[$key]['update'] = $update;
             $urls_js[$key]['css_id'] = $css_id;
             $urls_js[$key]['change'] = $change;
             $urls_js[$key]['event_full'] = $even_full;
+            $urls_js[$key]['event_change'] = $event_change;
 
         }
         return $urls_js;
