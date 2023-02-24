@@ -188,6 +188,28 @@ class _init_dps{
         return '$("#'.$entidad.'_id")';
     }
 
+    private function update(array $childrens, string $entidad_key, string $key, string $key_option){
+
+
+        $limpia = $this->limpia_selectores(selectores: $childrens);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar limpia',data:  $limpia);
+        }
+
+        $options = $this->options(entidad_key: $entidad_key,key_option:  $key_option,seccion:  $key);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar options',data:  $options);
+        }
+
+        $refresh = $this->refresh_selectores(selectores: $childrens);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar refresh',data:  $refresh);
+        }
+
+        return $limpia.$options.$refresh;
+
+    }
+
 
 
     /**
@@ -265,28 +287,15 @@ class _init_dps{
             }
 
 
-            $options = $this->options(entidad_key: $entidad_key,key_option:  $key_option,seccion:  $key);
+            $update = $this->update(childrens: $childrens,entidad_key:  $entidad_key,key:  $key,key_option:  $key_option);
             if(errores::$error){
-                return $this->error->error(mensaje: 'Error al generar options',data:  $options);
+                return $this->error->error(mensaje: 'Error al generar update',data:  $update);
             }
-
-
-            $limpia = $this->limpia_selectores(selectores: $childrens);
-            if(errores::$error){
-                return $this->error->error(mensaje: 'Error al generar limpia',data:  $limpia);
-            }
-
-            $refresh = $this->refresh_selectores(selectores: $childrens);
-            if(errores::$error){
-                return $this->error->error(mensaje: 'Error al generar refresh',data:  $refresh);
-            }
-
 
             $urls_js[$key]['url'] = $url;
-            $urls_js[$key]['options'] = $options;
+            $urls_js[$key]['update'] = $update;
             $urls_js[$key]['css_id'] = $css_id;
-            $urls_js[$key]['limpia'] = $limpia;
-            $urls_js[$key]['refresh'] = $refresh;
+
         }
         return $urls_js;
     }

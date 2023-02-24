@@ -9,11 +9,7 @@ let asigna_estados = (dp_pais_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_estado']['url']; ?>
 
     get_data(url, function (data) {
-    <?php echo $controlador->url_servicios['dp_estado']['limpia']; ?>
-
-    <?php echo $controlador->url_servicios['dp_estado']['options']; ?>
-
-    <?php echo $controlador->url_servicios['dp_estado']['refresh']; ?>
+    <?php echo $controlador->url_servicios['dp_estado']['update']; ?>
 
     });
 }
@@ -22,11 +18,7 @@ let asigna_municipios = (dp_estado_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_municipio']['url']; ?>
 
     get_data(url, function (data) {
-    <?php echo $controlador->url_servicios['dp_municipio']['limpia']; ?>
-
-    <?php echo $controlador->url_servicios['dp_municipio']['options']; ?>
-
-    <?php echo $controlador->url_servicios['dp_municipio']['refresh']; ?>
+    <?php echo $controlador->url_servicios['dp_municipio']['update']; ?>
 
     });
 }
@@ -35,11 +27,7 @@ let asigna_codigos_postales = (dp_municipio_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_cp']['url']; ?>
 
     get_data(url, function (data) {
-    <?php echo $controlador->url_servicios['dp_cp']['limpia']; ?>
-
-    <?php echo $controlador->url_servicios['dp_cp']['options']; ?>
-
-    <?php echo $controlador->url_servicios['dp_cp']['refresh']; ?>
+    <?php echo $controlador->url_servicios['dp_cp']['update']; ?>
     });
 }
 
