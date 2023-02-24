@@ -29,9 +29,9 @@ class controlador_dp_colonia extends _ctl_dps {
         $columns["dp_colonia_id"]["titulo"] = "Id";
         $columns["dp_colonia_codigo"]["titulo"] = "Código";
         $columns["dp_colonia_descripcion"]["titulo"] = "Colonia";
-        $columns["dp_colonia_georeferencia"]["titulo"] = "Georeferencia";
 
-        $filtro = array("dp_colonia.id","dp_colonia.codigo","dp_colonia.descripcion","dp_colonia.georeferencia");
+
+        $filtro = array("dp_colonia.id","dp_colonia.codigo","dp_colonia.descripcion");
 
         $datatables = new stdClass();
         $datatables->columns = $columns;

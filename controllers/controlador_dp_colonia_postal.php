@@ -36,7 +36,7 @@ class controlador_dp_colonia_postal extends _ctl_dps {
         $columns["dp_pais_descripcion"]["titulo"] = "País";
         $columns["dp_estado_descripcion"]["titulo"] = "Estado";
         $columns["dp_municipio_descripcion"]["titulo"] = "Municipio";
-        $columns["dp_colonia_postal_descripcion"]["titulo"] = "Colonia Postal";
+        $columns["dp_colonia_descripcion"]["titulo"] = "Colonia";
 
         $filtro = array("dp_colonia_postal.id","dp_colonia_postal.codigo","dp_colonia_postal.descripcion",
             "dp_pais.descripcion", "dp_estado.descripcion","dp_municipio.descripcion");

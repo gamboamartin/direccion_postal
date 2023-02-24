@@ -37,10 +37,9 @@ class controlador_dp_cp extends _ctl_dps {
         $columns["dp_estado_descripcion"]["titulo"] = "Estado";
         $columns["dp_municipio_descripcion"]["titulo"] = "Municipio";
         $columns["dp_cp_descripcion"]["titulo"] = "Código Postal";
-        $columns["dp_cp_georeferencia"]["titulo"] = "Georeferencia";
 
         $filtro = array("dp_cp.id","dp_cp.codigo","dp_cp.descripcion","dp_pais.descripcion",
-            "dp_estado.descripcion","dp_municipio.descripcion","dp_cp.georeferencia");
+            "dp_estado.descripcion","dp_municipio.descripcion");
 
         $datatables = new stdClass();
         $datatables->columns = $columns;
