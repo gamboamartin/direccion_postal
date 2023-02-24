@@ -10,34 +10,28 @@ let sl_dp_calle = <?php echo $controlador->url_servicios['dp_calle']['css_id']; 
 let asigna_estados = (dp_pais_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_estado']['url']; ?>
 
-    get_data(url, function (data) {
-        <?php echo $controlador->url_servicios['dp_estado']['update']; ?>
-    });
+    <?php echo $controlador->url_servicios['dp_estado']['update']; ?>
 }
 
 let asigna_municipios = (dp_estado_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_municipio']['url']; ?>
-
-    get_data(url, function (data) {
     <?php echo $controlador->url_servicios['dp_municipio']['update']; ?>
-
-    });
 }
 
 let asigna_codigos_postales = (dp_municipio_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_cp']['url']; ?>
 
-    get_data(url, function (data) {
+
         <?php echo $controlador->url_servicios['dp_cp']['update']; ?>
-    });
+
 }
 
 let asigna_colonias_postales = (dp_cp_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_colonia_postal']['url']; ?>
 
-    get_data(url, function (data) {
+
     <?php echo $controlador->url_servicios['dp_colonia_postal']['update']; ?>
-    });
+
 }
 
 sl_dp_pais.change(function () {

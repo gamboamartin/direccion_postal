@@ -7,18 +7,18 @@ let sl_dp_municipio = <?php echo $controlador->url_servicios['dp_municipio']['cs
 let asigna_estados = (dp_pais_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_estado']['url']; ?>
 
-    get_data(url, function (data) {
+
     <?php echo $controlador->url_servicios['dp_estado']['update']; ?>
 
-    });
+
 }
 
 let asigna_municipios = (dp_estado_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_municipio']['url']; ?>
 
-    get_data(url, function (data) {
+
     <?php echo $controlador->url_servicios['dp_municipio']['update']; ?>
-    });
+
 }
 
 sl_dp_pais.change(function () {

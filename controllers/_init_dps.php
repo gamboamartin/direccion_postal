@@ -210,6 +210,18 @@ class _init_dps{
 
     }
 
+    private function update_data(array $childrens, string $entidad_key, string $key, string $key_option){
+
+        $update = $this->update(childrens: $childrens,entidad_key: $entidad_key,key: $key,key_option: $key_option);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar update',data:  $update);
+        }
+
+        return 'get_data(url, function (data) {
+        '.$update.'
+        });';
+    }
+
 
 
     /**
@@ -287,7 +299,7 @@ class _init_dps{
             }
 
 
-            $update = $this->update(childrens: $childrens,entidad_key:  $entidad_key,key:  $key,key_option:  $key_option);
+            $update = $this->update_data(childrens: $childrens, entidad_key: $entidad_key,key:  $key,key_option:  $key_option);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al generar update',data:  $update);
             }
