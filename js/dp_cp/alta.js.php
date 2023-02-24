@@ -4,7 +4,7 @@ let sl_dp_pais = <?php echo $controlador->url_servicios['dp_pais']['css_id']; ?>
 let sl_dp_estado = <?php echo $controlador->url_servicios['dp_estado']['css_id']; ?>;
 let sl_dp_municipio = <?php echo $controlador->url_servicios['dp_municipio']['css_id']; ?>;
 
-let asigna_estados = (dp_pais_id = '') => {
+let asigna_dp_estado = (dp_pais_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_estado']['url']; ?>
 
 
@@ -13,7 +13,7 @@ let asigna_estados = (dp_pais_id = '') => {
 
 }
 
-let asigna_municipios = (dp_estado_id = '') => {
+let asigna_dp_municipio = (dp_estado_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_municipio']['url']; ?>
 
 
@@ -23,11 +23,11 @@ let asigna_municipios = (dp_estado_id = '') => {
 
 sl_dp_pais.change(function () {
     let selected = $(this).find('option:selected');
-    asigna_estados(selected.val());
+    asigna_dp_estado(selected.val());
 });
 
 sl_dp_estado.change(function () {
     let selected = $(this).find('option:selected');
-    asigna_municipios(selected.val());
+    asigna_dp_municipio(selected.val());
 });
 </script>

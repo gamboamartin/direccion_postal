@@ -7,18 +7,18 @@ let sl_dp_cp = <?php echo $controlador->url_servicios['dp_cp']['css_id']; ?>;
 let sl_dp_colonia_postal = <?php echo $controlador->url_servicios['dp_colonia_postal']['css_id']; ?>;
 let sl_dp_calle = <?php echo $controlador->url_servicios['dp_calle']['css_id']; ?>;
 
-let asigna_estados = (dp_pais_id = '') => {
+let asigna_dp_estado = (dp_pais_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_estado']['url']; ?>
 
     <?php echo $controlador->url_servicios['dp_estado']['update']; ?>
 }
 
-let asigna_municipios = (dp_estado_id = '') => {
+let asigna_dp_municipio = (dp_estado_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_municipio']['url']; ?>
     <?php echo $controlador->url_servicios['dp_municipio']['update']; ?>
 }
 
-let asigna_codigos_postales = (dp_municipio_id = '') => {
+let asigna_dp_cp = (dp_municipio_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_cp']['url']; ?>
 
 
@@ -26,7 +26,7 @@ let asigna_codigos_postales = (dp_municipio_id = '') => {
 
 }
 
-let asigna_colonias_postales = (dp_cp_id = '') => {
+let asigna_dp_colonia_postal = (dp_cp_id = '') => {
     let url = <?php echo $controlador->url_servicios['dp_colonia_postal']['url']; ?>
 
 
@@ -36,21 +36,21 @@ let asigna_colonias_postales = (dp_cp_id = '') => {
 
 sl_dp_pais.change(function () {
     let selected = $(this).find('option:selected');
-    asigna_estados(selected.val());
+    asigna_dp_estado(selected.val());
 });
 
 sl_dp_estado.change(function () {
     let selected = $(this).find('option:selected');
-    asigna_municipios(selected.val());
+    asigna_dp_municipio(selected.val());
 });
 
 sl_dp_municipio.change(function () {
     let selected = $(this).find('option:selected');
-    asigna_codigos_postales(selected.val());
+    asigna_dp_cp(selected.val());
 });
 
 sl_dp_cp.change(function () {
     let selected = $(this).find('option:selected');
-    asigna_colonias_postales(selected.val());
+    asigna_dp_colonia_postal(selected.val());
 });
 </script>
