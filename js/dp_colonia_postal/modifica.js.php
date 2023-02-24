@@ -11,8 +11,8 @@
 
 
 
-    <?php echo $controlador->url_servicios['dp_cp']['css_id']; ?>
-    <?php echo $controlador->url_servicios['dp_cp']['update']; ?>
+    <?php echo $controlador->url_servicios['dp_cp']['event_update']; ?>
+
 
 
 </script>

@@ -406,12 +406,14 @@ class _init_dps{
 
             $even_full = $css_id.$update.$change;
             $event_change = $css_id.$change;
+            $event_update = $css_id.$update;
 
             $urls_js[$key]['update'] = $update;
             $urls_js[$key]['css_id'] = $css_id;
             $urls_js[$key]['change'] = $change;
             $urls_js[$key]['event_full'] = $even_full;
             $urls_js[$key]['event_change'] = $event_change;
+            $urls_js[$key]['event_update'] = $event_update;
 
         }
         return $urls_js;

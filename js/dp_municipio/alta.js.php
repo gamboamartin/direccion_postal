@@ -3,8 +3,8 @@
     <?php echo $controlador->url_servicios['dp_pais']['event_change']; ?>
 
 
-    <?php echo $controlador->url_servicios['dp_estado']['css_id']; ?>
-    <?php echo $controlador->url_servicios['dp_estado']['update']; ?>
+    <?php echo $controlador->url_servicios['dp_estado']['event_update']; ?>
+
 
 
 </script>

@@ -4,7 +4,7 @@
 
     <?php echo $controlador->url_servicios['dp_estado']['event_full']; ?>
 
-    <?php echo $controlador->url_servicios['dp_municipio']['css_id']; ?>
-    <?php echo $controlador->url_servicios['dp_municipio']['update']; ?>
+    <?php echo $controlador->url_servicios['dp_municipio']['event_update']; ?>
+
 
 </script>

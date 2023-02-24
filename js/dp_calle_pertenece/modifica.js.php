@@ -10,8 +10,7 @@
     <?php echo $controlador->url_servicios['dp_cp']['event_full']; ?>
 
 
-    <?php echo $controlador->url_servicios['dp_colonia_postal']['css_id']; ?>
-    <?php echo $controlador->url_servicios['dp_colonia_postal']['update']; ?>
+    <?php echo $controlador->url_servicios['dp_colonia_postal']['event_update']; ?>
 
 
 </script>
