@@ -105,7 +105,7 @@ class controlador_dp_calle_pertenece extends _ctl_calles {
         }
 
         $identificador = "dp_colonia_postal_id";
-        $propiedades = array("label" => "Colonia Postal", "con_registros" => false);
+        $propiedades = array("label" => "Colonia Postal", "con_registros" => false,'key_descripcion_select'=>'dp_colonia_descripcion');
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "dp_calle_id";

@@ -17,14 +17,15 @@ class _init_dps{
         $this->validacion = new validacion();
     }
 
-    private function asigna_data(array $childrens, string $entidad_key, string $key_option, string $seccion_limpia, string $seccion_param){
+    private function asigna_data(array $childrens, string $entidad, string $entidad_key, string $key_option,
+                                 string $seccion_limpia, string $seccion_param){
         $update = $this->update_ejecuta(childrens: $childrens,entidad_key:  $entidad_key,
             key_option:  $key_option,seccion_limpia:  $seccion_limpia,seccion_param:  $seccion_param);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al asignar update', data: $update);
         }
 
-        return 'let asigna_'.$entidad_key.' = ('.$seccion_param.'_id = "") => {
+        return 'let asigna_'.$entidad.' = ('.$seccion_param.'_id = "") => {
             '.$update.'
         }
         ';
@@ -197,7 +198,7 @@ class _init_dps{
 
         $urls['colonia_postal']['seccion_param'] = 'dp_cp';
         $urls['colonia_postal']['key_option'] = 'descripcion';
-        $urls['colonia_postal']['entidad_key'] = 'dp_colonia_postal';
+        $urls['colonia_postal']['entidad_key'] = 'dp_colonia';
         $urls['colonia_postal']['childrens'] = array('colonia_postal');
 
 
@@ -247,8 +248,8 @@ class _init_dps{
             return $this->error->error(mensaje: 'Error al generar css',data:  $css_id);
         }
 
-        $update = $this->asigna_data(childrens: $params->childrens,entidad_key:  $params->entidad_key,key_option:  $params->key_option,
-            seccion_limpia: $params->seccion_limpia,seccion_param:  $params->seccion_param);
+        $update = $this->asigna_data(childrens: $params->childrens, entidad: $params->key, entidad_key: $params->entidad_key,
+            key_option: $params->key_option, seccion_limpia: $params->seccion_limpia, seccion_param: $params->seccion_param);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar update',data:  $update);
         }
