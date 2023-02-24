@@ -88,7 +88,7 @@ class controlador_dp_estado extends _ctl_dps {
     private function inicializa_priedades(): array
     {
         $identificador = "dp_pais_id";
-        $propiedades = array("label" => "País");
+        $propiedades = array("label" => "País", 'key_descripcion_select'=>'dp_pais_descripcion');
         $prop = $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al asignar propiedad',data:  $prop);
