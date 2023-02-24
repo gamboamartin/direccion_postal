@@ -22,7 +22,7 @@ use html\dp_calle_pertenece_html;
 use PDO;
 use stdClass;
 
-class controlador_dp_calle_pertenece extends _ctl_calles {
+class controlador_dp_calle_pertenece extends _ctl_calles { 
 
     public array $url_servicios = array();
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
