@@ -556,9 +556,15 @@ class selects {
      * Genera el name attr basado en el filtro para select
      * @param string $key_filtro Valor a integrar
      * @return array|string
+     * @version 9.73.1
      */
     private function name_attr(string $key_filtro): array|string
     {
+        $key_filtro = trim($key_filtro);
+        if($key_filtro === ''){
+            return $this->error->error(mensaje: 'Error key_filtro esta vacio',data: $key_filtro);
+        }
+
         return str_replace('.', '_', $key_filtro);
     }
 
