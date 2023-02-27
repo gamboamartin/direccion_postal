@@ -37,29 +37,40 @@ class selects {
 
         $tablas['dp_estado']['key_id'] = 'dp_estado_id';
         $tablas['dp_estado']['tabla'] = 'dp_estado';
+        $tablas['dp_estado']['key_filtro'] = 'dp_pais.id';
 
         $tablas['dp_municipio']['key_id'] = 'dp_municipio_id';
         $tablas['dp_municipio']['tabla'] = 'dp_municipio';
+        $tablas['dp_municipio']['key_filtro'] = 'dp_estado.id';
 
         $tablas['dp_cp']['key_id'] = 'dp_cp_id';
         $tablas['dp_cp']['tabla'] = 'dp_cp';
+        $tablas['dp_cp']['key_filtro'] = 'dp_municipio.id';
 
         $tablas['dp_colonia_postal']['key_id'] = 'dp_colonia_postal_id';
         $tablas['dp_colonia_postal']['tabla'] = 'dp_colonia_postal';
+        $tablas['dp_colonia_postal']['key_filtro'] = 'dp_cp.id';
 
         $tablas['dp_calle_pertenece']['key_id'] = 'dp_calle_pertenece_id';
         $tablas['dp_calle_pertenece']['tabla'] = 'dp_calle_pertenece';
+        $tablas['dp_calle_pertenece']['key_filtro'] = 'dp_colonia_postal.id';
 
         $tablas['dp_calle_pertenece_entre1']['key_id'] = 'dp_calle_pertenece_entre1_id';
         $tablas['dp_calle_pertenece_entre1']['tabla'] = 'dp_calle_pertenece';
+        $tablas['dp_calle_pertenece_entre1']['key_filtro'] = 'dp_colonia_postal.id';
 
         $tablas['dp_calle_pertenece_entre2']['key_id'] = 'dp_calle_pertenece_entre2_id';
         $tablas['dp_calle_pertenece_entre2']['tabla'] = 'dp_calle_pertenece';
+        $tablas['dp_calle_pertenece_entre2']['key_filtro'] = 'dp_colonia_postal.id';
 
 
         foreach ($tablas as $tabla){
 
             $key_id = $tabla['key_id'];
+            $key_filtro = '';
+            if(isset($tabla['key_filtro'])){
+                $key_filtro = $tabla['key_filtro'];
+            }
 
             $filtro = array();
             $cols = $params->$key_id->cols ?? 6;
@@ -67,8 +78,8 @@ class selects {
             $required = $params->$key_id->required ?? false;
 
 
-            $data_select = $this->$key_id(filtro:$filtro,html: $html,link:  $link, row: $row, tabla: $tabla['tabla'],
-                cols: $cols, disabled:$disabled, required: $required);
+            $data_select = $this->$key_id(filtro:$filtro,html: $html, key_filtro: $key_filtro,link:  $link, row: $row,
+                tabla: $tabla['tabla'], cols: $cols, disabled:$disabled, required: $required);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al generar select en '.$key_id,data:  $data_select);
 
@@ -83,6 +94,7 @@ class selects {
      * Genera un select de tipo estado inicializado
      * @param array $filtro Filtro para obtencion de datos
      * @param html $html Clade de template
+     * @param string $key_filtro
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
      * @param string $tabla
@@ -92,13 +104,15 @@ class selects {
      * @return array|stdClass
      * @version 0.114.8
      */
-    public function dp_calle_pertenece_id(array $filtro, html $html, PDO $link, stdClass $row, string $tabla,
-                                          int $cols = 6, bool $disabled = false,
+    public function dp_calle_pertenece_id(array $filtro, html $html, string $key_filtro, PDO $link, stdClass $row,
+                                          string $tabla, int $cols = 6, bool $disabled = false,
                                           bool $required = false): array|stdClass
     {
-        if(isset($row->dp_colonia_postal_id) && (int)$row->dp_colonia_postal_id !== -1){
-            $filtro['dp_colonia_postal.id'] = $row->dp_colonia_postal_id;
+        $filtro = $this->genera_filtro_select(filtro: $filtro,key_filtro:  $key_filtro,row:  $row);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
         }
+
         $con_registros = true;
         if(count($filtro) === 0){
             $con_registros = false;
@@ -118,6 +132,7 @@ class selects {
      * Genera un select de tipo estado inicializado
      * @param array $filtro Filtro de datos
      * @param html $html Clade de template
+     * @param string $key_filtro
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
      * @param string $tabla
@@ -127,12 +142,13 @@ class selects {
      * @return array|stdClass
      * @version 0.123.8
      */
-    public function dp_calle_pertenece_entre1_id(array $filtro,html $html, PDO $link, stdClass $row, string $tabla,
-                                                 int $cols = 6, bool $disabled = false,
+    public function dp_calle_pertenece_entre1_id(array $filtro,html $html, string $key_filtro, PDO $link,
+                                                 stdClass $row, string $tabla, int $cols = 6, bool $disabled = false,
                                                  bool $required = false): array|stdClass
     {
-        if(isset($row->dp_colonia_postal_id) && (int)$row->dp_colonia_postal_id !== -1){
-            $filtro['dp_colonia_postal.id'] = $row->dp_colonia_postal_id;
+        $filtro = $this->genera_filtro_select(filtro: $filtro,key_filtro:  $key_filtro,row:  $row);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
         }
         $con_registros = true;
         if(count($filtro) === 0){
@@ -154,6 +170,7 @@ class selects {
      * Genera un select de tipo estado inicializado
      * @param array $filtro Filtro con datos para obtencion de select
      * @param html $html Clade de template
+     * @param string $key_filtro
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
      * @param string $tabla Tabla o entidad de datos
@@ -162,12 +179,13 @@ class selects {
      * @param bool $required Si required inserta attr required
      * @return array|stdClass
      */
-    public function dp_calle_pertenece_entre2_id(array $filtro,html $html, PDO $link, stdClass $row, string $tabla,
-                                                 int $cols = 6, bool $disabled = false,
+    public function dp_calle_pertenece_entre2_id(array $filtro,html $html, string $key_filtro, PDO $link,
+                                                 stdClass $row, string $tabla, int $cols = 6, bool $disabled = false,
                                                  bool $required = false): array|stdClass
     {
-        if(isset($row->dp_colonia_postal_id) && (int)$row->dp_colonia_postal_id !== -1){
-            $filtro['dp_colonia_postal.id'] = $row->dp_colonia_postal_id;
+        $filtro = $this->genera_filtro_select(filtro: $filtro,key_filtro:  $key_filtro,row:  $row);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
         }
         $con_registros = true;
         if(count($filtro) === 0){
@@ -189,6 +207,7 @@ class selects {
      * Genera un select de tipo estado inicializado
      * @param array $filtro
      * @param html $html Clade de template
+     * @param string $key_filtro
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
      * @param string $tabla
@@ -197,12 +216,14 @@ class selects {
      * @param bool $required
      * @return array|stdClass
      */
-    public function dp_colonia_postal_id(array $filtro,html $html, PDO $link, stdClass $row, string $tabla,
-                                         int $cols = 6, bool $disabled = false, bool $required = false): array|stdClass
+    public function dp_colonia_postal_id(array $filtro,html $html, string $key_filtro, PDO $link, stdClass $row,
+                                         string $tabla, int $cols = 6, bool $disabled = false,
+                                         bool $required = false): array|stdClass
     {
 
-        if(isset($row->dp_cp_id) && (int)$row->dp_cp_id !== -1){
-            $filtro['dp_cp.id'] = $row->dp_cp_id;
+        $filtro = $this->genera_filtro_select(filtro: $filtro,key_filtro:  $key_filtro,row:  $row);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
         }
         $con_registros = true;
         if(count($filtro) === 0){
@@ -222,6 +243,7 @@ class selects {
      * Genera un select de tipo estado inicializado
      * @param array $filtro
      * @param html $html Clade de template
+     * @param string $key_filtro
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
      * @param string $tabla
@@ -230,12 +252,13 @@ class selects {
      * @param bool $required
      * @return array|stdClass
      */
-    public function dp_cp_id(array $filtro,html $html, PDO $link, stdClass $row, string $tabla, int $cols = 6,
-                             bool $disabled = false, bool $required = false): array|stdClass
+    public function dp_cp_id(array $filtro,html $html, string $key_filtro, PDO $link, stdClass $row, string $tabla,
+                             int $cols = 6, bool $disabled = false, bool $required = false): array|stdClass
     {
 
-        if(isset($row->dp_municipio_id) && (int)$row->dp_municipio_id !== -1){
-            $filtro['dp_municipio.id'] = $row->dp_municipio_id;
+        $filtro = $this->genera_filtro_select(filtro: $filtro,key_filtro:  $key_filtro,row:  $row);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
         }
         $con_registros = true;
         if(count($filtro) === 0){
@@ -255,6 +278,7 @@ class selects {
      * Genera un select de tipo estado inicializado
      * @param array $filtro Filtro para obtencion de datos
      * @param html $html Clade de template
+     * @param string $key_filtro
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
      * @param string $tabla
@@ -264,12 +288,13 @@ class selects {
      * @return array|stdClass
      * @version 0.125.8
      */
-    public function dp_estado_id(array $filtro,html $html, PDO $link, stdClass $row, string $tabla, int $cols = 6,
-                                 bool $disabled = false, bool $required = false): array|stdClass
+    public function dp_estado_id(array $filtro,html $html, string $key_filtro, PDO $link, stdClass $row, string $tabla,
+                                 int $cols = 6, bool $disabled = false, bool $required = false): array|stdClass
     {
 
-        if(isset($row->dp_pais_id) && (int)$row->dp_pais_id !== -1){
-            $filtro['dp_pais.id'] = $row->dp_pais_id;
+        $filtro = $this->genera_filtro_select(filtro: $filtro,key_filtro:  $key_filtro,row:  $row);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
         }
         $con_registros = true;
         if(count($filtro) === 0){
@@ -289,6 +314,7 @@ class selects {
      * Genera un select de tipo estado inicializado
      * @param array $filtro
      * @param html $html Clade de template
+     * @param string $key_filtro
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
      * @param string $tabla
@@ -297,12 +323,14 @@ class selects {
      * @param bool $required
      * @return array|stdClass
      */
-    public function dp_municipio_id(array $filtro,html $html, PDO $link, stdClass $row, string $tabla, int $cols = 6,
-                                    bool $disabled = false, bool $required = false): array|stdClass
+    public function dp_municipio_id(array $filtro,html $html, string $key_filtro, PDO $link, stdClass $row,
+                                    string $tabla, int $cols = 6, bool $disabled = false,
+                                    bool $required = false): array|stdClass
     {
 
-        if(isset($row->dp_estado_id) && (int)$row->dp_estado_id !== -1){
-            $filtro['dp_estado.id'] = $row->dp_estado_id;
+        $filtro = $this->genera_filtro_select(filtro: $filtro,key_filtro:  $key_filtro,row:  $row);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
         }
         $con_registros = true;
         if(count($filtro) === 0){
@@ -323,6 +351,7 @@ class selects {
      * Genera un select de tipo pais inicializado
      * @param array $filtro
      * @param html $html Clade de template
+     * @param string $key_filtro
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
      * @param string $tabla
@@ -335,9 +364,15 @@ class selects {
      * @fecha 2022-08-05 10:01
      * @author mgamboa
      */
-    public function dp_pais_id(array $filtro,html $html, PDO $link, stdClass $row, string $tabla, int $cols = 6,
-                               bool $disabled = false, bool $required = false): array|stdClass
+    public function dp_pais_id(array $filtro,html $html, string $key_filtro, PDO $link, stdClass $row,
+                               string $tabla, int $cols = 6, bool $disabled = false,
+                               bool $required = false): array|stdClass
     {
+
+        $filtro = $this->genera_filtro_select(filtro: $filtro,key_filtro:  $key_filtro,row:  $row);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
+        }
 
         $data = $this->select_base(con_registros: true,filtro:$filtro,html: $html,
             link:  $link, row: $row,tabla:  $tabla,cols: $cols, disabled: $disabled, required: $required);
@@ -347,6 +382,39 @@ class selects {
         }
 
         return $data;
+    }
+
+    private function filtro_select(array $filtro, string $key_filtro, string $name_attr, stdClass $row): array
+    {
+        $filtro[$key_filtro] = $row->$name_attr;
+        return $filtro;
+    }
+
+    private function genera_filtro_select(array $filtro, string $key_filtro, stdClass $row){
+        $name_attr = $this->genera_name_attr(key_filtro: $key_filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar name_attr',data:  $name_attr);
+        }
+
+        if($name_attr!=='') {
+            $filtro = $this->integra_filtro(filtro: $filtro,key_filtro:  $key_filtro,name_attr:  $name_attr,row:  $row);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
+            }
+        }
+        return $filtro;
+    }
+
+    private function genera_name_attr(string $key_filtro){
+        $name_attr = '';
+        if($key_filtro!=='') {
+            $name_attr = $this->name_attr(key_filtro: $key_filtro);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al generar name_attr',data:  $name_attr);
+
+            }
+        }
+        return $name_attr;
     }
 
     /**
@@ -377,7 +445,7 @@ class selects {
     }
 
     /**
-     * Genera un select inicilaizado
+     * Genera un select inicializado
      * @param bool $con_registros Si con registros muestra los registros
      * @param array $filtro Filtro de obtencion de datos
      * @param PDO $link Conexion a la base de datos
@@ -441,6 +509,17 @@ class selects {
         return $select;
     }
 
+    private function integra_filtro(array $filtro, string $key_filtro, string $name_attr, stdClass $row){
+        if (isset($row->$name_attr) && (int)$row->$name_attr !== -1) {
+            $filtro = $this->filtro_select(filtro: $filtro, key_filtro: $key_filtro, name_attr: $name_attr,
+                row:  $row);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
+            }
+        }
+        return $filtro;
+    }
+
     /**
      * Genera un key id
      * @param string $tabla Tabla o estructura de database
@@ -457,6 +536,11 @@ class selects {
             return $this->error->error(mensaje: 'Error tabla esta vacia',data: $tabla);
         }
         return $tabla.'_id';
+    }
+
+    private function name_attr(string $key_filtro): array|string
+    {
+        return str_replace('.', '_', $key_filtro);
     }
 
     /**
