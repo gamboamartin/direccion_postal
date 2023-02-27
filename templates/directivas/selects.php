@@ -6,14 +6,17 @@ use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\system\init;
 use gamboamartin\template\html;
+use gamboamartin\validacion\validacion;
 use PDO;
 use stdClass;
 
 
 class selects {
     private errores  $error;
+    private validacion $validacion;
     public function __construct(){
         $this->error = new errores();
+        $this->validacion = new validacion();
     }
 
     private function base_select(int $cols, bool $con_registros, bool $disabled, array $filtro, html $html,
@@ -408,6 +411,22 @@ class selects {
      */
     private function filtro_select(array $filtro, string $key_filtro, string $name_attr, stdClass $row): array
     {
+        $key_filtro = trim($key_filtro);
+        if($key_filtro === ''){
+            return $this->error->error(mensaje: 'Error key_filtro esta vacio',data:  $key_filtro);
+        }
+        $name_attr = trim($name_attr);
+        if($name_attr === ''){
+            return $this->error->error(mensaje: 'Error name_attr esta vacio',data:  $name_attr);
+        }
+
+        $keys = array($name_attr);
+
+        $valida = $this->validacion->valida_existencia_keys(keys: $keys,registro:  $row);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar $row',data:  $valida);
+        }
+
         $filtro[$key_filtro] = $row->$name_attr;
         return $filtro;
     }
