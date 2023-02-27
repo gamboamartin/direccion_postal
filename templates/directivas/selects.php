@@ -32,16 +32,43 @@ class selects {
     public function direcciones(html $html, PDO $link, stdClass $row, stdClass $selects, stdClass
     $params = new stdClass()): array|stdClass
     {
-        $tablas = array('dp_pais_id','dp_estado_id','dp_municipio_id','dp_cp_id','dp_colonia_postal_id',
-            'dp_calle_pertenece_id','dp_calle_pertenece_entre1_id','dp_calle_pertenece_entre2_id');
-        foreach ($tablas as $key_id){
+        $tablas['dp_pais']['key_id'] = 'dp_pais_id';
+        $tablas['dp_pais']['tabla'] = 'dp_pais';
+
+        $tablas['dp_estado']['key_id'] = 'dp_estado_id';
+        $tablas['dp_estado']['tabla'] = 'dp_estado';
+
+        $tablas['dp_municipio']['key_id'] = 'dp_municipio_id';
+        $tablas['dp_municipio']['tabla'] = 'dp_municipio';
+
+        $tablas['dp_cp']['key_id'] = 'dp_cp_id';
+        $tablas['dp_cp']['tabla'] = 'dp_cp';
+
+        $tablas['dp_colonia_postal']['key_id'] = 'dp_colonia_postal_id';
+        $tablas['dp_colonia_postal']['tabla'] = 'dp_colonia_postal';
+
+        $tablas['dp_calle_pertenece']['key_id'] = 'dp_calle_pertenece_id';
+        $tablas['dp_calle_pertenece']['tabla'] = 'dp_calle_pertenece';
+
+        $tablas['dp_calle_pertenece_entre1']['key_id'] = 'dp_calle_pertenece_entre1_id';
+        $tablas['dp_calle_pertenece_entre1']['tabla'] = 'dp_calle_pertenece';
+
+        $tablas['dp_calle_pertenece_entre2']['key_id'] = 'dp_calle_pertenece_entre2_id';
+        $tablas['dp_calle_pertenece_entre2']['tabla'] = 'dp_calle_pertenece';
+
+
+        foreach ($tablas as $tabla){
+
+            $key_id = $tabla['key_id'];
 
             $filtro = array();
             $cols = $params->$key_id->cols ?? 6;
             $disabled = $params->$key_id->disabled ?? false;
             $required = $params->$key_id->required ?? false;
-            $data_select = $this->$key_id(filtro:$filtro,html: $html,link:  $link, row: $row, cols: $cols,
-                disabled:$disabled, required: $required);
+
+
+            $data_select = $this->$key_id(filtro:$filtro,html: $html,link:  $link, row: $row, tabla: $tabla['tabla'],
+                cols: $cols, disabled:$disabled, required: $required);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al generar select en '.$key_id,data:  $data_select);
 
@@ -58,13 +85,16 @@ class selects {
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
+     * @param string $tabla
      * @param int $cols N columnas css
      * @param bool $disabled Si disabled deja el input deshabilitado
+     * @param bool $required
      * @return array|stdClass
      * @version 0.114.8
      */
-    public function dp_calle_pertenece_id(array $filtro, html $html, PDO $link, stdClass $row, int $cols = 6,
-                                          bool $disabled = false, bool $required = false): array|stdClass
+    public function dp_calle_pertenece_id(array $filtro, html $html, PDO $link, stdClass $row, string $tabla,
+                                          int $cols = 6, bool $disabled = false,
+                                          bool $required = false): array|stdClass
     {
         if(isset($row->dp_colonia_postal_id) && (int)$row->dp_colonia_postal_id !== -1){
             $filtro['dp_colonia_postal.id'] = $row->dp_colonia_postal_id;
@@ -75,7 +105,7 @@ class selects {
         }
 
         $data = $this->select_base(con_registros: $con_registros,filtro:$filtro, html: $html,link:  $link,
-            row: $row,tabla:  'dp_calle_pertenece', cols: $cols, disabled:$disabled, required: $required);
+            row: $row,tabla:  $tabla, cols: $cols, disabled:$disabled, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -90,13 +120,16 @@ class selects {
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
+     * @param string $tabla
      * @param int $cols N columnas css
      * @param bool $disabled Si disabled deja el input deshabilitado
+     * @param bool $required
      * @return array|stdClass
      * @version 0.123.8
      */
-    public function dp_calle_pertenece_entre1_id(array $filtro,html $html, PDO $link, stdClass $row, int $cols = 6,
-                                                 bool $disabled = false, bool $required = false): array|stdClass
+    public function dp_calle_pertenece_entre1_id(array $filtro,html $html, PDO $link, stdClass $row, string $tabla,
+                                                 int $cols = 6, bool $disabled = false,
+                                                 bool $required = false): array|stdClass
     {
         if(isset($row->dp_colonia_postal_id) && (int)$row->dp_colonia_postal_id !== -1){
             $filtro['dp_colonia_postal.id'] = $row->dp_colonia_postal_id;
@@ -106,7 +139,7 @@ class selects {
             $con_registros = false;
         }
         $data = $this->select_base(con_registros: $con_registros, filtro: $filtro, html: $html, link: $link,
-            row: $row, tabla: 'dp_calle_pertenece', cols: $cols, disabled: $disabled,
+            row: $row, tabla: $tabla, cols: $cols, disabled: $disabled,
             key_id: 'dp_calle_pertenece_entre1_id', name_funcion: 'select_dp_calle_pertenece_entre1_id',
             required: $required);
         if(errores::$error){
@@ -123,12 +156,15 @@ class selects {
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
+     * @param string $tabla
      * @param int $cols N columnas css
      * @param bool $disabled Si disabled deja el input deshabilitado
+     * @param bool $required
      * @return array|stdClass
      */
-    public function dp_calle_pertenece_entre2_id(array $filtro,html $html, PDO $link, stdClass $row, int $cols = 6,
-                                                 bool $disabled = false, bool $required = false): array|stdClass
+    public function dp_calle_pertenece_entre2_id(array $filtro,html $html, PDO $link, stdClass $row, string $tabla,
+                                                 int $cols = 6, bool $disabled = false,
+                                                 bool $required = false): array|stdClass
     {
         if(isset($row->dp_colonia_postal_id) && (int)$row->dp_colonia_postal_id !== -1){
             $filtro['dp_colonia_postal.id'] = $row->dp_colonia_postal_id;
@@ -138,7 +174,7 @@ class selects {
             $con_registros = false;
         }
         $data = $this->select_base(con_registros: $con_registros, filtro: $filtro, html: $html, link: $link,
-            row: $row, tabla: 'dp_calle_pertenece', cols: $cols, disabled: $disabled,
+            row: $row, tabla: $tabla, cols: $cols, disabled: $disabled,
             key_id: 'dp_calle_pertenece_entre2_id', name_funcion: 'select_dp_calle_pertenece_entre2_id',
             required: $required);
         if(errores::$error){
@@ -155,12 +191,14 @@ class selects {
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
+     * @param string $tabla
      * @param int $cols N columnas css
      * @param bool $disabled Si disabled deja el input deshabilitado
+     * @param bool $required
      * @return array|stdClass
      */
-    public function dp_colonia_postal_id(array $filtro,html $html, PDO $link, stdClass $row, int $cols = 6,
-                                         bool $disabled = false, bool $required = false): array|stdClass
+    public function dp_colonia_postal_id(array $filtro,html $html, PDO $link, stdClass $row, string $tabla,
+                                         int $cols = 6, bool $disabled = false, bool $required = false): array|stdClass
     {
 
         if(isset($row->dp_cp_id) && (int)$row->dp_cp_id !== -1){
@@ -171,7 +209,7 @@ class selects {
             $con_registros = false;
         }
         $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,
-            link:  $link, row: $row,tabla:  'dp_colonia_postal', cols: $cols, disabled: $disabled, required: $required);
+            link:  $link, row: $row,tabla:  $tabla, cols: $cols, disabled: $disabled, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -186,11 +224,13 @@ class selects {
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
+     * @param string $tabla
      * @param int $cols N columnas css
      * @param bool $disabled Si disabled deja el input deshabilitado
+     * @param bool $required
      * @return array|stdClass
      */
-    public function dp_cp_id(array $filtro,html $html, PDO $link, stdClass $row, int $cols = 6,
+    public function dp_cp_id(array $filtro,html $html, PDO $link, stdClass $row, string $tabla, int $cols = 6,
                              bool $disabled = false, bool $required = false): array|stdClass
     {
 
@@ -202,7 +242,7 @@ class selects {
             $con_registros = false;
         }
         $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,link:  $link,
-            row: $row,tabla:  'dp_cp', cols: $cols, disabled:$disabled, required: $required);
+            row: $row,tabla:  $tabla, cols: $cols, disabled:$disabled, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -217,12 +257,14 @@ class selects {
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
+     * @param string $tabla
      * @param int $cols N columnas css
      * @param bool $disabled Si disabled deja el input deshabilitado
+     * @param bool $required
      * @return array|stdClass
      * @version 0.125.8
      */
-    public function dp_estado_id(array $filtro,html $html, PDO $link, stdClass $row, int $cols = 6,
+    public function dp_estado_id(array $filtro,html $html, PDO $link, stdClass $row, string $tabla, int $cols = 6,
                                  bool $disabled = false, bool $required = false): array|stdClass
     {
 
@@ -234,7 +276,7 @@ class selects {
             $con_registros = false;
         }
         $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,
-            link:  $link, row: $row,tabla:  'dp_estado', cols: $cols, disabled:$disabled, required: $required);
+            link:  $link, row: $row,tabla:  $tabla, cols: $cols, disabled:$disabled, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -249,11 +291,13 @@ class selects {
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
+     * @param string $tabla
      * @param int $cols N columnas css
      * @param bool $disabled Si disabled deja el input deshabilitado
+     * @param bool $required
      * @return array|stdClass
      */
-    public function dp_municipio_id(array $filtro,html $html, PDO $link, stdClass $row, int $cols = 6,
+    public function dp_municipio_id(array $filtro,html $html, PDO $link, stdClass $row, string $tabla, int $cols = 6,
                                     bool $disabled = false, bool $required = false): array|stdClass
     {
 
@@ -266,7 +310,7 @@ class selects {
         }
 
         $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,link:  $link,
-            row: $row,tabla:  'dp_municipio', cols: $cols, disabled:$disabled, required: $required);
+            row: $row,tabla:  $tabla, cols: $cols, disabled:$disabled, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -281,20 +325,22 @@ class selects {
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
+     * @param string $tabla
      * @param int $cols N columnas css
      * @param bool $disabled Si disabled deja el input deshabilitado
+     * @param bool $required
      * @return array|stdClass
      * @version 0.83.8
      * @verfuncion 0.1.0
      * @fecha 2022-08-05 10:01
      * @author mgamboa
      */
-    public function dp_pais_id(array $filtro,html $html, PDO $link, stdClass $row, int $cols = 6,
+    public function dp_pais_id(array $filtro,html $html, PDO $link, stdClass $row, string $tabla, int $cols = 6,
                                bool $disabled = false, bool $required = false): array|stdClass
     {
 
         $data = $this->select_base(con_registros: true,filtro:$filtro,html: $html,
-            link:  $link, row: $row,tabla:  'dp_pais',cols: $cols, disabled: $disabled, required: $required);
+            link:  $link, row: $row,tabla:  $tabla,cols: $cols, disabled: $disabled, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -342,6 +388,7 @@ class selects {
      * @param bool $disabled Si disabled el input queda deshablitado
      * @param string $key_id llave del identificador
      * @param string $name_function nombre de funcion para generacion de select
+     * @param bool $required
      * @return array|string
      * @version 0.128..26
      * @verfuncion 0.1.0
@@ -381,6 +428,8 @@ class selects {
                 $name_function = $name_function_;
             }
         }
+
+
 
 
         $select = $obj_html->$name_function(cols: $cols, con_registros:$con_registros, id_selected:$row_->$key_id,
@@ -483,8 +532,9 @@ class selects {
      * @param string $tabla Tabla o estructura
      * @param int $cols N columnas css
      * @param bool $disabled Si disabled deja el input deshabilitado
-     * @param string $key_id Llave del identiifcador a validar
+     * @param string $key_id Llave del identificador a validar
      * @param string $name_funcion Nombre de funcion
+     * @param bool $required
      * @return array|stdClass
      * @version 0.100.8
      * @verfuncion 0.1.0
