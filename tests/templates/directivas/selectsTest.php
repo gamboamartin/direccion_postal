@@ -59,8 +59,9 @@ class selectsTest extends test {
         $row = new stdClass();
         $filtro =  array();
         $link = $this->link;
-        $resultado = $dir->dp_calle_pertenece_entre1_id(filtro: $filtro,html:  $html, key_filtro: '',
-            key_id: 'dp_calle_pertenece_entre1_id', link: $link,row:  $row, tabla: 'dp_calle_pertenece');
+        $resultado = $dir->dp_calle_pertenece_entre1_id(con_registros: false, filtro: $filtro,html:  $html,
+            key_filtro: '', key_id: 'dp_calle_pertenece_entre1_id', link: $link,row:  $row,
+            tabla: 'dp_calle_pertenece');
         $this->assertEquals(-1,$resultado->row->dp_calle_pertenece_id);
         $this->assertEquals(-1,$resultado->row->dp_calle_pertenece_entre1_id);
         $this->assertStringContainsStringIgnoringCase("' for='dp_calle_pertenece_entre1_id'>E",$resultado->select);
@@ -83,8 +84,8 @@ class selectsTest extends test {
         $filtro =  array();
         $link = $this->link;
         $disabled = false;
-        $resultado = $dir->dp_calle_pertenece_id(filtro: $filtro,html:  $html, key_filtro: '', key_id: '', link: $link,row:  $row,
-            tabla:'dp_calle_pertenece' ,disabled: $disabled);
+        $resultado = $dir->dp_calle_pertenece_id(con_registros: false, filtro: $filtro,html:  $html, key_filtro: '',
+            key_id: '', link: $link,row:  $row, tabla:'dp_calle_pertenece' ,disabled: $disabled);
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
 
@@ -97,8 +98,8 @@ class selectsTest extends test {
         $filtro =  array();
         $link = $this->link;
         $disabled = true;
-        $resultado = $dir->dp_calle_pertenece_id(filtro: $filtro,html:  $html, key_filtro: '', key_id: '',
-            link:  $link,row:  $row,tabla:'dp_calle_pertenece',disabled: $disabled);
+        $resultado = $dir->dp_calle_pertenece_id(con_registros: true, filtro: $filtro,html:  $html, key_filtro: '',
+            key_id: '', link:  $link,row:  $row,tabla:'dp_calle_pertenece',disabled: $disabled);
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
 
@@ -113,8 +114,8 @@ class selectsTest extends test {
         $filtro =  array();
         $link = $this->link;
         $disabled = true;
-        $resultado = $dir->dp_calle_pertenece_id(filtro: $filtro, html: $html,key_filtro: '', key_id: '', link: $link,
-            row: $row,tabla:'dp_calle_pertenece',disabled: $disabled);
+        $resultado = $dir->dp_calle_pertenece_id(con_registros: false, filtro: $filtro, html: $html,key_filtro: '',
+            key_id: '', link: $link, row: $row,tabla:'dp_calle_pertenece',disabled: $disabled);
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
 
@@ -137,8 +138,8 @@ class selectsTest extends test {
         $row = new stdClass();
         $filtro =  array();
         $link = $this->link;
-        $resultado = $dir->dp_calle_pertenece_entre1_id(filtro: $filtro,html:  $html,key_filtro: '', key_id: 'dp_calle_pertenece_entre1_id',
-            link: $link,row:  $row, tabla: 'dp_calle_pertenece');
+        $resultado = $dir->dp_calle_pertenece_entre1_id(con_registros: true, filtro: $filtro,html:  $html,
+            key_filtro: '', key_id: 'dp_calle_pertenece_entre1_id', link: $link,row:  $row, tabla: 'dp_calle_pertenece');
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals(-1,$resultado->row->dp_calle_pertenece_id);
@@ -152,8 +153,8 @@ class selectsTest extends test {
         $link = $this->link;
 
         $cols = 1;
-        $resultado = $dir->dp_calle_pertenece_entre1_id(filtro: $filtro,html:  $html,key_filtro: '',key_id: '',
-            link: $link,row:  $row, tabla: 'dp_calle_pertenece',cols: $cols );
+        $resultado = $dir->dp_calle_pertenece_entre1_id(con_registros: false, filtro: $filtro,html:  $html,
+            key_filtro: '',key_id: '', link: $link,row:  $row, tabla: 'dp_calle_pertenece',cols: $cols );
         $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-1'><l",$resultado->select);
 
         errores::$error = false;
@@ -164,8 +165,8 @@ class selectsTest extends test {
 
         $cols = 1;
         $disabled = true;
-        $resultado = $dir->dp_calle_pertenece_entre1_id(filtro: $filtro,html:  $html,key_filtro: '', key_id: '',
-            link: $link,row:  $row, tabla: 'dp_calle_pertenece',
+        $resultado = $dir->dp_calle_pertenece_entre1_id(con_registros: true, filtro: $filtro,html:  $html,
+            key_filtro: '', key_id: '', link: $link,row:  $row, tabla: 'dp_calle_pertenece',
             cols: $cols , disabled: $disabled);
 
         $this->assertStringContainsStringIgnoringCase("name='dp_calle_pertenece_entre1_id'  disabled><o",$resultado->select);
@@ -185,7 +186,7 @@ class selectsTest extends test {
         $dir = new selects();
 
         $row = new stdClass();
-        $resultado = $dir->dp_pais_id(array(),$html,'','', $this->link, $row, tabla: 'dp_pais');
+        $resultado = $dir->dp_pais_id(true, array(),$html,'','', $this->link, $row, tabla: 'dp_pais');
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals(121,$resultado->row->dp_pais_id);
@@ -199,7 +200,7 @@ class selectsTest extends test {
 
         $row = new stdClass();
         $row->dp_pais_id = 999;
-        $resultado = $dir->dp_pais_id(array(),$html,'','', $this->link, $row, tabla: 'dp_pais');
+        $resultado = $dir->dp_pais_id(false, array(),$html,'','', $this->link, $row, tabla: 'dp_pais');
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals(999,$resultado->row->dp_pais_id);
