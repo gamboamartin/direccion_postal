@@ -19,6 +19,11 @@ class selects {
     private function base_select(int $cols, bool $con_registros, bool $disabled, array $filtro, html $html,
                                  string $key_filtro, string $key_id, PDO $link, bool $required, stdClass $row,
                                  string $tabla){
+
+        $key_id = trim($key_id);if($key_id === ''){
+            return $this->error->error(mensaje: 'Error key_id esta vacio',data:  $key_id);
+        }
+
         $filtro = $this->genera_filtro_select(filtro: $filtro,key_filtro:  $key_filtro,row:  $row);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
@@ -31,9 +36,12 @@ class selects {
             }
         }
 
+        $name_function = "select_$key_id";
 
-        $data = $this->select_base(con_registros: $con_registros, filtro: $filtro, html: $html, link: $link,
-            row: $row, tabla: $tabla, cols: $cols, disabled: $disabled, key_id: $key_id, required: $required);
+
+        $data = $this->select_base(con_registros: $con_registros, filtro: $filtro, html: $html, link: $link, row: $row,
+            tabla: $tabla, cols: $cols, disabled: $disabled, key_id: $key_id, name_funcion: $name_function,
+            required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -197,9 +205,11 @@ class selects {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener con_registros',data:  $con_registros);
         }
+
+        $name_function = "select_$key_id";
         $data = $this->select_base(con_registros: $con_registros, filtro: $filtro, html: $html, link: $link,
             row: $row, tabla: $tabla, cols: $cols, disabled: $disabled,
-            key_id: $key_id, name_funcion: 'select_dp_calle_pertenece_entre1_id',
+            key_id: $key_id, name_funcion: $name_function,
             required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
@@ -237,9 +247,10 @@ class selects {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener con_registros',data:  $con_registros);
         }
+        $name_function = "select_$key_id";
         $data = $this->select_base(con_registros: $con_registros, filtro: $filtro, html: $html, link: $link,
             row: $row, tabla: $tabla, cols: $cols, disabled: $disabled,
-            key_id: $key_id, name_funcion: 'select_dp_calle_pertenece_entre2_id',
+            key_id: $key_id, name_funcion: $name_function,
             required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
