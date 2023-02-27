@@ -538,6 +538,11 @@ class selects {
         return $tabla.'_id';
     }
 
+    /**
+     * Genera el name attr basado en el filtro para select
+     * @param string $key_filtro Valor a integrar
+     * @return array|string
+     */
     private function name_attr(string $key_filtro): array|string
     {
         return str_replace('.', '_', $key_filtro);
