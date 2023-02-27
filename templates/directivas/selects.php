@@ -556,7 +556,16 @@ class selects {
         return $select;
     }
 
-    private function integra_filtro(array $filtro, string $key_filtro, string $name_attr, stdClass $row){
+    /**
+     * Integra el filtro si aplica para datos de select
+     * @param array $filtro Filtro inicializado
+     * @param string $key_filtro Key a integrar
+     * @param string $name_attr Nombre del atributo del row
+     * @param stdClass $row registro en ejecucion de option
+     * @return array
+     */
+    private function integra_filtro(array $filtro, string $key_filtro, string $name_attr, stdClass $row): array
+    {
         if (isset($row->$name_attr) && (int)$row->$name_attr !== -1) {
             $filtro = $this->filtro_select(filtro: $filtro, key_filtro: $key_filtro, name_attr: $name_attr,
                 row:  $row);
