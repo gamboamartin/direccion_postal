@@ -27,7 +27,7 @@ class dp_pais_html extends html_controler {
      */
     public function select_dp_pais_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link,
                                       bool $disabled = false, array $filtro = array(),
-                                      string $key_descripcion_select = 'descripcion',
+                                      string $key_descripcion_select = 'dp_pais_descripcion',
                                       bool $required = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);

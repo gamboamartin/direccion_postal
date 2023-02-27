@@ -47,7 +47,7 @@ class dp_calle_pertenece_html extends html_controler {
     }
 
     /**
-     * Generea input a partir de la variable $div, la cual toma como valor un nuevo objeto de la clase inputs_html,
+     * Genera input a partir de la variable $div, la cual toma como valor un nuevo objeto de la clase inputs_html,
      * y su función input que toma como referencias los valores de $cols, $row_upd, $value_vacio y $campo.
      * En caso de que exista algún error, un if se encarga de capturar el error y mostrar sus respectivos datos.
      * @param int $cols Numero de columnas css
@@ -83,7 +83,7 @@ class dp_calle_pertenece_html extends html_controler {
      */
     public function select_dp_calle_pertenece_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link,
                                                  bool $disabled = false, array $filtro = array(),
-                                                 string $key_descripcion_select = 'descripcion',
+                                                 string $key_descripcion_select = 'dp_calle_descripcion',
                                                  bool $required = false): array|string
     {
 
@@ -120,7 +120,7 @@ class dp_calle_pertenece_html extends html_controler {
     public function select_dp_calle_pertenece_entre1_id(int $cols, bool $con_registros, int $id_selected,
                                                         PDO $link, bool $disabled = false,
                                                         array $filtro = array(),
-                                                        string $key_descripcion_select = 'descripcion',
+                                                        string $key_descripcion_select = 'ddp_calle_escripcion',
                                                         bool $required = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
@@ -151,7 +151,7 @@ class dp_calle_pertenece_html extends html_controler {
      */
     public function select_dp_calle_pertenece_entre2_id(int $cols, bool $con_registros, int $id_selected,
                                                         PDO $link, bool $disabled = false, array $filtro = array(),
-                                                        string $key_descripcion_select = 'descripcion',
+                                                        string $key_descripcion_select = 'dp_calle_descripcion',
                                                         bool $required = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);

@@ -547,8 +547,6 @@ class selects {
         }
 
 
-
-
         $select = $obj_html->$name_function(cols: $cols, con_registros:$con_registros, id_selected:$row_->$key_id,
             link: $link, filtro:$filtro, disabled:$disabled, required: $required);
         if(errores::$error){
