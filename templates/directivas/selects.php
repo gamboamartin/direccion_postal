@@ -433,6 +433,7 @@ class selects {
      * Genera el nombre del atributo para select
      * @param string $key_filtro Key para crear name atributo
      * @return array|string
+     * @version 9.78.1
      */
     private function genera_name_attr(string $key_filtro): array|string
     {

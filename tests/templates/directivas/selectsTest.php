@@ -210,6 +210,22 @@ class selectsTest extends test {
         errores::$error = false;
     }
 
+    public function test_genera_name_attr(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_estado';
+        $dir = new selects();
+        $dir = new liberator($dir);
+
+        $key_filtro = 'a';
+        $resultado = $dir->genera_name_attr($key_filtro);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('a',$resultado);
+        errores::$error = false;
+    }
+
     /**
      */
     public function test_genera_obj_html(): void
