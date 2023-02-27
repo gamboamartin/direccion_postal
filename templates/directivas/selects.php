@@ -408,6 +408,7 @@ class selects {
      * @param string $name_attr nombre del atributo row
      * @param stdClass $row Registro en ejecucion
      * @return array
+     * @version 9.84.1
      */
     private function filtro_select(array $filtro, string $key_filtro, string $name_attr, stdClass $row): array
     {

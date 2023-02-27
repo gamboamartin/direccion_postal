@@ -210,6 +210,27 @@ class selectsTest extends test {
         errores::$error = false;
     }
 
+    public function test_filtro_select(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_estado';
+
+        $dir = new selects();
+        $dir = new liberator($dir);
+
+        $filtro = array();
+        $row = new stdClass();
+        $key_filtro = 'a';
+        $name_attr = 'b';
+        $row->b = 'a';
+        $resultado = $dir->filtro_select($filtro, $key_filtro, $name_attr, $row);
+        $this->assertIsArray($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('a',$resultado['a']);
+        errores::$error = false;
+    }
+
     public function test_genera_name_attr(): void
     {
         errores::$error = false;
