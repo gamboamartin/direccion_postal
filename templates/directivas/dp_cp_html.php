@@ -19,6 +19,7 @@ class dp_cp_html extends html_controler {
      * @param PDO $link conexion a la base de datos
      * @param bool $disabled Si disabled el input queda deshabilitado
      * @param array $filtro Filtro para obtencion de datos
+     * @param string $key_descripcion_select
      * @param bool $required
      * @return array|string
      * @version 0.60.8
@@ -28,6 +29,7 @@ class dp_cp_html extends html_controler {
      */
     public function select_dp_cp_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link,
                                     bool $disabled = false, array $filtro = array(),
+                                    string $key_descripcion_select = 'descripcion',
                                     bool $required = false): array|string
     {
 

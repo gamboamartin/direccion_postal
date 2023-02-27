@@ -76,12 +76,14 @@ class dp_calle_pertenece_html extends html_controler {
      * @param PDO $link Conexion a la base de datos
      * @param bool $disabled Si disabled el input que da inactivo
      * @param array $filtro Filtro para obtencion de datos via filtro and del modelo
+     * @param string $key_descripcion_select
      * @param bool $required Integra attr required html
      * @return array|string
      * @version 1.157.10
      */
     public function select_dp_calle_pertenece_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link,
                                                  bool $disabled = false, array $filtro = array(),
+                                                 string $key_descripcion_select = 'descripcion',
                                                  bool $required = false): array|string
     {
 
@@ -111,11 +113,15 @@ class dp_calle_pertenece_html extends html_controler {
      * @param PDO $link Conexion a la base de datos
      * @param bool $disabled si disabled el input queda deshabilitado
      * @param array $filtro Filtro de registros
+     * @param string $key_descripcion_select
+     * @param bool $required
      * @return array|string
      */
     public function select_dp_calle_pertenece_entre1_id(int $cols, bool $con_registros, int $id_selected,
                                                         PDO $link, bool $disabled = false,
-                                                        array $filtro = array(), bool $required = false): array|string
+                                                        array $filtro = array(),
+                                                        string $key_descripcion_select = 'descripcion',
+                                                        bool $required = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
         if(errores::$error){
@@ -139,11 +145,14 @@ class dp_calle_pertenece_html extends html_controler {
      * @param PDO $link
      * @param bool $disabled
      * @param array $filtro
+     * @param string $key_descripcion_select
+     * @param bool $required
      * @return array|string
      */
     public function select_dp_calle_pertenece_entre2_id(int $cols, bool $con_registros, int $id_selected,
-                                                        PDO $link, bool $disabled = false,
-                                                        array $filtro = array(), bool $required = false): array|string
+                                                        PDO $link, bool $disabled = false, array $filtro = array(),
+                                                        string $key_descripcion_select = 'descripcion',
+                                                        bool $required = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
         if(errores::$error){

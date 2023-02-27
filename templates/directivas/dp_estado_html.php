@@ -16,6 +16,7 @@ class dp_estado_html extends html_controler {
      * @param PDO $link Conexion a la bd
      * @param bool $disabled Si disabled el input queda deshabilitado
      * @param array $filtro Filtro para la obtencion de registros
+     * @param string $key_descripcion_select
      * @param bool $required
      * @return array|string
      * @version 0.59.7
@@ -25,6 +26,7 @@ class dp_estado_html extends html_controler {
      */
     public function select_dp_estado_id(int $cols, bool $con_registros,int|null $id_selected, PDO $link,
                                         bool $disabled = false, array $filtro = array(),
+                                        string $key_descripcion_select = 'descripcion',
                                         bool $required = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);

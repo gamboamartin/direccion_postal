@@ -10,6 +10,7 @@ use PDO;
 class dp_colonia_html extends html_controler {
     public function select_dp_colonia_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link,
                                          bool $disabled = false, array $filtro = array(),
+                                         string $key_descripcion_select = 'descripcion',
                                          bool $required = false): array|string
     {
         $modelo = new dp_colonia($link);
