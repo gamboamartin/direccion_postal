@@ -184,23 +184,29 @@ class _init_dps{
 
         $urls['estado']['seccion_param'] = 'dp_pais';
         $urls['estado']['key_option'] = 'descripcion';
-        $urls['estado']['childrens'] = array('estado','municipio','cp','colonia_postal');
+        $urls['estado']['childrens'] = array('estado', 'municipio','cp','colonia_postal','calle_pertenece');
         $urls['estado']['exe'] = 'dp_municipio';
 
         $urls['municipio']['seccion_param'] = 'dp_estado';
         $urls['municipio']['key_option'] = 'descripcion';
-        $urls['municipio']['childrens'] = array('municipio','cp','colonia_postal');
+        $urls['municipio']['childrens'] = array('municipio','cp','colonia_postal','calle_pertenece');
         $urls['municipio']['exe'] = 'dp_cp';
 
         $urls['cp']['seccion_param'] = 'dp_municipio';
         $urls['cp']['key_option'] = 'descripcion';
-        $urls['cp']['childrens'] = array('cp','colonia_postal');
+        $urls['cp']['childrens'] = array('cp','colonia_postal','calle_pertenece');
         $urls['cp']['exe'] = 'dp_colonia_postal';
 
         $urls['colonia_postal']['seccion_param'] = 'dp_cp';
         $urls['colonia_postal']['key_option'] = 'descripcion';
         $urls['colonia_postal']['entidad_key'] = 'dp_colonia';
-        $urls['colonia_postal']['childrens'] = array('colonia_postal');
+        $urls['colonia_postal']['childrens'] = array('colonia_postal','calle_pertenece');
+        $urls['colonia_postal']['exe'] = 'dp_calle_pertenece';
+
+        $urls['calle_pertenece']['seccion_param'] = 'dp_colonia_postal';
+        $urls['calle_pertenece']['key_option'] = 'descripcion';
+        $urls['calle_pertenece']['entidad_key'] = 'dp_calle';
+        $urls['calle_pertenece']['childrens'] = array('calle_pertenece');
 
 
         $urls_js = $this->urls(urls:$urls);
