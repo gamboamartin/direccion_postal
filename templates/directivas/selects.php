@@ -16,6 +16,29 @@ class selects {
         $this->error = new errores();
     }
 
+    private function base_select(int $cols, bool $disabled, array $filtro, html $html, string $key_filtro, PDO $link,
+                                 bool $required, stdClass $row, string $tabla){
+        $filtro = $this->genera_filtro_select(filtro: $filtro,key_filtro:  $key_filtro,row:  $row);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
+        }
+
+        $con_registros = $this->con_registros(filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener con_registros',data:  $con_registros);
+        }
+
+
+        $data = $this->select_base(con_registros: $con_registros,filtro:$filtro, html: $html,link:  $link,
+            row: $row,tabla:  $tabla, cols: $cols, disabled:$disabled, required: $required);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $data);
+
+        }
+
+        return $data;
+    }
+
     private function con_registros(array $filtro): bool
     {
         $con_registros = true;
@@ -117,19 +140,9 @@ class selects {
                                           string $tabla, int $cols = 6, bool $disabled = false,
                                           bool $required = false): array|stdClass
     {
-        $filtro = $this->genera_filtro_select(filtro: $filtro,key_filtro:  $key_filtro,row:  $row);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
-        }
 
-        $con_registros = $this->con_registros(filtro: $filtro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al obtener con_registros',data:  $con_registros);
-        }
-
-
-        $data = $this->select_base(con_registros: $con_registros,filtro:$filtro, html: $html,link:  $link,
-            row: $row,tabla:  $tabla, cols: $cols, disabled:$disabled, required: $required);
+        $data = $this->base_select(cols: $cols,disabled:  $disabled,filtro:  $filtro,html:  $html,
+            key_filtro:  $key_filtro,link:  $link,required:  $required,row:  $row,tabla:  $tabla);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -231,16 +244,8 @@ class selects {
                                          bool $required = false): array|stdClass
     {
 
-        $filtro = $this->genera_filtro_select(filtro: $filtro,key_filtro:  $key_filtro,row:  $row);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
-        }
-        $con_registros = $this->con_registros(filtro: $filtro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al obtener con_registros',data:  $con_registros);
-        }
-        $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,
-            link:  $link, row: $row,tabla:  $tabla, cols: $cols, disabled: $disabled, required: $required);
+        $data = $this->base_select(cols: $cols,disabled:  $disabled,filtro:  $filtro,html:  $html,
+            key_filtro:  $key_filtro,link:  $link,required:  $required,row:  $row,tabla:  $tabla);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -266,16 +271,8 @@ class selects {
                              int $cols = 6, bool $disabled = false, bool $required = false): array|stdClass
     {
 
-        $filtro = $this->genera_filtro_select(filtro: $filtro,key_filtro:  $key_filtro,row:  $row);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
-        }
-        $con_registros = $this->con_registros(filtro: $filtro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al obtener con_registros',data:  $con_registros);
-        }
-        $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,link:  $link,
-            row: $row,tabla:  $tabla, cols: $cols, disabled:$disabled, required: $required);
+        $data = $this->base_select(cols: $cols,disabled:  $disabled,filtro:  $filtro,html:  $html,
+            key_filtro:  $key_filtro,link:  $link,required:  $required,row:  $row,tabla:  $tabla);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -302,16 +299,8 @@ class selects {
                                  int $cols = 6, bool $disabled = false, bool $required = false): array|stdClass
     {
 
-        $filtro = $this->genera_filtro_select(filtro: $filtro,key_filtro:  $key_filtro,row:  $row);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
-        }
-        $con_registros = $this->con_registros(filtro: $filtro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al obtener con_registros',data:  $con_registros);
-        }
-        $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,
-            link:  $link, row: $row,tabla:  $tabla, cols: $cols, disabled:$disabled, required: $required);
+        $data = $this->base_select(cols: $cols,disabled:  $disabled,filtro:  $filtro,html:  $html,
+            key_filtro:  $key_filtro,link:  $link,required:  $required,row:  $row,tabla:  $tabla);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -338,17 +327,8 @@ class selects {
                                     bool $required = false): array|stdClass
     {
 
-        $filtro = $this->genera_filtro_select(filtro: $filtro,key_filtro:  $key_filtro,row:  $row);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
-        }
-        $con_registros = $this->con_registros(filtro: $filtro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al obtener con_registros',data:  $con_registros);
-        }
-
-        $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,link:  $link,
-            row: $row,tabla:  $tabla, cols: $cols, disabled:$disabled, required: $required);
+        $data = $this->base_select(cols: $cols,disabled:  $disabled,filtro:  $filtro,html:  $html,
+            key_filtro:  $key_filtro,link:  $link,required:  $required,row:  $row,tabla:  $tabla);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
@@ -379,17 +359,8 @@ class selects {
                                bool $required = false): array|stdClass
     {
 
-        $filtro = $this->genera_filtro_select(filtro: $filtro,key_filtro:  $key_filtro,row:  $row);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar filtro',data:  $filtro);
-        }
-        $con_registros = $this->con_registros(filtro: $filtro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al obtener con_registros',data:  $con_registros);
-        }
-
-        $data = $this->select_base(con_registros: $con_registros,filtro:$filtro,html: $html,
-            link:  $link, row: $row,tabla:  $tabla,cols: $cols, disabled: $disabled, required: $required);
+        $data = $this->base_select(cols: $cols,disabled:  $disabled,filtro:  $filtro,html:  $html,
+            key_filtro:  $key_filtro,link:  $link,required:  $required,row:  $row,tabla:  $tabla);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data);
 
