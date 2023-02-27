@@ -156,10 +156,10 @@ class selects {
      * @param html $html Clade de template
      * @param PDO $link conexion a bd
      * @param stdClass $row Registro en operacion
-     * @param string $tabla
+     * @param string $tabla Tabla o entidad de datos
      * @param int $cols N columnas css
      * @param bool $disabled Si disabled deja el input deshabilitado
-     * @param bool $required
+     * @param bool $required Si required inserta attr required
      * @return array|stdClass
      */
     public function dp_calle_pertenece_entre2_id(array $filtro,html $html, PDO $link, stdClass $row, string $tabla,
