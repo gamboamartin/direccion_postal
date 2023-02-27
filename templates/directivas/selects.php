@@ -419,6 +419,14 @@ class selects {
         return $data;
     }
 
+    /**
+     * Genera el filtro para data de selector
+     * @param array $filtro Filtro
+     * @param string $key_filtro Key de row
+     * @param string $name_attr nombre del atributo row
+     * @param stdClass $row Registro en ejecucion
+     * @return array
+     */
     private function filtro_select(array $filtro, string $key_filtro, string $name_attr, stdClass $row): array
     {
         $filtro[$key_filtro] = $row->$name_attr;
