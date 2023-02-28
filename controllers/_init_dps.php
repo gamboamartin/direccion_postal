@@ -290,10 +290,15 @@ class _init_dps{
     /**
      * Genera el key del array haciendo referencia a dp
      * @param string $seccion_limpia Seccion sin prefijo
-     * @return string
+     * @return string|array
+     * @version 9.88.1
      */
-    private function key(string $seccion_limpia): string
+    private function key(string $seccion_limpia): string|array
     {
+        $seccion_limpia = trim($seccion_limpia);
+        if($seccion_limpia === ''){
+            return $this->error->error(mensaje: 'Error seccion_limpia esta vacia', data: $seccion_limpia);
+        }
         return "dp_$seccion_limpia";
     }
     private function key_option(array $data){
