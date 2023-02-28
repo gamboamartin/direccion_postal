@@ -132,7 +132,7 @@ class dp_calle_pertenece_html extends html_controler {
     public function select_dp_calle_pertenece_entre1_id(int $cols, bool $con_registros, int $id_selected,
                                                         PDO $link, bool $disabled = false,
                                                         array $filtro = array(),
-                                                        string $key_descripcion_select = 'ddp_calle_descripcion',
+                                                        string $key_descripcion_select = 'dp_calle_descripcion',
                                                         bool $required = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
