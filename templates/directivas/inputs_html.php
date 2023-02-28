@@ -72,11 +72,9 @@ class inputs_html {
                           string $campo): array|string
     {
 
-        if($cols<=0){
-            return $this->error->error(mensaje: 'Error cols debe ser mayor a 0', data: $cols);
-        }
-        if($cols>=13){
-            return $this->error->error(mensaje: 'Error cols debe ser menor o igual a  12', data: $cols);
+        $valida = $directivas->valida_cols(cols: $cols);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar cols', data: $valida);
         }
         $campo = trim($campo);
         if($campo === ''){

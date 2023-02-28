@@ -68,6 +68,28 @@ class dp_calle_pertenece_htmlTest extends test {
         errores::$error = false;
     }
 
+    public function test_input(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_estado';
+        $html = new html();
+        $dir = new dp_calle_pertenece_html($html);
+        //$dir = new liberator($dir);
+
+        $cols = 1;
+        $row_upd = new stdClass();
+        $value_vacio = false;
+        $campo = 'a';
+
+        $resultado = $dir->input($cols, $row_upd, $value_vacio, $campo);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals("<div class='control-group col-sm-1'><label class='control-label' for='a'>a</label><div class='controls'><input type='text' name='a' value='' class='form-control' required id='a' placeholder='a' title='a' /></div></div>",$resultado);
+        errores::$error = false;
+
+    }
+
     public function test_select_dp_calle_pertenece_id(): void
     {
         errores::$error = false;

@@ -57,9 +57,19 @@ class dp_calle_pertenece_html extends html_controler {
      * @param bool $value_vacio Si vacio limpiar valores
      * @param string $campo Nombre del campo para name
      * @return array|string
+     * @version 9.91.1
      */
-    public function input(int $cols, stdClass $row_upd, bool $value_vacio, string $campo): array|string
+    final public function input(int $cols, stdClass $row_upd, bool $value_vacio, string $campo): array|string
     {
+
+        $valida = $this->directivas->valida_cols(cols: $cols);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar cols', data: $valida);
+        }
+        $campo = trim($campo);
+        if($campo === ''){
+            return $this->error->error(mensaje: 'Error campo debe tener info', data: $campo);
+        }
 
         $div = (new inputs_html())->input(cols: $cols,directivas:  $this->directivas, row_upd: $row_upd,
             value_vacio:  $value_vacio,campo:  $campo);
