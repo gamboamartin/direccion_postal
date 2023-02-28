@@ -119,14 +119,15 @@ class dp_calle_pertenece_html extends html_controler {
     }
 
     /**
+     * Genera un selector de tipo calle pertenece
      * @param int $cols Numero de columnas en css
      * @param bool $con_registros Si con registros asigna los registros como options
      * @param int $id_selected Identificador
      * @param PDO $link Conexion a la base de datos
      * @param bool $disabled si disabled el input queda deshabilitado
      * @param array $filtro Filtro de registros
-     * @param string $key_descripcion_select
-     * @param bool $required
+     * @param string $key_descripcion_select key de campo a mostrar
+     * @param bool $required attr required
      * @return array|string
      */
     public function select_dp_calle_pertenece_entre1_id(int $cols, bool $con_registros, int $id_selected,
