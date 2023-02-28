@@ -26,7 +26,7 @@ class _init_dps{
             return $this->error->error(mensaje: 'Error al asignar update', data: $update);
         }
 
-        return 'let asigna_'.$entidad.' = ('.$seccion_param.'_id = "") => {
+        return 'let asigna_'.$entidad.' = ('.$seccion_param.'_id = "", val_selected_id = "") => {
             '.$update.'
         }
         ';
@@ -479,13 +479,14 @@ class _init_dps{
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar options',data:  $options);
         }
+        $val_selected = '$("#'.$key.'_id").val(val_selected_id);';
 
         $refresh = $this->refresh_selectores(selectores: $childrens);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar refresh',data:  $refresh);
         }
 
-        return $limpia.$options.$refresh;
+        return $limpia.$options.$val_selected.$refresh;
 
     }
 
