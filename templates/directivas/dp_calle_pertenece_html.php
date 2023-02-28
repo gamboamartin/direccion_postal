@@ -17,6 +17,7 @@ class dp_calle_pertenece_html extends html_controler {
      * @param bool $con_registros Si no con registros deja el select vacio
      * @param array $filtro filtro de datos para options
      * @param int $id_selected id seleccionado
+     * @param string $key_descripcion_select
      * @param string $label Etiqueta a mostrar
      * @param PDO $link conexion a base de datos
      * @param string $name name del input
@@ -28,8 +29,9 @@ class dp_calle_pertenece_html extends html_controler {
      * @fecha 2022-08-04 13:11
      * @author mgamboa
      */
-    private function entre_calles(int $cols, bool $con_registros, array $filtro, int $id_selected, string $label,
-                                  PDO $link, string $name, bool $disabled = false, bool $required = false): array|string
+    private function entre_calles(int $cols, bool $con_registros, array $filtro, int $id_selected,
+                                  string $key_descripcion_select, string $label, PDO $link, string $name,
+                                  bool $disabled = false, bool $required = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
         if(errores::$error){
@@ -38,8 +40,8 @@ class dp_calle_pertenece_html extends html_controler {
         $modelo = new dp_calle_pertenece($link);
 
         $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
-            modelo: $modelo, disabled: $disabled, filtro: $filtro, key_id: 'dp_calle_pertenece_id', label: $label,
-            name: $name, required: $required);
+            modelo: $modelo, disabled: $disabled, filtro: $filtro, key_descripcion_select: $key_descripcion_select,
+            key_id: 'dp_calle_pertenece_id', label: $label, name: $name, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
@@ -96,9 +98,9 @@ class dp_calle_pertenece_html extends html_controler {
             $id_selected = -1;
         }
 
-        $select = $this->entre_calles(cols: $cols,con_registros:  $con_registros, filtro: $filtro,
-            id_selected: $id_selected, label: 'Calle', link: $link, name: 'dp_calle_pertenece_id' ,disabled:$disabled,
-        required: $required);
+        $select = $this->entre_calles(cols: $cols, con_registros: $con_registros, filtro: $filtro,
+            id_selected: $id_selected, key_descripcion_select: $key_descripcion_select, label: 'Calle',
+            link: $link, name: 'dp_calle_pertenece_id', disabled: $disabled, required: $required);
 
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
@@ -120,7 +122,7 @@ class dp_calle_pertenece_html extends html_controler {
     public function select_dp_calle_pertenece_entre1_id(int $cols, bool $con_registros, int $id_selected,
                                                         PDO $link, bool $disabled = false,
                                                         array $filtro = array(),
-                                                        string $key_descripcion_select = 'ddp_calle_escripcion',
+                                                        string $key_descripcion_select = 'ddp_calle_descripcion',
                                                         bool $required = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
@@ -128,9 +130,9 @@ class dp_calle_pertenece_html extends html_controler {
             return $this->error->error(mensaje: 'Error al validar cols', data: $valida);
         }
 
-        $select = $this->entre_calles(cols: $cols,con_registros:  $con_registros, filtro: $filtro,
-            id_selected: $id_selected, label: 'Entre calle', link: $link, name: 'dp_calle_pertenece_entre1_id',
-            disabled: $disabled, required: $required );
+        $select = $this->entre_calles(cols: $cols, con_registros: $con_registros, filtro: $filtro,
+            id_selected: $id_selected, key_descripcion_select: $key_descripcion_select, label: 'Entre calle',
+            link: $link, name: 'dp_calle_pertenece_entre1_id', disabled: $disabled, required: $required);
 
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
@@ -159,9 +161,9 @@ class dp_calle_pertenece_html extends html_controler {
             return $this->error->error(mensaje: 'Error al validar cols', data: $valida);
         }
 
-        $select = $this->entre_calles(cols: $cols,con_registros:  $con_registros, filtro: $filtro,
-            id_selected: $id_selected, label: 'Entre calle', link: $link, name: 'dp_calle_pertenece_entre2_id',
-            disabled: $disabled, required: $required);
+        $select = $this->entre_calles(cols: $cols, con_registros: $con_registros, filtro: $filtro,
+            id_selected: $id_selected, key_descripcion_select: $key_descripcion_select, label: 'Entre calle',
+            link: $link, name: 'dp_calle_pertenece_entre2_id', disabled: $disabled, required: $required);
 
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);

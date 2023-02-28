@@ -38,8 +38,9 @@ class dp_calle_pertenece_htmlTest extends test {
         $id_selected = -1;
         $filtro = array();
         $name = '';
-        $resultado = $dir->entre_calles(cols:$cols,con_registros: $con_registros,filtro:  $filtro,
-            id_selected:  $id_selected,label:  'Entre Calle', link: $this->link,name:  $name);
+        $resultado = $dir->entre_calles(cols: $cols, con_registros: $con_registros, filtro: $filtro,
+            id_selected: $id_selected, key_descripcion_select: 'dp_calle_descripcion', label: 'Entre Calle',
+            link: $this->link, name: $name);
 
 
         $this->assertIsString($resultado);
@@ -58,7 +59,7 @@ class dp_calle_pertenece_htmlTest extends test {
         $filtro = array();
         $name = 'xxx';
         $resultado = $dir->entre_calles(cols:$cols, con_registros:$con_registros,filtro: $filtro,
-            id_selected:$id_selected,label:'xxx',link: $this->link,name: $name);
+            id_selected:$id_selected,label:'xxx',link: $this->link,name: $name, key_descripcion_select: 'dp_calle_descripcion');
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-1'><label class='control-label' for='xxx'",$resultado);
