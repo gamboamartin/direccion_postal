@@ -434,7 +434,13 @@ class _init_dps{
         return $css_id.'.selectpicker("refresh");';
     }
 
-    private function seccion_param(array $data){
+    /**
+     * Obtiene el params de data
+     * @param array $data Datos de inicializacion de urls
+     * @return string
+     */
+    private function seccion_param(array $data): string
+    {
         $seccion_param = '';
         if(isset($data['seccion_param'])){
             $seccion_param = $data['seccion_param'];
