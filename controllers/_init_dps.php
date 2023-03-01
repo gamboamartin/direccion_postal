@@ -454,10 +454,7 @@ class _init_dps{
         if(isset($data['seccion_param'])){
             $seccion_param = $data['seccion_param'];
         }
-        $seccion_param = trim($seccion_param);
-        if($seccion_param === ''){
-            return $this->error->error(mensaje: 'Error seccion_param esta vacio',data:  $seccion_param);
-        }
+        
         return $seccion_param;
     }
 
