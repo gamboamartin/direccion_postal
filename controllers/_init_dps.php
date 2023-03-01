@@ -301,7 +301,15 @@ class _init_dps{
         }
         return "dp_$seccion_limpia";
     }
-    private function key_option(array $data){
+
+    /**
+     *
+     * Genera el key a utilizar en option
+     * @param array $data Datos inicializados de url
+     * @return string
+     */
+    private function key_option(array $data): string
+    {
         $key_option = '';
         if(isset($data['key_option'])){
             $key_option = $data['key_option'];
