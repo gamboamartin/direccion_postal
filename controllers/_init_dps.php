@@ -307,13 +307,14 @@ class _init_dps{
      * Genera el key a utilizar en option
      * @param array $data Datos inicializados de url
      * @return string
-     * 
+     * @version 9.97.3
+     *
      */
     private function key_option(array $data): string
     {
         $key_option = '';
         if(isset($data['key_option'])){
-            $key_option = $data['key_option'];
+            $key_option = trim($data['key_option']);
         }
         return $key_option;
     }

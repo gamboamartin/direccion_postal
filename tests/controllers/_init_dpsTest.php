@@ -39,6 +39,23 @@ class _init_dpsTest extends test {
         errores::$error = false;
     }
 
+    public function test_key_option(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $data = array();
+        $resultado = $init->key_option($data);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals("", $resultado);
+        errores::$error = false;
+    }
+
     public function test_seccion_param(): void
     {
         errores::$error = false;
