@@ -56,6 +56,15 @@ class _init_dpsTest extends test {
         $this->assertEquals("a", $resultado);
 
         errores::$error = false;
+
+        $data = array();
+        $data['seccion_param'] = '';
+        $resultado = $init->seccion_param($data);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals("", $resultado);
+
+        errores::$error = false;
     }
 
     public function test_url_servicio(): void

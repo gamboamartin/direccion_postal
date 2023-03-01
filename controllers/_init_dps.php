@@ -307,6 +307,7 @@ class _init_dps{
      * Genera el key a utilizar en option
      * @param array $data Datos inicializados de url
      * @return string
+     * 
      */
     private function key_option(array $data): string
     {
@@ -452,9 +453,9 @@ class _init_dps{
     {
         $seccion_param = '';
         if(isset($data['seccion_param'])){
-            $seccion_param = $data['seccion_param'];
+            $seccion_param = trim($data['seccion_param']);
         }
-        
+
         return $seccion_param;
     }
 
