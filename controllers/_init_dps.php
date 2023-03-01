@@ -437,13 +437,18 @@ class _init_dps{
     /**
      * Obtiene el params de data
      * @param array $data Datos de inicializacion de urls
-     * @return string
+     * @return string|array
+     * @version 9.94.2
      */
-    private function seccion_param(array $data): string
+    private function seccion_param(array $data): string|array
     {
         $seccion_param = '';
         if(isset($data['seccion_param'])){
             $seccion_param = $data['seccion_param'];
+        }
+        $seccion_param = trim($seccion_param);
+        if($seccion_param === ''){
+            return $this->error->error(mensaje: 'Error seccion_param esta vacio',data:  $seccion_param);
         }
         return $seccion_param;
     }
