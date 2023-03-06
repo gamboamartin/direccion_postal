@@ -150,13 +150,18 @@ class _init_dps{
     /**
      * Integra la funcion js a ejecutar
      * @param array $data Datos de urls
-     * @return string
+     * @return string|array
+     * @version 9.109.3
      */
-    private function exe(array $data): string
+    private function exe(array $data): string|array
     {
         $exe = '';
         if(isset($data['exe'])){
-            $exe = $data['exe'];
+            if(!is_string($data['exe'])){
+                return $this->error->error(mensaje: 'Error exe debe ser string',data:  $data);
+            }
+
+            $exe = trim($data['exe']);
         }
         return $exe;
     }
