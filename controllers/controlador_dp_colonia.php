@@ -27,11 +27,10 @@ class controlador_dp_colonia extends _ctl_dps {
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
 
         $columns["dp_colonia_id"]["titulo"] = "Id";
-        $columns["dp_colonia_codigo"]["titulo"] = "Código";
         $columns["dp_colonia_descripcion"]["titulo"] = "Colonia";
 
 
-        $filtro = array("dp_colonia.id","dp_colonia.codigo","dp_colonia.descripcion");
+        $filtro = array("dp_colonia.id","dp_colonia.descripcion");
 
         $datatables = new stdClass();
         $datatables->columns = $columns;
@@ -99,15 +98,24 @@ class controlador_dp_colonia extends _ctl_dps {
     {
         $identificador = "codigo";
         $propiedades = array("place_holder" => "Código", "cols" => 4);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $prop = $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al integrar propiedad', data: $prop);
+        }
 
         $identificador = "descripcion";
-        $propiedades = array("place_holder" => "Colonia", "cols" => 8);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $propiedades = array("place_holder" => "Colonia", "cols" => 12);
+        $prop = $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al integrar propiedad', data: $prop);
+        }
 
         $identificador = "georeferencia";
         $propiedades = array("place_holder" => "Georeferencia", "cols" => 12);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al integrar propiedad', data: $prop);
+        }
 
         return $this->keys_selects;
     }

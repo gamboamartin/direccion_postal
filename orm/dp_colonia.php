@@ -11,9 +11,8 @@ class dp_colonia extends _modelo_parent {
         $columnas = array($tabla=>false);
         $campos_obligatorios[] = 'descripcion';
 
-        $campos_view['codigo'] = array('type' => 'inputs');
         $campos_view['descripcion'] = array('type' => 'inputs');
-        $campos_view['georeferencia'] = array('type' => 'inputs');
+
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas,campos_view: $campos_view);
