@@ -90,13 +90,18 @@ class _init_dps{
     /**
      *
      * Integra los childrens de data para conf de js
-     * @param array $data
+     * @param array $data Datos de urls
      * @return array
+     * @version 9.107.3
+     *
      */
     private function childrens(array $data): array
     {
         $childrens = array();
         if(isset($data['childrens'])){
+            if(!is_array($data['childrens'])){
+                return $this->error->error(mensaje: 'Error $data[childrens] dbe ser array',data:  $data);
+            }
             $childrens = $data['childrens'];
         }
         return $childrens;

@@ -21,6 +21,25 @@ class _init_dpsTest extends test {
         $this->paths_conf->database = '/var/www/html/direccion_postal/config/database.php';
         $this->paths_conf->views = '/var/www/html/direccion_postal/config/views.php';
     }
+    public function test_childrens(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $data = array();
+        $data['childrens'] = array();
+
+        $resultado = $init->childrens($data);
+        $this->assertIsArray($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEmpty($resultado);
+        errores::$error = false;
+    }
+
 
     public function test_entidad_key(): void
     {
