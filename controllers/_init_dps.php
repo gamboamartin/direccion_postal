@@ -87,7 +87,14 @@ class _init_dps{
         return $selected.$exe_fn;
     }
 
-    private function childrens(array $data){
+    /**
+     *
+     * Integra los childrens de data para conf de js
+     * @param array $data
+     * @return array
+     */
+    private function childrens(array $data): array
+    {
         $childrens = array();
         if(isset($data['childrens'])){
             $childrens = $data['childrens'];
