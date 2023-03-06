@@ -32,14 +32,14 @@ class controlador_dp_calle_pertenece extends _ctl_calles {
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
 
         $columns["dp_calle_pertenece_id"]["titulo"] = "Id";
-        $columns["dp_calle_pertenece_codigo"]["titulo"] = "Código";
         $columns["dp_pais_descripcion"]["titulo"] = "País";
         $columns["dp_estado_descripcion"]["titulo"] = "Estado";
         $columns["dp_municipio_descripcion"]["titulo"] = "Municipio";
+        $columns["dp_cp_descripcion"]["titulo"] = "CP";
         $columns["dp_colonia_descripcion"]["titulo"] = "Colonia";
         $columns["dp_calle_descripcion"]["titulo"] = "Calle";
 
-        $filtro = array("dp_calle_pertenece.id","dp_calle_pertenece.codigo","dp_calle_pertenece.descripcion",
+        $filtro = array("dp_calle_pertenece.id","dp_calle_pertenece.descripcion",
             "dp_pais.descripcion", "dp_estado.descripcion","dp_municipio.descripcion",
             "dp_colonia_postal.descripcion");
 

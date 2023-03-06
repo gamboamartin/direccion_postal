@@ -29,11 +29,6 @@ class dp_calle_pertenece extends _base {
     public function alta_bd(): array|stdClass
     {
 
-        $keys = array('codigo');
-        $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $this->registro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al validar data',data:  $valida);
-        }
 
         $registro = $this->init_alta_bd(registro: $this->registro);
         if(errores::$error) {
@@ -59,11 +54,6 @@ class dp_calle_pertenece extends _base {
             return $this->error->error(mensaje: 'Error al validar data',data:  $valida);
         }
 
-        $keys = array('codigo');
-        $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $data);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al validar data',data:  $valida);
-        }
 
         $colonia_postal = (new dp_colonia_postal($this->link))->get_colonia_postal($data['dp_colonia_postal_id']);
         if(errores::$error){
@@ -73,6 +63,9 @@ class dp_calle_pertenece extends _base {
         $calle = (new dp_calle($this->link))->get_calle($data['dp_calle_id']);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener calle',data:  $calle);
+        }
+        if(!isset($data['codigo'])){
+            $data['codigo'] =  $colonia_postal['dp_colonia_postal_descripcion'].' '.$calle['dp_calle_descripcion'];
         }
 
         if(!isset($data['codigo_bis'])){
@@ -155,11 +148,7 @@ class dp_calle_pertenece extends _base {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar modelo->registro',data:  $valida);
         }
-        $keys = array('codigo');
-        $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $registro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al validar data',data:  $valida);
-        }
+
 
         $registro = $this->campos_base_temp(data:$registro, modelo: $this);
         if(errores::$error){
