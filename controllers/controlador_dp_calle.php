@@ -27,18 +27,15 @@ class controlador_dp_calle extends _ctl_calles {
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
 
         $columns["dp_calle_id"]["titulo"] = "Id";
-        $columns["dp_calle_codigo"]["titulo"] = "Código";
         $columns["dp_calle_descripcion"]["titulo"] = "Calle";
 
-        $filtro = array("dp_calle.id","dp_calle.codigo","dp_calle.descripcion");
+        $filtro = array("dp_calle.id","dp_calle.descripcion");
 
 
         parent::__construct(html: $html, link: $link, modelo: $modelo, obj_link: $obj_link, columns: $columns,
             filtro: $filtro, paths_conf: $paths_conf);
 
         $this->childrens_data['dp_calle_pertenece']['title'] = 'Calle Pertenece';
-
-
 
 
     }
@@ -101,7 +98,7 @@ class controlador_dp_calle extends _ctl_calles {
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "descripcion";
-        $propiedades = array("place_holder" => "Calle", "cols" => 8);
+        $propiedades = array("place_holder" => "Calle", "cols" => 12);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         return $this->keys_selects;
