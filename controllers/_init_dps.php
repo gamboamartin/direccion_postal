@@ -513,6 +513,11 @@ class _init_dps{
     }
 
 
+    /**
+     * Integra un selector en forma js
+     * @param string $entidad Entidad a integrar
+     * @return string
+     */
     private function selector(string $entidad): string
     {
         return '$("#'.$entidad.'_id")';
