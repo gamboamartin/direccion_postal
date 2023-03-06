@@ -114,27 +114,45 @@ class controlador_dp_cp extends _ctl_dps {
     {
         $identificador = "dp_pais_id";
         $propiedades = array("label" => "Pais",'key_descripcion_select'=>'dp_pais_descripcion');
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $prop = $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al integrar propiedad',data:  $prop);
+        }
 
         $identificador = "dp_estado_id";
         $propiedades = array("label" => "Estado", "con_registros" => false,'key_descripcion_select'=>'dp_estado_descripcion');
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al integrar propiedad',data:  $prop);
+        }
 
         $identificador = "dp_municipio_id";
         $propiedades = array("label" => "Municipio", "con_registros" => false,'key_descripcion_select'=>'dp_municipio_descripcion');
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al integrar propiedad',data:  $prop);
+        }
 
         $identificador = "codigo";
         $propiedades = array("place_holder" => "Código");
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al integrar propiedad',data:  $prop);
+        }
 
         $identificador = "descripcion";
         $propiedades = array("place_holder" => "Código Postal", "cols" => 6);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al integrar propiedad',data:  $prop);
+        }
 
         $identificador = "georeferencia";
         $propiedades = array("place_holder" => "Georeferencia", "cols" => 12);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al integrar propiedad',data:  $prop);
+        }
 
         return $this->keys_selects;
     }
