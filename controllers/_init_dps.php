@@ -100,7 +100,15 @@ class _init_dps{
         return 'asigna_'.$entidad.'(selected.val());';
     }
 
-    private function entidad_key(array $data, string $key){
+    /**
+     *
+     * Integra el nombre de la entidad
+     * @param array $data Datos previos
+     * @param string $key Key a integrar
+     * @return string
+     */
+    private function entidad_key(array $data, string $key): string
+    {
         $entidad_key = $key;
         if(isset($data['entidad_key'])){
             $entidad_key = $data['entidad_key'];
