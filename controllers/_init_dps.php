@@ -503,9 +503,15 @@ class _init_dps{
      * Integra un selector de tipo id forma jquery
      * @param string $entidad Entidad a integrar equivalente a select
      * @return array|string
+     * @version 9.113.3
      */
     private function select(string $entidad): array|string
     {
+        $entidad = trim($entidad);
+        if($entidad === ''){
+            return $this->error->error(mensaje: 'Error entidad esta vacia',data:  $entidad);
+        }
+
         $css_id = $this->selector($entidad);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar css',data:  $css_id);
