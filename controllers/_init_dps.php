@@ -105,13 +105,21 @@ class _init_dps{
      * Integra el nombre de la entidad
      * @param array $data Datos previos
      * @param string $key Key a integrar
-     * @return string
+     * @return string|array
+     * @version 9.105.3
      */
-    private function entidad_key(array $data, string $key): string
+    private function entidad_key(array $data, string $key): string|array
     {
+        $key = trim($key);
+        if($key === ''){
+            return $this->error->error(mensaje: 'Error key esta vacio',data:  $key);
+        }
         $entidad_key = $key;
         if(isset($data['entidad_key'])){
-            $entidad_key = $data['entidad_key'];
+            $data['entidad_key'] = trim($data['entidad_key']);
+            if($data['entidad_key']!=='') {
+                $entidad_key = $data['entidad_key'];
+            }
         }
         return $entidad_key;
     }
