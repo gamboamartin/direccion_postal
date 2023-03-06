@@ -147,7 +147,13 @@ class _init_dps{
         });';
     }
 
-    private function exe(array $data){
+    /**
+     * Integra la funcion js a ejecutar
+     * @param array $data Datos de urls
+     * @return string
+     */
+    private function exe(array $data): string
+    {
         $exe = '';
         if(isset($data['exe'])){
             $exe = $data['exe'];
