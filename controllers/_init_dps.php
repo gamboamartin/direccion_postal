@@ -516,10 +516,15 @@ class _init_dps{
     /**
      * Integra un selector en forma js
      * @param string $entidad Entidad a integrar
-     * @return string
+     * @return string|array
+     * @version 9.111.3
      */
-    private function selector(string $entidad): string
+    private function selector(string $entidad): string|array
     {
+        $entidad = trim($entidad);
+        if($entidad === ''){
+            return $this->error->error(mensaje: 'Error entidad esta vacia',data:  $entidad);
+        }
         return '$("#'.$entidad.'_id")';
     }
 

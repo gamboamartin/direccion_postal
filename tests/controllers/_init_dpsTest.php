@@ -141,6 +141,24 @@ class _init_dpsTest extends test {
         errores::$error = false;
     }
 
+    public function test_selector(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $entidad = 'a';
+        $resultado = $init->selector($entidad);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('$("#a_id")', $resultado);
+
+        errores::$error = false;
+    }
+
     public function test_url_servicio(): void
     {
         errores::$error = false;
