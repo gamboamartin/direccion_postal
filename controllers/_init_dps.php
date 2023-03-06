@@ -403,7 +403,14 @@ class _init_dps{
         });';
     }
 
-    private function params(array $data, string $seccion_limpia){
+    /**
+     * Integra los parametros para generacion de java
+     * @param array $data Datos de url
+     * @param string $seccion_limpia Seccion a integrar
+     * @return array|stdClass
+     */
+    private function params(array $data, string $seccion_limpia): array|stdClass
+    {
         $key = $this->key(seccion_limpia: $seccion_limpia);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar key',data:  $key);
