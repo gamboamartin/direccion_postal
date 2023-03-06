@@ -34,10 +34,14 @@ class dp_cp extends modelo {
     public function alta_bd(): array|stdClass
     {
 
-        $keys = array('descripcion','codigo');
+        $keys = array('descripcion');
         $valida = $this->validacion->valida_existencia_keys(keys:$keys,registro:  $this->registro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar registro', data: $valida);
+        }
+
+        if(!isset($this->registro['codigo'])){
+            $this->registro['codigo'] = $this->registro['descripcion'];
         }
 
         $registro = $this->init_alta_bd(registro: $this->registro);

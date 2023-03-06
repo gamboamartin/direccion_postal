@@ -32,14 +32,13 @@ class controlador_dp_cp extends _ctl_dps {
         $obj_link = new links_menu(link: $link,registro_id:  $this->registro_id);
 
         $columns["dp_cp_id"]["titulo"] = "Id";
-        $columns["dp_cp_codigo"]["titulo"] = "Código";
         $columns["dp_pais_descripcion"]["titulo"] = "País";
         $columns["dp_estado_descripcion"]["titulo"] = "Estado";
         $columns["dp_municipio_descripcion"]["titulo"] = "Municipio";
         $columns["dp_cp_descripcion"]["titulo"] = "Código Postal";
 
-        $filtro = array("dp_cp.id","dp_cp.codigo","dp_cp.descripcion","dp_pais.descripcion",
-            "dp_estado.descripcion","dp_municipio.descripcion");
+        $filtro = array("dp_cp.id","dp_cp.descripcion","dp_pais.descripcion", "dp_estado.descripcion",
+            "dp_municipio.descripcion");
 
         $datatables = new stdClass();
         $datatables->columns = $columns;
@@ -130,7 +129,7 @@ class controlador_dp_cp extends _ctl_dps {
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "descripcion";
-        $propiedades = array("place_holder" => "Código Postal", "cols" => 12);
+        $propiedades = array("place_holder" => "Código Postal", "cols" => 6);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "georeferencia";
