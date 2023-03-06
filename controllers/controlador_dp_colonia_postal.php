@@ -32,13 +32,13 @@ class controlador_dp_colonia_postal extends _ctl_dps {
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
 
         $columns["dp_colonia_postal_id"]["titulo"] = "Id";
-        $columns["dp_colonia_postal_codigo"]["titulo"] = "Código";
         $columns["dp_pais_descripcion"]["titulo"] = "País";
         $columns["dp_estado_descripcion"]["titulo"] = "Estado";
         $columns["dp_municipio_descripcion"]["titulo"] = "Municipio";
+        $columns["dp_cp_descripcion"]["titulo"] = "CP";
         $columns["dp_colonia_descripcion"]["titulo"] = "Colonia";
 
-        $filtro = array("dp_colonia_postal.id","dp_colonia_postal.codigo","dp_colonia_postal.descripcion",
+        $filtro = array("dp_colonia_postal.id","dp_colonia_postal.descripcion",'"dp_cp.descripcion"',
             "dp_pais.descripcion", "dp_estado.descripcion","dp_municipio.descripcion");
 
         $datatables = new stdClass();
@@ -122,7 +122,7 @@ class controlador_dp_colonia_postal extends _ctl_dps {
         }
 
         $identificador = "dp_colonia_id";
-        $propiedades = array("label" => "Colonia",'key_descripcion_select' => 'dp_colonia_descripcion');
+        $propiedades = array("label" => "Colonia",'key_descripcion_select' => 'dp_colonia_descripcion', "cols"=>12);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "codigo";

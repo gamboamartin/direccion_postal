@@ -61,6 +61,10 @@ class dp_colonia_postal extends _base {
             return $this->error->error(mensaje: 'Error al obtener colonia',data:  $cp);
         }
 
+        if(!isset($data['codigo'])){
+            $data['codigo'] =  $cp['dp_cp_descripcion'].' '.$colonia['dp_colonia_descripcion'];
+        }
+
         if(!isset($data['codigo_bis'])){
             $keys = array('codigo');
             $valida = $this->validacion->valida_existencia_keys(keys:$keys,registro:  $data);
