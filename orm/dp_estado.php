@@ -1,5 +1,6 @@
 <?php
 namespace gamboamartin\direccion_postal\models;
+use base\orm\_defaults;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
@@ -22,6 +23,34 @@ class dp_estado extends modelo {
 
         $this->NAMESPACE = __NAMESPACE__;
         $this->etiqueta = 'Estado';
+
+        if(!isset($_SESSION['init'][$tabla])) {
+            $descripcion = 'MEXICO';
+            if(isset($_SESSION['init']['dp_pais'])){
+                unset($_SESSION['init']['dp_pais']);
+            }
+
+            $r_dp_pais = (new dp_pais(link: $this->link))->registro_by_descripcion(descripcion: $descripcion);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al obtener pais', data: $r_dp_pais);
+                print_r($error);
+                exit;
+            }
+            $dp_pais = $r_dp_pais->registros[0];
+
+            $catalago = array();
+            $catalago[] = array('codigo' => 'JAL', 'descripcion' => 'JALISCO', 'dp_pais_id' => $dp_pais['dp_pais_id']);
+
+
+            $r_alta_bd = (new _defaults())->alta_defaults(catalago: $catalago, entidad: $this);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
+                print_r($error);
+                exit;
+            }
+            $_SESSION['init'][$tabla] = true;
+        }
+
     }
 
     public function alta_bd(): array|stdClass

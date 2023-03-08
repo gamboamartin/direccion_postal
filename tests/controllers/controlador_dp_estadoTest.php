@@ -3,9 +3,7 @@ namespace tests\links\secciones;
 
 use controllers\controlador_dp_estado;
 use gamboamartin\errores\errores;
-use gamboamartin\test\liberator;
 use gamboamartin\test\test;
-use JsonException;
 use stdClass;
 
 

@@ -1,5 +1,6 @@
 <?php
 namespace gamboamartin\direccion_postal\models;
+use base\orm\_defaults;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
@@ -23,6 +24,37 @@ class dp_municipio extends modelo {
 
         $this->NAMESPACE = __NAMESPACE__;
         $this->etiqueta = 'Municipio';
+
+        if(!isset($_SESSION['init'][$tabla])) {
+            $descripcion = 'JALISCO';
+            if(isset($_SESSION['init']['dp_estado'])){
+                unset($_SESSION['init']['dp_estado']);
+            }
+
+            $r_dp_estado = (new dp_estado(link: $this->link))->registro_by_descripcion(descripcion: $descripcion);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al obtener estado', data: $r_dp_estado);
+                print_r($error);
+                exit;
+            }
+            $dp_estado = $r_dp_estado->registros[0];
+
+            $catalago = array();
+            $catalago[] = array('codigo' => 'ZAP', 'descripcion' => 'ZAPOPAN', 'dp_estado_id' => $dp_estado['dp_estado_id']);
+            $catalago[] = array('codigo' => 'GDL', 'descripcion' => 'GUADALAJARA', 'dp_estado_id' => $dp_estado['dp_estado_id']);
+            $catalago[] = array('codigo' => 'TLQ', 'descripcion' => 'TLAQUEPAQUE', 'dp_estado_id' => $dp_estado['dp_estado_id']);
+
+
+            $r_alta_bd = (new _defaults())->alta_defaults(catalago: $catalago, entidad: $this);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
+                print_r($error);
+                exit;
+            }
+            $_SESSION['init'][$tabla] = true;
+        }
+
+
     }
 
     public function alta_bd(): array|stdClass
