@@ -1,5 +1,6 @@
 <?php
 namespace gamboamartin\direccion_postal\models;
+use base\orm\_defaults;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
@@ -29,6 +30,44 @@ class dp_cp extends modelo {
         $this->NAMESPACE = __NAMESPACE__;
 
         $this->etiqueta = 'CP';
+
+        if(!isset($_SESSION['init'][$tabla])) {
+            $descripcion = 'ZAPOPAN';
+            if(isset($_SESSION['init']['dp_municipio'])){
+                unset($_SESSION['init']['dp_municipio']);
+            }
+
+            $r_dp_municipio_z = (new dp_municipio(link: $this->link))->registro_by_descripcion(descripcion: $descripcion);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al obtener r_dp_municipio', data: $r_dp_municipio_z);
+                print_r($error);
+                exit;
+            }
+            $dp_municipio_z = $r_dp_municipio_z->registros[0];
+
+            $descripcion = 'TLAQUEPAQUE';
+            $r_dp_municipio_t = (new dp_municipio(link: $this->link))->registro_by_descripcion(descripcion: $descripcion);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al obtener r_dp_municipio', data: $r_dp_municipio_t);
+                print_r($error);
+                exit;
+            }
+            $dp_municipio_t = $r_dp_municipio_t->registros[0];
+
+
+            $catalago = array();
+            $catalago[] = array('codigo' => '45010', 'descripcion' => '45010', 'dp_municipio_id' => $dp_municipio_z['dp_municipio_id']);
+            $catalago[] = array('codigo' => '45580', 'descripcion' => '45580', 'dp_municipio_id' => $dp_municipio_t['dp_municipio_id']);
+
+
+            $r_alta_bd = (new _defaults())->alta_defaults(catalago: $catalago, entidad: $this);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
+                print_r($error);
+                exit;
+            }
+            $_SESSION['init'][$tabla] = true;
+        }
     }
 
     public function alta_bd(): array|stdClass
