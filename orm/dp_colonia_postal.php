@@ -25,6 +25,16 @@ class dp_colonia_postal extends _base {
         $this->etiqueta = 'Colonia Postal';
 
         if(!isset($_SESSION['init'][$tabla])) {
+
+            if(isset($_SESSION['init']['dp_colonia'])){
+                unset($_SESSION['init']['dp_colonia']);
+            }
+            if(isset($_SESSION['init']['dp_cp'])){
+                unset($_SESSION['init']['dp_cp']);
+            }
+            new dp_colonia(link: $this->link);
+            new dp_cp(link: $this->link);
+
             $catalogo = array();
             $catalogo[] = array('id'=>'28733','codigo' => '45010-28733', 'descripcion' => '45010-28733','dp_cp_id'=>'45010','dp_colonia_id'=>'28733');
             $catalogo[] = array('id'=>'45812','codigo' => '45580-45812', 'descripcion' => '45580-45812','dp_cp_id'=>'45580','dp_colonia_id'=>'45812');

@@ -27,6 +27,12 @@ class dp_municipio extends modelo {
 
 
         if(!isset($_SESSION['init'][$tabla])) {
+
+            if(isset($_SESSION['init']['dp_estado'])){
+                unset($_SESSION['init']['dp_estado']);
+            }
+            new dp_estado(link: $this->link);
+
             $catalogo[] = array('id'=>'1','codigo'=>'AGU001','descripcion'=>'Aguascalientes','dp_estado_id'=>'1');
             $catalogo[] = array('id'=>'2','codigo'=>'BCN001','descripcion'=>'Ensenada','dp_estado_id'=>'2');
             $catalogo[] = array('id'=>'3','codigo'=>'BCS001','descripcion'=>'Comondú','dp_estado_id'=>'3');

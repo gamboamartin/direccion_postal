@@ -34,6 +34,12 @@ class dp_cp extends modelo {
 
         if(!isset($_SESSION['init'][$tabla])) {
 
+
+            if(isset($_SESSION['init']['dp_municipio'])){
+                unset($_SESSION['init']['dp_municipio']);
+            }
+            new dp_municipio(link: $this->link);
+
             $catalago = array();
 
 

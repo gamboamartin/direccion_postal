@@ -26,6 +26,12 @@ class dp_estado extends modelo {
 
 
         if(!isset($_SESSION['init'][$tabla])) {
+
+            if(isset($_SESSION['init']['dp_pais'])){
+                unset($_SESSION['init']['dp_pais']);
+            }
+            new dp_pais(link: $this->link);
+
             $catalogo[] = array('id'=>'1','codigo'=>'AGU','descripcion'=>'Aguascalientes','dp_pais_id'=>'151');
             $catalogo[] = array('id'=>'2','codigo'=>'BCN','descripcion'=>'Baja California','dp_pais_id'=>'151');
             $catalogo[] = array('id'=>'3','codigo'=>'BCS','descripcion'=>'Baja California Sur','dp_pais_id'=>'151');
