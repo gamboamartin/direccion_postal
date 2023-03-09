@@ -1,5 +1,6 @@
 <?php
 namespace gamboamartin\direccion_postal\models;
+use base\orm\_defaults;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
@@ -22,6 +23,23 @@ class dp_colonia_postal extends _base {
         $this->NAMESPACE = __NAMESPACE__;
 
         $this->etiqueta = 'Colonia Postal';
+
+        if(!isset($_SESSION['init'][$tabla])) {
+            $catalogo = array();
+            $catalogo[] = array('id'=>'28733','codigo' => '45010-28733', 'descripcion' => '45010-28733','dp_cp_id'=>'45010','dp_colonia_id'=>'28733');
+            $catalogo[] = array('id'=>'45812','codigo' => '45580-45812', 'descripcion' => '45580-45812','dp_cp_id'=>'45580','dp_colonia_id'=>'45812');
+            $catalogo[] = array('id'=>'110706','codigo' => '45580-110706', 'descripcion' => '45580-110706','dp_cp_id'=>'45580','dp_colonia_id'=>'110706');
+
+
+            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
+                print_r($error);
+                exit;
+            }
+            $_SESSION['init'][$tabla] = true;
+        }
+
     }
 
     public function alta_bd(): array|stdClass
