@@ -20,6 +20,7 @@ class dp_pais extends _modelo_parent {
         $this->NAMESPACE = __NAMESPACE__;
         $this->etiqueta = 'Pais';
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
             $catalago = array();
             $catalago[] = array('codigo' => 'MEX', 'descripcion' => 'MEXICO');
@@ -33,6 +34,7 @@ class dp_pais extends _modelo_parent {
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
     }
 
 }

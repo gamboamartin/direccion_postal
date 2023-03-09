@@ -24,6 +24,7 @@ class dp_estado extends modelo {
         $this->NAMESPACE = __NAMESPACE__;
         $this->etiqueta = 'Estado';
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
             $descripcion = 'MEXICO';
             if(isset($_SESSION['init']['dp_pais'])){
@@ -50,6 +51,7 @@ class dp_estado extends modelo {
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
 
     }
 

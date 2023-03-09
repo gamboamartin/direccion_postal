@@ -22,6 +22,7 @@ class dp_colonia extends _modelo_parent {
 
         $this->etiqueta = 'Colonia';
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
             $catalago = array();
             $catalago[] = array('codigo' => '01', 'descripcion' => 'CUIDAD GRANJA');
@@ -36,6 +37,7 @@ class dp_colonia extends _modelo_parent {
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
 
     }
 

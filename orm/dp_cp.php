@@ -31,6 +31,7 @@ class dp_cp extends modelo {
 
         $this->etiqueta = 'CP';
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
             $descripcion = 'ZAPOPAN';
             if(isset($_SESSION['init']['dp_municipio'])){
@@ -55,6 +56,7 @@ class dp_cp extends modelo {
             $dp_municipio_t = $r_dp_municipio_t->registros[0];
 
 
+
             $catalago = array();
             $catalago[] = array('codigo' => '45010', 'descripcion' => '45010', 'dp_municipio_id' => $dp_municipio_z['dp_municipio_id']);
             $catalago[] = array('codigo' => '45580', 'descripcion' => '45580', 'dp_municipio_id' => $dp_municipio_t['dp_municipio_id']);
@@ -68,6 +70,7 @@ class dp_cp extends modelo {
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
     }
 
     public function alta_bd(): array|stdClass

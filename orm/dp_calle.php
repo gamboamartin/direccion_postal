@@ -24,6 +24,7 @@ class dp_calle extends _modelo_parent {
 
         $this->etiqueta = 'Calle';
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
             $catalago = array();
             $catalago[] = array('codigo' => '01', 'descripcion' => 'AVENIDA IGNACIO L. VALLARTA');
@@ -42,6 +43,7 @@ class dp_calle extends _modelo_parent {
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
 
     }
 
