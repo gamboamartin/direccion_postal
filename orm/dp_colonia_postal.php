@@ -86,7 +86,7 @@ class dp_colonia_postal extends _base {
 
         $colonia = (new dp_colonia($this->link))->get_colonia(dp_colonia_id: $data['dp_colonia_id']);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al obtener colonia',data:  $cp);
+            return $this->error->error(mensaje: 'Error al obtener colonia',data:  $colonia);
         }
 
         if(!isset($data['codigo'])){
