@@ -32,54 +32,7 @@ class dp_cp extends modelo {
         $this->etiqueta = 'CP';
 
 
-        if(!isset($_SESSION['init'][$tabla])) {
 
-
-            if(isset($_SESSION['init']['dp_municipio'])){
-                unset($_SESSION['init']['dp_municipio']);
-            }
-            new dp_municipio(link: $this->link);
-
-            $catalago = array();
-
-
-            $catalago[] = array('codigo' => '03000', 'descripcion' => '03000', 'dp_municipio_id' => '394');
-
-            $catalago[] = array('codigo' => '21110', 'descripcion' => '21110', 'dp_municipio_id' => '33');
-            $catalago[] = array('codigo' => '24080', 'descripcion' => '24080', 'dp_municipio_id' => '35');
-            $catalago[] = array('codigo' => '28047', 'descripcion' => '28047', 'dp_municipio_id' => '37');
-
-            $catalago[] = array('codigo' => '45010', 'descripcion' => '45010', 'dp_municipio_id' => '1805');
-            $catalago[] = array('codigo' => '45580', 'descripcion' => '45580', 'dp_municipio_id' => '1649');
-
-
-            $catalago[] = array('codigo' => '54893', 'descripcion' => '54893', 'dp_municipio_id' => '1178');
-            $catalago[] = array('codigo' => '61700', 'descripcion' => '61700', 'dp_municipio_id' => '1751');
-            $catalago[] = array('codigo' => '68010', 'descripcion' => '68010', 'dp_municipio_id' => '1368');
-            $catalago[] = array('codigo' => '76840', 'descripcion' => '76840', 'dp_municipio_id' => '459');
-            $catalago[] = array('codigo' => '78485', 'descripcion' => '78485', 'dp_municipio_id' => '577');
-            $catalago[] = array('codigo' => '82532', 'descripcion' => '82532', 'dp_municipio_id' => '271');
-
-            $catalago[] = array('codigo' => '91779', 'descripcion' => '91779', 'dp_municipio_id' => '2043');
-
-            $catalago[] = array('codigo' => '95803', 'descripcion' => '95803', 'dp_municipio_id' => '1887');
-
-
-
-
-
-            foreach ($catalago as $key=>$row){
-                $catalago[$key]['id'] = (int)$row['codigo'];
-            }
-
-            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalago, entidad: $this);
-            if (errores::$error) {
-                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
-                print_r($error);
-                exit;
-            }
-            $_SESSION['init'][$tabla] = true;
-        }
 
     }
 

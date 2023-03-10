@@ -23,32 +23,6 @@ class dp_colonia extends _modelo_parent {
         $this->etiqueta = 'Colonia';
 
 
-        if(!isset($_SESSION['init'][$tabla])) {
-            $catalogo = array();
-
-            $catalogo[] = array('codigo' => '8981', 'descripcion' => 'Eligio Esquivel');
-            $catalogo[] = array('codigo' => '9107', 'descripcion' => 'Fronteriza');
-            $catalogo[] = array('codigo' => '9355', 'descripcion' => 'Santa Clara');
-            $catalogo[] = array('codigo' => '28733', 'descripcion' => 'Ciudad Granja');
-            $catalogo[] = array('codigo' => '45812', 'descripcion' => 'Residencial Revolución');
-
-            $catalogo[] = array('codigo' => '100108', 'descripcion' => 'Ficus');
-
-            $catalogo[] = array('codigo' => '110706', 'descripcion' => 'Revolución');
-
-
-            foreach ($catalogo as $key=>$row){
-                $catalogo[$key]['id'] = (int)$row['codigo'];
-            }
-
-            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
-            if (errores::$error) {
-                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
-                print_r($error);
-                exit;
-            }
-            $_SESSION['init'][$tabla] = true;
-        }
 
 
     }

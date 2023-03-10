@@ -22,7 +22,7 @@ class dp_pais extends _modelo_parent {
 
 
         if(!isset($_SESSION['init'][$tabla])) {
-            $catalago = array();
+            $catalogo = array();
             $catalogo[] = array('id'=>'1','codigo'=>'AFG','descripcion'=>'Afganistán');
             $catalogo[] = array('id'=>'2','codigo'=>'ALA','descripcion'=>'Islas Åland');
             $catalogo[] = array('id'=>'3','codigo'=>'ALB','descripcion'=>'Albania');
@@ -173,7 +173,7 @@ class dp_pais extends _modelo_parent {
             $catalogo[] = array('id'=>'148','codigo'=>'MUS','descripcion'=>'Mauricio');
             $catalogo[] = array('id'=>'149','codigo'=>'MRT','descripcion'=>'Mauritania');
             $catalogo[] = array('id'=>'150','codigo'=>'MYT','descripcion'=>'Mayotte');
-            $catalogo[] = array('id'=>'151','codigo'=>'MEX','descripcion'=>'México');
+            $catalogo[] = array('id'=>'151','codigo'=>'MEX','descripcion'=>'Mexico');
             $catalogo[] = array('id'=>'152','codigo'=>'FSM','descripcion'=>'Micronesia (los Estados Federados de)');
             $catalogo[] = array('id'=>'153','codigo'=>'MDA','descripcion'=>'Moldavia (la República de)');
             $catalogo[] = array('id'=>'154','codigo'=>'MCO','descripcion'=>'Mónaco');
@@ -282,6 +282,7 @@ class dp_pais extends _modelo_parent {
                 exit;
             }
             $_SESSION['init'][$tabla] = true;
+
         }
 
     }

@@ -25,27 +25,7 @@ class dp_calle extends _modelo_parent {
         $this->etiqueta = 'Calle';
 
 
-        if(!isset($_SESSION['init'][$tabla])) {
-            $catalogo = array();
-            $catalogo[] = array('codigo' => '01', 'descripcion' => 'AVENIDA IGNACIO L. VALLARTA');
-            $catalogo[] = array('codigo' => '02', 'descripcion' => 'CALLE CAMICHINES');
-            $catalogo[] = array('codigo' => '03', 'descripcion' => 'ANILLO PERIFERICO PONINTE');
-            $catalogo[] = array('codigo' => '04', 'descripcion' => 'TLAXCALA');
-            $catalogo[] = array('codigo' => '05', 'descripcion' => 'PLAN DE LA NORIA');
-            $catalogo[] = array('codigo' => '06', 'descripcion' => 'TEXIHUATLA');
 
-            foreach ($catalogo as $key=>$row){
-                $catalogo[$key]['id'] = (int)$row['codigo'];
-            }
-
-            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
-            if (errores::$error) {
-                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
-                print_r($error);
-                exit;
-            }
-            $_SESSION['init'][$tabla] = true;
-        }
 
     }
 
