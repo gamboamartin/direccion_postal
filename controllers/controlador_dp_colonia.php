@@ -13,11 +13,16 @@ use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\template_1\html;
 use html\dp_colonia_html;
+use html\dp_cp_html;
+use html\dp_estado_html;
+use html\dp_municipio_html;
+use html\dp_pais_html;
 use PDO;
 use stdClass;
 
 class controlador_dp_colonia extends _ctl_dps {
 
+    public string $link_colonia_postal_alta_bd = '';
     public array|stdClass $keys_selects = array();
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
@@ -51,8 +56,58 @@ class controlador_dp_colonia extends _ctl_dps {
         $this->childrens_data['dp_colonia_postal']['title'] = 'Colonia Postal';
 
         $this->lista_get_data = true;
+
+        $link_colonia_postal_alta_bd = $obj_link->link_alta_bd(link: $this->link,seccion:  'dp_colonia_postal');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al integrar link',data:  $link_colonia_postal_alta_bd);
+        }
+        $this->link_colonia_postal_alta_bd = $link_colonia_postal_alta_bd;
     }
 
+
+    public function asigna_a_cp(bool $header, bool $ws = true){
+
+        $urls_js = (new _init_dps())->init_js(controler: $this);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar template',data:  $urls_js,header: $header,ws: $ws);
+
+        }
+        $this->inputs = new stdClass();
+
+        $filtro['dp_colonia.id'] = $this->registro_id;
+
+        $dp_colonia_id =  (new dp_colonia_html(html: $this->html_base))->select_dp_colonia_id(
+            cols: 12, con_registros: true, id_selected: $this->registro_id, link: $this->link, filtro: $filtro);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al integrar input',data:  $dp_colonia_id);
+        }
+        $this->inputs->dp_colonia_id = $dp_colonia_id;
+
+        $dp_pais_id =  (new dp_pais_html(html: $this->html_base))->select_dp_pais_id(cols: 12,con_registros: true,id_selected: -1,link: $this->link);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al integrar input',data:  $dp_pais_id);
+        }
+        $this->inputs->dp_pais_id = $dp_pais_id;
+
+        $dp_estado_id =  (new dp_estado_html(html: $this->html_base))->select_dp_estado_id(cols: 12,con_registros: false,id_selected: -1,link: $this->link);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al integrar input',data:  $dp_estado_id);
+        }
+        $this->inputs->dp_estado_id = $dp_estado_id;
+
+        $dp_municipio_id =  (new dp_municipio_html(html: $this->html_base))->select_dp_municipio_id(cols: 12,con_registros: false,id_selected: -1,link: $this->link);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al integrar input',data:  $dp_estado_id);
+        }
+        $this->inputs->dp_municipio_id = $dp_municipio_id;
+
+        $dp_cp_id =  (new dp_cp_html(html: $this->html_base))->select_dp_cp_id(cols: 12,con_registros: false,id_selected: -1,link: $this->link);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al integrar input',data:  $dp_estado_id);
+        }
+        $this->inputs->dp_cp_id = $dp_cp_id;
+
+    }
 
     private function base(): array|stdClass
     {
@@ -119,7 +174,25 @@ class controlador_dp_colonia extends _ctl_dps {
             return $this->errores->error(mensaje: 'Error al integrar propiedad', data: $prop);
         }
 
+        $identificador = "dp_colonia_id";
+        $propiedades = array("label" => "Colonia",'key_descripcion_select' => 'dp_colonia_descripcion', "cols"=>12,'con_registros'=>false);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
         return $this->keys_selects;
+    }
+
+    final public function init_datatable(): stdClass
+    {
+        $columns["dp_colonia_id"]["titulo"] = "Id";
+        $columns["dp_colonia_descripcion"]["titulo"] = "Colonia";
+
+        $filtro = array("dp_colonia.id","dp_colonia.descripcion");
+
+        $datatables = new stdClass();
+        $datatables->columns = $columns;
+        $datatables->filtro = $filtro;
+
+        return $datatables;
     }
 
     public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true,
