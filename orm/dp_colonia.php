@@ -31,6 +31,9 @@ class dp_colonia extends _modelo_parent {
             $catalogo[] = array('codigo' => '9355', 'descripcion' => 'Santa Clara');
             $catalogo[] = array('codigo' => '28733', 'descripcion' => 'Ciudad Granja');
             $catalogo[] = array('codigo' => '45812', 'descripcion' => 'Residencial Revolución');
+
+            $catalogo[] = array('codigo' => '100108', 'descripcion' => 'Ficus');
+
             $catalogo[] = array('codigo' => '110706', 'descripcion' => 'Revolución');
 
 

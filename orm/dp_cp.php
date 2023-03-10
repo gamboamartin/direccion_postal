@@ -43,6 +43,8 @@ class dp_cp extends modelo {
             $catalago = array();
 
 
+            $catalago[] = array('codigo' => '03000', 'descripcion' => '03000', 'dp_municipio_id' => '394');
+
             $catalago[] = array('codigo' => '21110', 'descripcion' => '21110', 'dp_municipio_id' => '33');
             $catalago[] = array('codigo' => '24080', 'descripcion' => '24080', 'dp_municipio_id' => '35');
             $catalago[] = array('codigo' => '28047', 'descripcion' => '28047', 'dp_municipio_id' => '37');
@@ -57,6 +59,9 @@ class dp_cp extends modelo {
             $catalago[] = array('codigo' => '76840', 'descripcion' => '76840', 'dp_municipio_id' => '459');
             $catalago[] = array('codigo' => '78485', 'descripcion' => '78485', 'dp_municipio_id' => '577');
             $catalago[] = array('codigo' => '82532', 'descripcion' => '82532', 'dp_municipio_id' => '271');
+
+            $catalago[] = array('codigo' => '91779', 'descripcion' => '91779', 'dp_municipio_id' => '2043');
+
             $catalago[] = array('codigo' => '95803', 'descripcion' => '95803', 'dp_municipio_id' => '1887');
 
 
