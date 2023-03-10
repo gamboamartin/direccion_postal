@@ -59,6 +59,7 @@ class controlador_dp_municipio extends _ctl_dps {
         $this->verifica_parents_alta = true;
 
         $this->childrens_data['dp_cp']['title'] = 'CP';
+        $this->lista_get_data = true;
     }
 
     public function alta(bool $header, bool $ws = false): array|string
