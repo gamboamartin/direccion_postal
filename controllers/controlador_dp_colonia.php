@@ -49,6 +49,8 @@ class controlador_dp_colonia extends _ctl_dps {
         }
 
         $this->childrens_data['dp_colonia_postal']['title'] = 'Colonia Postal';
+
+        $this->lista_get_data = true;
     }
 
 
