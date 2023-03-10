@@ -21,6 +21,7 @@ class dp_pais extends _modelo_parent {
         $this->etiqueta = 'Pais';
 
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
             $catalogo = array();
             $catalogo[] = array('id'=>'1','codigo'=>'AFG','descripcion'=>'Afganistán');
@@ -284,6 +285,7 @@ class dp_pais extends _modelo_parent {
             $_SESSION['init'][$tabla] = true;
 
         }
+        */
 
     }
 

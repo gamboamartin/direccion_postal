@@ -25,6 +25,7 @@ class dp_estado extends modelo {
         $this->etiqueta = 'Estado';
 
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
 
             if(isset($_SESSION['init']['dp_pais'])){
@@ -138,6 +139,7 @@ class dp_estado extends modelo {
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
 
 
     }

@@ -26,6 +26,7 @@ class dp_municipio extends modelo {
         $this->etiqueta = 'Municipio';
 
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
 
             if(isset($_SESSION['init']['dp_estado'])){
@@ -2507,6 +2508,7 @@ class dp_municipio extends modelo {
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
 
 
 
