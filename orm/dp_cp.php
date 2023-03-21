@@ -24,8 +24,14 @@ class dp_cp extends modelo {
         $campos_view['descripcion'] = array('type' => 'inputs');
         $campos_view['georeferencia'] = array('type' => 'inputs');
 
+        $parents_data['dp_municipio'] = array();
+        $parents_data['dp_municipio']['namespace'] = 'gamboamartin\\direccion_postal\\models';
+        $parents_data['dp_municipio']['registro_id'] = -1;
+        $parents_data['dp_municipio']['keys_parents'] = array('dp_municipio_descripcion');
+        $parents_data['dp_municipio']['key_id'] = 'dp_municipio_id';
+
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas,campos_view: $campos_view);
+            columnas: $columnas,campos_view: $campos_view, parents_data: $parents_data);
 
         $this->NAMESPACE = __NAMESPACE__;
 
