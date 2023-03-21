@@ -18,8 +18,20 @@ class dp_calle_pertenece extends _base {
         $campos_view['codigo'] = array('type' => 'inputs');
         $campos_view['georeferencia'] = array('type' => 'inputs');
 
+        $parents_data['dp_calle'] = array();
+        $parents_data['dp_calle']['namespace'] = 'gamboamartin\\direccion_postal\\models';
+        $parents_data['dp_calle']['registro_id'] = -1;
+        $parents_data['dp_calle']['keys_parents'] = array('dp_calle_descripcion');
+        $parents_data['dp_calle']['key_id'] = 'dp_calle_id';
+
+        $parents_data['dp_colonia_postal'] = array();
+        $parents_data['dp_colonia_postal']['namespace'] = 'gamboamartin\\direccion_postal\\models';
+        $parents_data['dp_colonia_postal']['registro_id'] = -1;
+        $parents_data['dp_colonia_postal']['keys_parents'] = array('dp_colonia_postal_descripcion');
+        $parents_data['dp_colonia_postal']['key_id'] = 'dp_colonia_postal_id';
+
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas,campos_view: $campos_view);
+            columnas: $columnas,campos_view: $campos_view, parents_data: $parents_data);
 
         $this->NAMESPACE = __NAMESPACE__;
 

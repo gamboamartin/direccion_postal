@@ -17,12 +17,28 @@ class dp_colonia_postal extends _base {
         $campos_view['codigo'] = array('type' => 'inputs');
         $campos_view['descripcion'] = array('type' => 'inputs');
 
+
+        $parents_data['dp_cp'] = array();
+        $parents_data['dp_cp']['namespace'] = 'gamboamartin\\direccion_postal\\models';
+        $parents_data['dp_cp']['registro_id'] = -1;
+        $parents_data['dp_cp']['keys_parents'] = array('dp_cp_descripcion');
+        $parents_data['dp_cp']['key_id'] = 'dp_cp_id';
+
+        $parents_data['dp_colonia'] = array();
+        $parents_data['dp_colonia']['namespace'] = 'gamboamartin\\direccion_postal\\models';
+        $parents_data['dp_colonia']['registro_id'] = -1;
+        $parents_data['dp_colonia']['keys_parents'] = array('dp_colonia_descripcion');
+        $parents_data['dp_colonia']['key_id'] = 'dp_colonia_id';
+
+
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas,campos_view: $campos_view);
+            columnas: $columnas,campos_view: $campos_view, parents_data: $parents_data);
 
         $this->NAMESPACE = __NAMESPACE__;
 
         $this->etiqueta = 'Colonia Postal';
+
+
 
 
 
