@@ -113,6 +113,26 @@ class _init_dpsTest extends test {
         errores::$error = false;
     }
 
+    public function test_params(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $data = array();
+        $seccion_limpia = 'a';
+        $resultado = $init->params($data, $seccion_limpia);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('let sl_dp_a = $("#dp_a_id");', $resultado->css_id);
+
+        errores::$error = false;
+
+    }
+
     public function test_seccion_param(): void
     {
         errores::$error = false;

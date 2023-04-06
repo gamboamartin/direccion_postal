@@ -408,9 +408,15 @@ class _init_dps{
      * @param array $data Datos de url
      * @param string $seccion_limpia Seccion a integrar
      * @return array|stdClass
+     * @version 10.11.0
      */
     private function params(array $data, string $seccion_limpia): array|stdClass
     {
+        $seccion_limpia = trim($seccion_limpia);
+        if($seccion_limpia === ''){
+            return $this->error->error(mensaje: 'Error seccion_limpia esta vacia', data: $seccion_limpia);
+        }
+
         $key = $this->key(seccion_limpia: $seccion_limpia);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar key',data:  $key);
