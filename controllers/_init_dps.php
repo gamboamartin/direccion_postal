@@ -621,6 +621,7 @@ class _init_dps{
      * @param string $seccion Seccion a ejecutar
      * @param string $extra_params Params GET
      * @return string|array
+     * @version 10.12.0
      */
     private function url_servicio(string $accion, string $seccion, string $extra_params = ''): string|array
     {
@@ -650,6 +651,13 @@ class _init_dps{
         return "get_url('$seccion','$accion', $extra_params);";
     }
 
+    /**
+     * Integra un elemento de extra param a un selector
+     * @param string $accion Accion  de obtencion de datos
+     * @param string $seccion Seccion de obtencion de datos
+     * @param string $seccion_param Parametros de funcion
+     * @return array|string
+     */
     private function url_servicio_extra_param(string $accion, string $seccion, string $seccion_param): array|string
     {
         $extra_param_js = '';
