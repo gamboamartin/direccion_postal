@@ -81,7 +81,6 @@ class controlador_dp_calle extends _ctl_calles {
 
         }
 
-
         return $salida;
 
 

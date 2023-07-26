@@ -625,15 +625,9 @@ class _init_dps{
      */
     private function url_servicio(string $accion, string $seccion, string $extra_params = ''): string|array
     {
-        $accion = trim($accion);
-        $valida = $this->validacion->valida_texto_pep_8(txt: $accion);
+        $valida = $this->valida_pep_8_base(accion: $accion, seccion: $seccion);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al validar accion',data: $valida);
-        }
-        $seccion = trim($seccion);
-        $valida = $this->validacion->valida_texto_pep_8(txt: $seccion);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al validar seccion',data: $valida);
+            return $this->error->error(mensaje: 'Error al validar datos',data: $valida);
         }
 
         $extra_params = trim($extra_params);
@@ -665,6 +659,12 @@ class _init_dps{
         if($seccion_param !== '') {
             $extra_param_js = '{' . $seccion_param . '_id: ' . $seccion_param . '_id}';
         }
+
+        $valida = $this->valida_pep_8_base(accion: $accion, seccion: $seccion);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar datos',data: $valida);
+        }
+
         $url = $this->url_servicio(accion: $accion,seccion:  $seccion,extra_params:  $extra_param_js);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar url',data: $url);
@@ -698,5 +698,19 @@ class _init_dps{
 
         }
         return $urls_js;
+    }
+
+    private function valida_pep_8_base(string $accion, string $seccion){
+        $accion = trim($accion);
+        $valida = $this->validacion->valida_texto_pep_8(txt: $accion);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar accion',data: $valida);
+        }
+        $seccion = trim($seccion);
+        $valida = $this->validacion->valida_texto_pep_8(txt: $seccion);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar seccion',data: $valida);
+        }
+        return true;
     }
 }

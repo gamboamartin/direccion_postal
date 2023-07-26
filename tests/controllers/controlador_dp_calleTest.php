@@ -2,6 +2,7 @@
 namespace gamboamartin\direccion_postal\tests\controllers;
 
 use controllers\controlador_dp_calle;
+use gamboamartin\direccion_postal\tests\base_test;
 use gamboamartin\errores\errores;
 use gamboamartin\test\test;
 use stdClass;
@@ -27,8 +28,27 @@ class controlador_dp_calleTest extends test {
         errores::$error = false;
         $_GET['session_id'] = 1;
         $_GET['seccion'] = 'dp_calle';
+        $_GET['accion'] = 'get_calle';
         $_SESSION['grupo_id'] = '2';
         $_SESSION['usuario_id'] = '2';
+
+        $del = (new base_test())->del_adm_seccion(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al del',data:  $del);
+            print_r($error);
+            exit;
+        }
+
+        $adm_accion_id = mt_rand(10000000,99999999);
+        $adm_seccion_id = mt_rand(10000000,99999999);
+        $alta = (new base_test())->alta_adm_accion(link: $this->link, adm_seccion_descripcion: 'dp_calle',
+            adm_seccion_id: $adm_seccion_id, descripcion: 'get_calle', id: $adm_accion_id);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar',data:  $alta);
+            print_r($error);
+            exit;
+        }
+
         $ctl = new controlador_dp_calle(link: $this->link,paths_conf: $this->paths_conf);
 
         $_GET['dp_calle_id'] = 1;
