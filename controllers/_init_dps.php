@@ -621,7 +621,6 @@ class _init_dps{
      * @param string $seccion Seccion a ejecutar
      * @param string $extra_params Params GET
      * @return string|array
-     * @version 10.12.0
      */
     private function url_servicio(string $accion, string $seccion, string $extra_params = ''): string|array
     {
@@ -700,7 +699,14 @@ class _init_dps{
         return $urls_js;
     }
 
-    private function valida_pep_8_base(string $accion, string $seccion){
+    /**
+     * Valida que un sting sea conformado pep_8
+     * @param string $accion Accion a validar
+     * @param string $seccion Seccion a validar
+     * @return array|true
+     */
+    private function valida_pep_8_base(string $accion, string $seccion): bool|array
+    {
         $accion = trim($accion);
         $valida = $this->validacion->valida_texto_pep_8(txt: $accion);
         if(errores::$error){
