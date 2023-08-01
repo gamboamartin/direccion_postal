@@ -704,6 +704,7 @@ class _init_dps{
      * @param string $accion Accion a validar
      * @param string $seccion Seccion a validar
      * @return array|true
+     * @version 10.14.0
      */
     private function valida_pep_8_base(string $accion, string $seccion): bool|array
     {
