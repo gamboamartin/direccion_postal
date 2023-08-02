@@ -375,7 +375,8 @@ class _init_dps{
     }
 
     /**
-     * @param array $selectores
+     * Limpia los selectores con empty
+     * @param array $selectores Conjunto de selectores a incializar
      * @return array|string
      */
     private function limpia_selectores(array $selectores): array|string
@@ -400,6 +401,7 @@ class _init_dps{
     }
 
     /**
+     * Integra la funcion new option definida en java base
      * @param string $entidad_key
      * @param string $key_option
      * @param string $seccion
@@ -673,6 +675,7 @@ class _init_dps{
     private function url_servicio_extra_param(string $accion, string $seccion, string $seccion_param): array|string
     {
         $extra_param_js = '';
+
         $seccion_param = trim($seccion_param);
         if($seccion_param !== '') {
             $extra_param_js = '{' . $seccion_param . '_id: ' . $seccion_param . '_id}';
@@ -695,9 +698,15 @@ class _init_dps{
      * @param string $seccion_limpia Seccion a obtener
      * @param string $seccion_param parametros de la seccion
      * @return array|string
+     * @version 10.16.0
      */
     private function url_servicio_get(string $seccion_limpia, string $seccion_param): array|string
     {
+        $seccion_limpia = trim($seccion_limpia);
+        if($seccion_limpia === ''){
+            return $this->error->error(mensaje: 'Error seccion_limpia esta vacia',data:  $seccion_limpia);
+        }
+
         $accion = "get_$seccion_limpia";
         $seccion = "dp_$seccion_limpia";
 

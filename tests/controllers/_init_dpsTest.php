@@ -236,6 +236,25 @@ class _init_dpsTest extends test {
         $this->assertEquals("get_url('v','a', {});", $resultado);
     }
 
+    public function test_url_servicio_get(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $seccion_limpia = 'a';
+        $seccion_param = '';
+        $resultado = $init->url_servicio_get($seccion_limpia, $seccion_param);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals("get_url('dp_a','get_a', {});",$resultado);
+        errores::$error = false;
+
+    }
+
     public function test_valida_pep_8_base(): void
     {
         errores::$error = false;
