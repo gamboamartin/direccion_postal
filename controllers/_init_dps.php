@@ -358,6 +358,12 @@ class _init_dps{
         return $key_option;
     }
 
+    /**
+     * Limpia el selector con empty
+     * @param string $css_id Identificador
+     * @param string $entidad_limpia Entidad a limpiar
+     * @return string
+     */
     private function limpia_selector(string $css_id, string $entidad_limpia): string
     {
 
@@ -368,7 +374,12 @@ class _init_dps{
 
     }
 
-    private function limpia_selectores(array $selectores){
+    /**
+     * @param array $selectores
+     * @return array|string
+     */
+    private function limpia_selectores(array $selectores): array|string
+    {
         $limpia_selectores = '';
         foreach ($selectores as $selector) {
 
@@ -388,6 +399,12 @@ class _init_dps{
         return $limpia_selectores;
     }
 
+    /**
+     * @param string $entidad_key
+     * @param string $key_option
+     * @param string $seccion
+     * @return string
+     */
     private function new_option(string $entidad_key, string $key_option, string $seccion): string
     {
         return 'integra_new_option(sl_'.$seccion.','.$seccion.'.'.$entidad_key.'_'.$key_option.','.$seccion.'.'.$seccion.'_id);';
@@ -621,6 +638,7 @@ class _init_dps{
      * @param string $seccion Seccion a ejecutar
      * @param string $extra_params Params GET
      * @return string|array
+     * @version 10.15.0
      */
     private function url_servicio(string $accion, string $seccion, string $extra_params = ''): string|array
     {
@@ -650,6 +668,7 @@ class _init_dps{
      * @param string $seccion Seccion de obtencion de datos
      * @param string $seccion_param Parametros de funcion
      * @return array|string
+     * @version 10.15.0
      */
     private function url_servicio_extra_param(string $accion, string $seccion, string $seccion_param): array|string
     {
@@ -671,6 +690,12 @@ class _init_dps{
         return $url;
     }
 
+    /**
+     * Genera la url como jquery para obtencion de ws
+     * @param string $seccion_limpia Seccion a obtener
+     * @param string $seccion_param parametros de la seccion
+     * @return array|string
+     */
     private function url_servicio_get(string $seccion_limpia, string $seccion_param): array|string
     {
         $accion = "get_$seccion_limpia";
