@@ -18,6 +18,7 @@ class dp_pais_html extends html_controler {
      * @param bool $disabled Si disabled el input queda deshabilitado
      * @param array $filtro Filtro de obtencion de datos
      * @param string $key_descripcion_select Integra la descripcion a mostrar en select
+     * @param string $name Name input default dp_pais_id
      * @param bool $required atributo required
      * @return array|string
      * @version 0.120.26
@@ -28,7 +29,7 @@ class dp_pais_html extends html_controler {
     public function select_dp_pais_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link,
                                       bool $disabled = false, array $filtro = array(),
                                       string $key_descripcion_select = 'dp_pais_descripcion',
-                                      bool $required = false): array|string
+                                      string $name = 'dp_pais_id', bool $required = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
         if(errores::$error){
@@ -43,7 +44,7 @@ class dp_pais_html extends html_controler {
 
         $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
             modelo: $modelo, disabled: $disabled, filtro: $filtro, key_descripcion_select: $key_descripcion_select,
-            label: 'Pais', required: $required);
+            label: 'Pais', name: $name, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
