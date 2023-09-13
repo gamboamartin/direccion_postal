@@ -89,6 +89,7 @@ class dp_calle_pertenece_html extends html_controler {
      * @param bool $disabled Si disabled el input que da inactivo
      * @param array $filtro Filtro para obtencion de datos via filtro and del modelo
      * @param string $key_descripcion_select
+     * @param string $name
      * @param bool $required Integra attr required html
      * @return array|string
      * @version 1.157.10
@@ -96,6 +97,7 @@ class dp_calle_pertenece_html extends html_controler {
     public function select_dp_calle_pertenece_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link,
                                                  bool $disabled = false, array $filtro = array(),
                                                  string $key_descripcion_select = 'dp_calle_descripcion',
+                                                 string $name='dp_calle_pertenece_id',
                                                  bool $required = false): array|string
     {
 
@@ -110,7 +112,7 @@ class dp_calle_pertenece_html extends html_controler {
 
         $select = $this->entre_calles(cols: $cols, con_registros: $con_registros, filtro: $filtro,
             id_selected: $id_selected, key_descripcion_select: $key_descripcion_select, label: 'Calle',
-            link: $link, name: 'dp_calle_pertenece_id', disabled: $disabled, required: $required);
+            link: $link, name: $name, disabled: $disabled, required: $required);
 
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);

@@ -17,6 +17,7 @@ class dp_municipio_html extends html_controler {
      * @param bool $disabled Si disabled el input queda deshabilitado
      * @param array $filtro Filtro de obtencion de datos
      * @param string $key_descripcion_select
+     * @param string $name
      * @param bool $required
      * @return array|string
      * @version 0.74.8
@@ -27,7 +28,7 @@ class dp_municipio_html extends html_controler {
     public function select_dp_municipio_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link,
                                            bool $disabled = false, array $filtro = array(),
                                            string $key_descripcion_select = 'dp_municipio_descripcion',
-                                           bool $required = false): array|string
+                                           string $name='dp_municipio_id', bool $required = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
         if(errores::$error){
@@ -39,7 +40,7 @@ class dp_municipio_html extends html_controler {
         }
         $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
             modelo: $modelo, disabled: $disabled, filtro: $filtro, key_descripcion_select: $key_descripcion_select,
-            label: 'Municipio', required: $required);
+            label: 'Municipio', name: $name, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }

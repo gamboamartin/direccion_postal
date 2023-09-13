@@ -19,6 +19,7 @@ class dp_colonia_postal_html extends html_controler {
      * @param bool $disabled Si disabled el input queda deshabilitado
      * @param array $filtro filtro de registros
      * @param string $key_descripcion_select
+     * @param string $name
      * @param bool $required
      * @return array|string
      * @version 0.63.7
@@ -29,6 +30,7 @@ class dp_colonia_postal_html extends html_controler {
     public function select_dp_colonia_postal_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link,
                                                 bool $disabled = false, array $filtro = array(),
                                                 string $key_descripcion_select = 'dp_colonia_descripcion',
+                                                string $name ='dp_colonia_postal_id',
                                                 bool $required = false): array|string
     {
 
@@ -44,7 +46,7 @@ class dp_colonia_postal_html extends html_controler {
         }
         $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
             modelo: $modelo, disabled: $disabled, filtro: $filtro, key_descripcion_select: $key_descripcion_select,
-            label: 'Colonia', required: $required);
+            label: 'Colonia', name: $name, required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
