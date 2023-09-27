@@ -113,6 +113,26 @@ class _init_dpsTest extends test {
         errores::$error = false;
     }
 
+    public function test_limpia_selector(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $css_id = 'a';
+        $entidad_limpia = 'v';
+
+        $resultado = $init->limpia_selector($css_id, $entidad_limpia);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('a.empty();integra_new_option(a,"Seleccione v","-1");', $resultado);
+
+        errores::$error = false;
+    }
+
     public function test_params(): void
     {
         errores::$error = false;

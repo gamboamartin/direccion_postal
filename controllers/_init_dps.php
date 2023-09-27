@@ -362,11 +362,20 @@ class _init_dps{
      * Limpia el selector con empty
      * @param string $css_id Identificador
      * @param string $entidad_limpia Entidad a limpiar
-     * @return string
+     * @return string|array
+     * @version 15.2.0
      */
-    private function limpia_selector(string $css_id, string $entidad_limpia): string
+    private function limpia_selector(string $css_id, string $entidad_limpia): string|array
     {
 
+        $css_id = trim($css_id);
+        if($css_id === ''){
+            return $this->error->error(mensaje: 'Error css_id esta vacio', data: $css_id);
+        }
+        $entidad_limpia = trim($entidad_limpia);
+        if($entidad_limpia === ''){
+            return $this->error->error(mensaje: 'Error entidad_limpia esta vacio', data: $entidad_limpia);
+        }
         $empty = $css_id.'.empty();';
         $init = 'integra_new_option('.$css_id.',"Seleccione '.$entidad_limpia.'","-1");';
 

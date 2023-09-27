@@ -33,7 +33,7 @@
         "phpmailer/phpmailer": "^6.3",
       "ext-gd": "*",
       "ext-exif": "*",
-        "chillerlan/php-qrcode": "^4.3", 
+        "chillerlan/php-qrcode": "^4.3",
       "ext-zlib": "*",
       "ext-sockets": "*",
       "ext-curl": "*",
