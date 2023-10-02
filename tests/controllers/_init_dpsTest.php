@@ -154,6 +154,50 @@ class _init_dpsTest extends test {
         errores::$error = false;
     }
 
+    public function test_new_option(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $entidad_key = 'b';
+        $key_option = 'c';
+        $seccion = 'a';
+
+        $resultado = $init->new_option($entidad_key, $key_option, $seccion);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('integra_new_option(sl_a,a.b_c,a.a_id);', $resultado);
+
+        errores::$error = false;
+    }
+
+    public function test_options(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $entidad_key = 'b';
+        $key_option = 'c';
+        $seccion = 'a';
+
+        $resultado = $init->options($entidad_key, $key_option, $seccion);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('$.each(data.registros, function( index, a ) {
+            integra_new_option(sl_a,a.b_c,a.a_id);
+        });', $resultado);
+
+        errores::$error = false;
+    }
+
     public function test_params(): void
     {
         errores::$error = false;
@@ -294,6 +338,26 @@ class _init_dpsTest extends test {
         $this->assertEquals("get_url('dp_a','get_a', {});",$resultado);
         errores::$error = false;
 
+    }
+
+    public function test_valida_base(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $entidad_key = 'b';
+        $key_option = 'c';
+        $seccion = 'a';
+
+        $resultado = $init->valida_base($entidad_key, $key_option, $seccion);
+        $this->assertIsBool($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertTrue($resultado);
+        errores::$error = false;
     }
 
     public function test_valida_pep_8_base(): void

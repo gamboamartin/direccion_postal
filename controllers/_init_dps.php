@@ -485,21 +485,44 @@ class _init_dps{
      * @param string $entidad_key Entidad
      * @param string $key_option para obtener valor
      * @param string $seccion Seccion a ejecutar
-     * @return string
+     * @return string|array
+     * @version 15.4.0
      */
-    private function new_option(string $entidad_key, string $key_option, string $seccion): string
+    private function new_option(string $entidad_key, string $key_option, string $seccion): string|array
     {
-        return 'integra_new_option(sl_'.$seccion.','.$seccion.'.'.$entidad_key.'_'.$key_option.','.$seccion.'.'.$seccion.'_id);';
+        $seccion = trim($seccion);
+        $entidad_key = trim($entidad_key);
+        $key_option = trim($key_option);
+
+        $valida = $this->valida_base(entidad_key: $entidad_key,key_option:  $key_option,seccion:  $seccion);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar datos', data: $valida);
+        }
+
+        $data = 'sl_'.$seccion.','.$seccion.'.'.$entidad_key.'_'.$key_option.','.$seccion.'.'.$seccion.'_id';
+
+        return 'integra_new_option('.$data.');';
     }
 
     /**
-     * @param string $entidad_key
-     * @param string $key_option
-     * @param string $seccion
+     * Integra las opciones para java
+     * @param string $entidad_key Entidad
+     * @param string $key_option para obtener valor
+     * @param string $seccion Seccion a ejecutar
      * @return array|string
+     * @version 15.4.0
      */
     private function options(string $entidad_key, string $key_option, string $seccion): array|string
     {
+        $seccion = trim($seccion);
+        $entidad_key = trim($entidad_key);
+        $key_option = trim($key_option);
+
+        $valida = $this->valida_base(entidad_key: $entidad_key,key_option:  $key_option,seccion:  $seccion);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar datos', data: $valida);
+        }
+
         $new_option = $this->new_option(entidad_key: $entidad_key,key_option:  $key_option,seccion:  $seccion);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar new option', data: $new_option);
@@ -576,7 +599,8 @@ class _init_dps{
     }
 
     /**
-     * @param array $selectores
+     * Integra los refresh de java conforme los selectores enviados
+     * @param array $selectores Conjunto de selectores
      * @return array|string
      */
     private function refresh_selectores(array $selectores): array|string
@@ -603,7 +627,8 @@ class _init_dps{
     }
 
     /**
-     * @param string $css_id
+     * Integra la ejecucion de refresh de un selector
+     * @param string $css_id Identificador de css a ejecutar
      * @return string
      */
     private function refresh_selectpicker(string $css_id): string
@@ -673,10 +698,11 @@ class _init_dps{
     }
 
     /**
-     * @param array $childrens
-     * @param string $entidad_key
-     * @param string $key
-     * @param string $key_option
+     * Aplica la ejecucion tipo javascript
+     * @param array $childrens Elementos hijos a integrar update
+     * @param string $entidad_key Entidad base de ejecucion
+     * @param string $key Key = seccion
+     * @param string $key_option Campo para la integracion del nuevo valor
      * @return array|string
      */
     private function update(array $childrens, string $entidad_key, string $key, string $key_option): array|string
@@ -860,6 +886,31 @@ class _init_dps{
 
         }
         return $urls_js;
+    }
+
+    /**
+     * Valida la integracion de datos basica
+     * @param string $entidad_key Entidad
+     * @param string $key_option para obtener valor
+     * @param string $seccion Seccion a ejecutar
+     * @return bool|array
+     * @version 15.4.0
+     */
+    private function valida_base(string $entidad_key, string $key_option, string $seccion): bool|array
+    {
+        $seccion = trim($seccion);
+        if($seccion === ''){
+            return $this->error->error(mensaje: 'Error seccion esta vacia', data: $seccion);
+        }
+        $entidad_key = trim($entidad_key);
+        if($entidad_key === ''){
+            return $this->error->error(mensaje: 'Error entidad_key esta vacia', data: $entidad_key);
+        }
+        $key_option = trim($key_option);
+        if($key_option === ''){
+            return $this->error->error(mensaje: 'Error key_option esta vacia', data: $key_option);
+        }
+        return true;
     }
 
     /**
