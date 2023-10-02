@@ -133,6 +133,27 @@ class _init_dpsTest extends test {
         errores::$error = false;
     }
 
+    public function test_limpia_selectores(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+
+        $selectores = array();
+        $selectores[] = 'a';
+
+        $resultado = $init->limpia_selectores($selectores);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('$("#dp_a_id").empty();integra_new_option($("#dp_a_id"),"Seleccione a","-1");', $resultado);
+
+        errores::$error = false;
+    }
+
     public function test_params(): void
     {
         errores::$error = false;

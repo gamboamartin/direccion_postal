@@ -17,8 +17,18 @@ class _init_dps{
         $this->validacion = new validacion();
     }
 
+    /**
+     * @param array $childrens
+     * @param string $entidad
+     * @param string $entidad_key
+     * @param string $key_option
+     * @param string $seccion_limpia
+     * @param string $seccion_param
+     * @return array|string
+     */
     private function asigna_data(array $childrens, string $entidad, string $entidad_key, string $key_option,
-                                 string $seccion_limpia, string $seccion_param){
+                                 string $seccion_limpia, string $seccion_param): array|string
+    {
 
         $update = $this->update_ejecuta(childrens: $childrens,entidad_key:  $entidad_key,
             key_option:  $key_option,seccion_limpia:  $seccion_limpia,seccion_param:  $seccion_param);
@@ -68,7 +78,13 @@ class _init_dps{
         return $controlador;
     }
 
-    private function change(string $entidad, string $exe){
+    /**
+     * @param string $entidad
+     * @param string $exe
+     * @return array|string
+     */
+    private function change(string $entidad, string $exe): array|string
+    {
 
         $selected = $this->selected(entidad: $entidad);
         if(errores::$error){
@@ -107,6 +123,10 @@ class _init_dps{
         return $childrens;
     }
 
+    /**
+     * @param string $entidad
+     * @return string
+     */
     private function ejecuta_funcion(string $entidad): string
     {
         return 'asigna_'.$entidad.'(selected.val());';
@@ -136,7 +156,13 @@ class _init_dps{
         return $entidad_key;
     }
 
-    private function event_change(string $entidad, string $exe){
+    /**
+     * @param string $entidad
+     * @param string $exe
+     * @return array|string
+     */
+    private function event_change(string $entidad, string $exe): array|string
+    {
         $change = $this->change(entidad: $entidad, exe: $exe);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar change',data:  $change);
@@ -166,7 +192,14 @@ class _init_dps{
         return $exe;
     }
 
-    private function genera_data_java(array $data, string $seccion_limpia, array $urls_js){
+    /**
+     * @param array $data
+     * @param string $seccion_limpia
+     * @param array $urls_js
+     * @return array
+     */
+    private function genera_data_java(array $data, string $seccion_limpia, array $urls_js): array
+    {
         $params = $this->params(data: $data, seccion_limpia: $seccion_limpia);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar params',data:  $params);
@@ -184,7 +217,12 @@ class _init_dps{
         return $urls_js;
     }
 
-    private function genera_java(stdClass $params){
+    /**
+     * @param stdClass $params
+     * @return array|stdClass
+     */
+    private function genera_java(stdClass $params): array|stdClass
+    {
         $java = $this->java(params: $params);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar java',data:  $java);
@@ -212,6 +250,10 @@ class _init_dps{
         return $datatables;
     }
 
+    /**
+     * @param controler $controler
+     * @return array
+     */
     final public function init_js(controler $controler): array
     {
         $urls = array();
@@ -268,6 +310,13 @@ class _init_dps{
         return $controler;
     }
 
+    /**
+     * @param stdClass $java
+     * @param string $key
+     * @param stdClass $params
+     * @param array $urls_js
+     * @return array
+     */
     private function integra_data(stdClass $java, string $key, stdClass $params, array $urls_js): array
     {
         $data = $java->$key;
@@ -275,7 +324,14 @@ class _init_dps{
         return $urls_js;
     }
 
-    private function integra_datas(stdClass $java, stdClass $params, array $urls_js){
+    /**
+     * @param stdClass $java
+     * @param stdClass $params
+     * @param array $urls_js
+     * @return array
+     */
+    private function integra_datas(stdClass $java, stdClass $params, array $urls_js): array
+    {
         $keys = array('update','css_id','change','event_full','event_change','event_update');
         foreach ($keys as $key){
             $urls_js = $this->integra_data(java: $java,key:  $key,params:  $params,urls_js:  $urls_js);
@@ -287,7 +343,12 @@ class _init_dps{
     }
 
 
-    private function java(stdClass $params){
+    /**
+     * @param stdClass $params
+     * @return array|stdClass
+     */
+    private function java(stdClass $params): array|stdClass
+    {
 
         $css_id = $this->select(entidad: $params->key);
         if(errores::$error){
@@ -313,6 +374,10 @@ class _init_dps{
 
     }
 
+    /**
+     * @param stdClass $java
+     * @return stdClass
+     */
     private function java_compuesto(stdClass $java): stdClass
     {
         $event_full = $java->css_id.$java->update.$java->change;
@@ -387,11 +452,17 @@ class _init_dps{
      * Limpia los selectores con empty
      * @param array $selectores Conjunto de selectores a incializar
      * @return array|string
+     * @version 15.3.0
      */
     private function limpia_selectores(array $selectores): array|string
     {
         $limpia_selectores = '';
         foreach ($selectores as $selector) {
+
+            $selector = trim($selector);
+            if($selector === ''){
+                return $this->error->error(mensaje: 'Error selector esta vacio', data: $selector);
+            }
 
             $entidad = "dp_$selector";
 
@@ -411,9 +482,9 @@ class _init_dps{
 
     /**
      * Integra la funcion new option definida en java base
-     * @param string $entidad_key
-     * @param string $key_option
-     * @param string $seccion
+     * @param string $entidad_key Entidad
+     * @param string $key_option para obtener valor
+     * @param string $seccion Seccion a ejecutar
      * @return string
      */
     private function new_option(string $entidad_key, string $key_option, string $seccion): string
@@ -421,7 +492,14 @@ class _init_dps{
         return 'integra_new_option(sl_'.$seccion.','.$seccion.'.'.$entidad_key.'_'.$key_option.','.$seccion.'.'.$seccion.'_id);';
     }
 
-    private function options(string $entidad_key, string $key_option, string $seccion){
+    /**
+     * @param string $entidad_key
+     * @param string $key_option
+     * @param string $seccion
+     * @return array|string
+     */
+    private function options(string $entidad_key, string $key_option, string $seccion): array|string
+    {
         $new_option = $this->new_option(entidad_key: $entidad_key,key_option:  $key_option,seccion:  $seccion);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar new option', data: $new_option);
@@ -497,7 +575,12 @@ class _init_dps{
         return $data;
     }
 
-    private function refresh_selectores(array $selectores){
+    /**
+     * @param array $selectores
+     * @return array|string
+     */
+    private function refresh_selectores(array $selectores): array|string
+    {
 
         $refreshs = '';
         foreach ($selectores as $selector) {
@@ -519,6 +602,10 @@ class _init_dps{
 
     }
 
+    /**
+     * @param string $css_id
+     * @return string
+     */
     private function refresh_selectpicker(string $css_id): string
     {
         return $css_id.'.selectpicker("refresh");';
@@ -560,6 +647,10 @@ class _init_dps{
         return 'let sl_'.$entidad.' = '.$css_id.';';
     }
 
+    /**
+     * @param string $entidad
+     * @return string
+     */
     private function selected(string $entidad): string
     {
         return 'let selected = sl_'.$entidad.'.find("option:selected");';
@@ -581,7 +672,15 @@ class _init_dps{
         return '$("#'.$entidad.'_id")';
     }
 
-    private function update(array $childrens, string $entidad_key, string $key, string $key_option){
+    /**
+     * @param array $childrens
+     * @param string $entidad_key
+     * @param string $key
+     * @param string $key_option
+     * @return array|string
+     */
+    private function update(array $childrens, string $entidad_key, string $key, string $key_option): array|string
+    {
 
 
         $limpia = $this->limpia_selectores(selectores: $childrens);
@@ -604,7 +703,15 @@ class _init_dps{
 
     }
 
-    private function update_data(array $childrens, string $entidad_key, string $key, string $key_option){
+    /**
+     * @param array $childrens
+     * @param string $entidad_key
+     * @param string $key
+     * @param string $key_option
+     * @return array|string
+     */
+    private function update_data(array $childrens, string $entidad_key, string $key, string $key_option): array|string
+    {
 
         $update = $this->update(childrens: $childrens,entidad_key: $entidad_key,key: $key,key_option: $key_option);
         if(errores::$error){
@@ -616,8 +723,17 @@ class _init_dps{
         });';
     }
 
+    /**
+     * @param array $childrens
+     * @param string $entidad_key
+     * @param string $key_option
+     * @param string $seccion_limpia
+     * @param string $seccion_param
+     * @return array|string
+     */
     private function update_ejecuta(array $childrens, string $entidad_key, string $key_option,
-                                    string $seccion_limpia, string $seccion_param){
+                                    string $seccion_limpia, string $seccion_param): array|string
+    {
 
         $key = "dp_$seccion_limpia";
 
@@ -728,6 +844,10 @@ class _init_dps{
         return $url;
     }
 
+    /**
+     * @param array $urls
+     * @return array
+     */
     final public function urls(array $urls): array
     {
         $urls_js = array();
