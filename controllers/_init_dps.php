@@ -602,12 +602,18 @@ class _init_dps{
      * Integra los refresh de java conforme los selectores enviados
      * @param array $selectores Conjunto de selectores
      * @return array|string
+     * @version 15.5.0
      */
     private function refresh_selectores(array $selectores): array|string
     {
 
         $refreshs = '';
         foreach ($selectores as $selector) {
+
+            $selector = trim($selector);
+            if($selector === ''){
+                return $this->error->error(mensaje: 'Error selector esta vacio', data: $selector);
+            }
 
             $entidad = "dp_$selector";
 
@@ -629,10 +635,15 @@ class _init_dps{
     /**
      * Integra la ejecucion de refresh de un selector
      * @param string $css_id Identificador de css a ejecutar
-     * @return string
+     * @return string|array
+     * @version 15.5.0
      */
-    private function refresh_selectpicker(string $css_id): string
+    private function refresh_selectpicker(string $css_id): string|array
     {
+        $css_id = trim($css_id);
+        if($css_id === ''){
+            return $this->error->error(mensaje: 'Error css_id esta vacio', data: $css_id);
+        }
         return $css_id.'.selectpicker("refresh");';
     }
 
@@ -704,10 +715,18 @@ class _init_dps{
      * @param string $key Key = seccion
      * @param string $key_option Campo para la integracion del nuevo valor
      * @return array|string
+     * @version 15.5.0
      */
     private function update(array $childrens, string $entidad_key, string $key, string $key_option): array|string
     {
+        $key = trim($key);
+        $entidad_key = trim($entidad_key);
+        $key_option = trim($key_option);
 
+        $valida = $this->valida_base(entidad_key: $entidad_key,key_option:  $key_option,seccion:  $key);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar datos', data: $valida);
+        }
 
         $limpia = $this->limpia_selectores(selectores: $childrens);
         if(errores::$error){
@@ -730,10 +749,11 @@ class _init_dps{
     }
 
     /**
-     * @param array $childrens
-     * @param string $entidad_key
-     * @param string $key
-     * @param string $key_option
+     * Integra los elementos de un update
+     * @param array $childrens Secciones
+     * @param string $entidad_key Entidad
+     * @param string $key seccion
+     * @param string $key_option campo valor
      * @return array|string
      */
     private function update_data(array $childrens, string $entidad_key, string $key, string $key_option): array|string
@@ -750,6 +770,7 @@ class _init_dps{
     }
 
     /**
+     * Integra el llamado a la ejecucion de un selector
      * @param array $childrens
      * @param string $entidad_key
      * @param string $key_option

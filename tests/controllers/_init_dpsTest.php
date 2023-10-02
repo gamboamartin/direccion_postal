@@ -218,6 +218,45 @@ class _init_dpsTest extends test {
 
     }
 
+    public function test_refresh_selectores(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $selectores = array();
+        $selectores[] = 'c';
+        $selectores[] = 'd';
+
+        $resultado = $init->refresh_selectores($selectores);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('$("#dp_c_id").selectpicker("refresh");$("#dp_d_id").selectpicker("refresh");', $resultado);
+
+        errores::$error = false;
+    }
+
+    public function test_refresh_selectpicker(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $css_id = 'a';
+
+        $resultado = $init->refresh_selectpicker($css_id);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('a.selectpicker("refresh");', $resultado);
+        errores::$error = false;
+    }
+
     public function test_seccion_param(): void
     {
         errores::$error = false;
@@ -278,6 +317,29 @@ class _init_dpsTest extends test {
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals('$("#a_id")', $resultado);
+
+        errores::$error = false;
+    }
+
+    public function test_update(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $childrens = array();
+        $entidad_key = 'v';
+        $key = 'a';
+        $key_option = 'f';
+
+        $resultado = $init->update($childrens, $entidad_key, $key, $key_option);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertStringContainsStringIgnoringCase('$.each(data.registros, function( index, a ) {
+            integra_new_option(sl_a,a.v_f,a.a_id);', $resultado);
 
         errores::$error = false;
     }
