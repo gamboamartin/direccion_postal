@@ -344,6 +344,30 @@ class _init_dpsTest extends test {
         errores::$error = false;
     }
 
+    public function test_update_data(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $childrens = array();
+        $entidad_key = 'b';
+        $key = 'a';
+        $key_option = 'c';
+
+        $resultado = $init->update_data($childrens, $entidad_key, $key, $key_option);
+        $this->assertStringContainsStringIgnoringCase('get_data(url, function (data) {
+        $.each(data.registros, function( index, a ) {
+            integra_new_option(sl_a,a.b_c,a.a_id);
+        });$("#a_id").val(val_selected_id);', $resultado);
+
+        errores::$error = false;
+
+    }
+
     public function test_url_servicio(): void
     {
         errores::$error = false;

@@ -18,6 +18,7 @@ class _init_dps{
     }
 
     /**
+     * Asigna los datos de una ejecucion GET
      * @param array $childrens
      * @param string $entidad
      * @param string $entidad_key
@@ -94,7 +95,7 @@ class _init_dps{
         $exe_fn = '';
         if($exe !== '') {
 
-            $exe_fn = $this->ejecuta_funcion($exe);
+            $exe_fn = $this->ejecuta_funcion(entidad: $exe);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al generar exe',data:  $exe_fn);
             }
@@ -684,7 +685,8 @@ class _init_dps{
     }
 
     /**
-     * @param string $entidad
+     * Integra selected en option
+     * @param string $entidad Entidad de integracion
      * @return string
      */
     private function selected(string $entidad): string
@@ -755,9 +757,18 @@ class _init_dps{
      * @param string $key seccion
      * @param string $key_option campo valor
      * @return array|string
+     * @version 15.6.0
      */
     private function update_data(array $childrens, string $entidad_key, string $key, string $key_option): array|string
     {
+        $key = trim($key);
+        $entidad_key = trim($entidad_key);
+        $key_option = trim($key_option);
+
+        $valida = $this->valida_base(entidad_key: $entidad_key,key_option:  $key_option,seccion:  $key);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar datos', data: $valida);
+        }
 
         $update = $this->update(childrens: $childrens,entidad_key: $entidad_key,key: $key,key_option: $key_option);
         if(errores::$error){
@@ -771,11 +782,11 @@ class _init_dps{
 
     /**
      * Integra el llamado a la ejecucion de un selector
-     * @param array $childrens
-     * @param string $entidad_key
-     * @param string $key_option
-     * @param string $seccion_limpia
-     * @param string $seccion_param
+     * @param array $childrens Conjunto de elementos a integrar
+     * @param string $entidad_key Entidad de ejecucion
+     * @param string $key_option Campo valor option
+     * @param string $seccion_limpia Seccion
+     * @param string $seccion_param Parametros extra
      * @return array|string
      */
     private function update_ejecuta(array $childrens, string $entidad_key, string $key_option,
