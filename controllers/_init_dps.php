@@ -259,7 +259,8 @@ class _init_dps{
     }
 
     /**
-     * @param stdClass $params
+     * Genera el java para cambio de direcciones
+     * @param stdClass $params Parametros
      * @return array|stdClass
      */
     private function genera_java(stdClass $params): array|stdClass
@@ -352,10 +353,11 @@ class _init_dps{
     }
 
     /**
-     * @param stdClass $java
-     * @param string $key
-     * @param stdClass $params
-     * @param array $urls_js
+     * Integra los datos en un array para la integracion en frontend
+     * @param stdClass $java Java a integrar
+     * @param string $key Key de base
+     * @param stdClass $params Parametros
+     * @param array $urls_js urls a ejecutar
      * @return array
      */
     private function integra_data(stdClass $java, string $key, stdClass $params, array $urls_js): array
@@ -388,9 +390,50 @@ class _init_dps{
      * Genera el java de selects
      * @param stdClass $params Parametros a integrar
      * @return array|stdClass
+     * @version 15.12.0
      */
     private function java(stdClass $params): array|stdClass
     {
+        if(!isset($params->key)){
+            return $this->error->error(mensaje: 'Error $params->key no existe',data:  $params);
+        }
+        $params->key = trim($params->key);
+        if($params->key === ''){
+            return $this->error->error(mensaje: 'Error $params->key esta vacio',data:  $params);
+        }
+        if(!isset($params->childrens)){
+            return $this->error->error(mensaje: 'Error $params->childrens no existe',data:  $params);
+        }
+        if(!isset($params->entidad_key)){
+            return $this->error->error(mensaje: 'Error $params->entidad_key no existe',data:  $params);
+        }
+        if(!isset($params->key_option)){
+            return $this->error->error(mensaje: 'Error $params->key_option no existe',data:  $params);
+        }
+        if(!isset($params->seccion_limpia)){
+            return $this->error->error(mensaje: 'Error $params->seccion_limpia no existe',data:  $params);
+        }
+        if(!isset($params->seccion_param)){
+            return $this->error->error(mensaje: 'Error $params->seccion_param no existe',data:  $params);
+        }
+        if(!is_array($params->childrens)){
+            return $this->error->error(mensaje: 'Error $params->childrens debe ser un array',data:  $params);
+        }
+        if($params->seccion_limpia === ''){
+            return $this->error->error(mensaje: 'Error $params->seccion_limpia esta vacio',data:  $params);
+        }
+        if($params->entidad_key === ''){
+            return $this->error->error(mensaje: 'Error $params->entidad_key esta vacio',data:  $params);
+        }
+        if($params->key_option === ''){
+            return $this->error->error(mensaje: 'Error $params->key_option esta vacio',data:  $params);
+        }
+        if($params->seccion_param === ''){
+            return $this->error->error(mensaje: 'Error $params->seccion_param esta vacio',data:  $params);
+        }
+        if(!isset($params->exe)){
+            return $this->error->error(mensaje: 'Error $params->exe no existe',data:  $params);
+        }
 
         $css_id = $this->select(entidad: $params->key);
         if(errores::$error){
@@ -418,7 +461,8 @@ class _init_dps{
     }
 
     /**
-     * @param stdClass $java
+     * Ajusta los elementos de java en objetos
+     * @param stdClass $java Datos de java
      * @return stdClass
      */
     private function java_compuesto(stdClass $java): stdClass
