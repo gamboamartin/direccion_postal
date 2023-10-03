@@ -368,6 +368,7 @@ class _init_dps{
     }
 
     /**
+     * Integra los datos para se usados en frontend
      * @param stdClass $java
      * @param stdClass $params
      * @param array $urls_js
@@ -463,10 +464,21 @@ class _init_dps{
     /**
      * Ajusta los elementos de java en objetos
      * @param stdClass $java Datos de java
-     * @return stdClass
+     * @return stdClass|array
+     * @version 15.13.0
      */
-    private function java_compuesto(stdClass $java): stdClass
+    private function java_compuesto(stdClass $java): stdClass|array
     {
+        if(!isset($java->css_id)){
+            $java->css_id = '';
+        }
+        if(!isset($java->update)){
+            $java->update = '';
+        }
+        if(!isset($java->change)){
+            $java->change = '';
+        }
+
         $event_full = $java->css_id.$java->update.$java->change;
         $event_change = $java->css_id.$java->change;
         $event_update = $java->css_id.$java->update;

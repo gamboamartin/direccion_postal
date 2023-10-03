@@ -187,6 +187,24 @@ class _init_dpsTest extends test {
         errores::$error = false;
     }
 
+    public function test_java_compuesto(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $java = new stdClass();
+        $java->css_id = '';
+
+        $resultado = $init->java_compuesto($java);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+    }
+
     public function test_key(): void
     {
         errores::$error = false;
