@@ -105,6 +105,7 @@ class _init_dps{
      * @param string $entidad Entidad de llamado
      * @param string $exe Entidad a ejecutar
      * @return array|string
+     * @version 15.11.0
      */
     private function change(string $entidad, string $exe): array|string
     {
@@ -194,6 +195,7 @@ class _init_dps{
      * @param string $entidad Entidad que detona exe
      * @param string $exe Entidad a ejecutar
      * @return array|string
+     * @version 15.11.0
      */
     private function event_change(string $entidad, string $exe): array|string
     {

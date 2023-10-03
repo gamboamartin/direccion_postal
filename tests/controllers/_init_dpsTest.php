@@ -44,6 +44,33 @@ class _init_dpsTest extends test {
         $this->assertStringContainsStringIgnoringCase('let asigna_d = (z_id =',$resultado);
         errores::$error = false;
     }
+
+    public function test_change(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $entidad = 'a';
+        $exe = '';
+        $resultado = $init->change($entidad, $exe);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('let selected = sl_a.find("option:selected");',$resultado);
+        errores::$error = false;
+
+        $entidad = 'a';
+        $exe = 'v';
+        $resultado = $init->change($entidad, $exe);
+
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('let selected = sl_a.find("option:selected");asigna_v(selected.val());',$resultado);
+        errores::$error = false;
+    }
     public function test_childrens(): void
     {
         errores::$error = false;
@@ -115,6 +142,24 @@ class _init_dpsTest extends test {
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals("aaa", $resultado);
+        errores::$error = false;
+    }
+
+    public function test_event_change(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $entidad = 'z';
+        $exe = 'j';
+        $resultado = $init->event_change($entidad, $exe);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertStringContainsStringIgnoringCase('let selected = sl_z.find("option:selected");asigna_j(selected.val());', $resultado);
         errores::$error = false;
     }
 
