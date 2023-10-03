@@ -21,6 +21,29 @@ class _init_dpsTest extends test {
         $this->paths_conf->database = '/var/www/html/direccion_postal/config/database.php';
         $this->paths_conf->views = '/var/www/html/direccion_postal/config/views.php';
     }
+
+    public function test_asigna_data(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $childrens = array();
+        $entidad_key = 'b';
+        $entidad = 'd';
+        $key_option = 'c';
+        $seccion_limpia = 'a';
+        $seccion_param = 'z';
+
+        $resultado = $init->asigna_data($childrens, $entidad, $entidad_key, $key_option, $seccion_limpia, $seccion_param);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertStringContainsStringIgnoringCase('let asigna_d = (z_id =',$resultado);
+        errores::$error = false;
+    }
     public function test_childrens(): void
     {
         errores::$error = false;
@@ -39,7 +62,6 @@ class _init_dpsTest extends test {
         $this->assertEmpty($resultado);
         errores::$error = false;
     }
-
 
     public function test_entidad_key(): void
     {

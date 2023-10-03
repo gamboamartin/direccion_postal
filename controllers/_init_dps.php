@@ -30,6 +30,26 @@ class _init_dps{
     private function asigna_data(array $childrens, string $entidad, string $entidad_key, string $key_option,
                                  string $seccion_limpia, string $seccion_param): array|string
     {
+        $seccion_limpia = trim($seccion_limpia);
+        if($seccion_limpia === ''){
+            return $this->error->error(mensaje: 'Error seccion_limpia esta vacia',data:  $seccion_limpia);
+        }
+        $entidad_key = trim($entidad_key);
+        if($entidad_key === ''){
+            return $this->error->error(mensaje: 'Error entidad_key esta vacia', data: $entidad_key);
+        }
+        $key_option = trim($key_option);
+        if($key_option === ''){
+            return $this->error->error(mensaje: 'Error key_option esta vacia', data: $key_option);
+        }
+        $entidad = trim($entidad);
+        if($entidad === ''){
+            return $this->error->error(mensaje: 'Error entidad esta vacia', data: $entidad);
+        }
+        $seccion_param = trim($seccion_param);
+        if($seccion_param === ''){
+            return $this->error->error(mensaje: 'Error seccion_param esta vacia', data: $seccion_param);
+        }
 
         $update = $this->update_ejecuta(childrens: $childrens,entidad_key:  $entidad_key,
             key_option:  $key_option,seccion_limpia:  $seccion_limpia,seccion_param:  $seccion_param);
@@ -348,7 +368,8 @@ class _init_dps{
 
 
     /**
-     * @param stdClass $params
+     * Genera el java de selects
+     * @param stdClass $params Parametros a integrar
      * @return array|stdClass
      */
     private function java(stdClass $params): array|stdClass
@@ -359,8 +380,9 @@ class _init_dps{
             return $this->error->error(mensaje: 'Error al generar css',data:  $css_id);
         }
 
-        $update = $this->asigna_data(childrens: $params->childrens, entidad: $params->key, entidad_key: $params->entidad_key,
-            key_option: $params->key_option, seccion_limpia: $params->seccion_limpia, seccion_param: $params->seccion_param);
+        $update = $this->asigna_data(childrens: $params->childrens, entidad: $params->key,
+            entidad_key: $params->entidad_key, key_option: $params->key_option, seccion_limpia: $params->seccion_limpia,
+            seccion_param: $params->seccion_param);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar update',data:  $update);
         }
