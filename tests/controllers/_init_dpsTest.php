@@ -325,6 +325,26 @@ class _init_dpsTest extends test {
         errores::$error = false;
     }
 
+    public function test_selected(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $entidad = 'a';
+
+
+        $resultado = $init->selected($entidad);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('let selected = sl_a.find("option:selected");', $resultado);
+
+        errores::$error = false;
+    }
+
     public function test_selector(): void
     {
         errores::$error = false;

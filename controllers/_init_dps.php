@@ -26,6 +26,7 @@ class _init_dps{
      * @param string $seccion_limpia Seccion
      * @param string $seccion_param Parametro
      * @return array|string
+     * @version 15.9.0
      */
     private function asigna_data(array $childrens, string $entidad, string $entidad_key, string $key_option,
                                  string $seccion_limpia, string $seccion_param): array|string
@@ -107,6 +108,10 @@ class _init_dps{
      */
     private function change(string $entidad, string $exe): array|string
     {
+        $entidad = trim($entidad);
+        if($entidad === ''){
+            return $this->error->error(mensaje: 'Error entidad esta vacia',data:  $entidad);
+        }
 
         $selected = $this->selected(entidad: $entidad);
         if(errores::$error){
@@ -148,10 +153,14 @@ class _init_dps{
     /**
      * Integra la llamada de la ejecucion en java
      * @param string $entidad Entidad a ejecutar
-     * @return string
+     * @return string|array
      */
-    private function ejecuta_funcion(string $entidad): string
+    private function ejecuta_funcion(string $entidad): string|array
     {
+        $entidad = trim($entidad);
+        if($entidad === ''){
+            return $this->error->error(mensaje: 'Error entidad esta vacio',data:  $entidad);
+        }
         return 'asigna_'.$entidad.'(selected.val());';
     }
 
@@ -187,6 +196,11 @@ class _init_dps{
      */
     private function event_change(string $entidad, string $exe): array|string
     {
+        $entidad = trim($entidad);
+        if($entidad === ''){
+            return $this->error->error(mensaje: 'Error entidad esta vacia',data:  $entidad);
+        }
+
         $change = $this->change(entidad: $entidad, exe: $exe);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar change',data:  $change);
@@ -712,10 +726,15 @@ class _init_dps{
     /**
      * Integra selected en option
      * @param string $entidad Entidad de integracion
-     * @return string
+     * @return string|array
+     * @version 15.9.0
      */
-    private function selected(string $entidad): string
+    private function selected(string $entidad): string|array
     {
+        $entidad = trim($entidad);
+        if($entidad === ''){
+            return $this->error->error(mensaje: 'Error entidad esta vacia',data:  $entidad);
+        }
         return 'let selected = sl_'.$entidad.'.find("option:selected");';
     }
 
