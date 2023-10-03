@@ -154,6 +154,7 @@ class _init_dps{
      * Integra la llamada de la ejecucion en java
      * @param string $entidad Entidad a ejecutar
      * @return string|array
+     * @version 15.10.0
      */
     private function ejecuta_funcion(string $entidad): string|array
     {

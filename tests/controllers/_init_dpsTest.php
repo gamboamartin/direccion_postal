@@ -63,6 +63,23 @@ class _init_dpsTest extends test {
         errores::$error = false;
     }
 
+    public function test_ejecuta_funcion(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $entidad = 'c';
+        $resultado = $init->ejecuta_funcion($entidad);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals("asigna_c(selected.val());",$resultado);
+        errores::$error = false;
+    }
+
     public function test_entidad_key(): void
     {
         errores::$error = false;
