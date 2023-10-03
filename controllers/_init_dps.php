@@ -19,12 +19,12 @@ class _init_dps{
 
     /**
      * Asigna los datos de una ejecucion GET
-     * @param array $childrens
-     * @param string $entidad
-     * @param string $entidad_key
-     * @param string $key_option
-     * @param string $seccion_limpia
-     * @param string $seccion_param
+     * @param array $childrens Tablas de ejecucion
+     * @param string $entidad Entidad base de ejecucion
+     * @param string $entidad_key Key de entidad
+     * @param string $key_option Key de valor option
+     * @param string $seccion_limpia Seccion
+     * @param string $seccion_param Parametro
      * @return array|string
      */
     private function asigna_data(array $childrens, string $entidad, string $entidad_key, string $key_option,
@@ -80,8 +80,9 @@ class _init_dps{
     }
 
     /**
-     * @param string $entidad
-     * @param string $exe
+     * Integra el llamado de la funcion en java evento change
+     * @param string $entidad Entidad de llamado
+     * @param string $exe Entidad a ejecutar
      * @return array|string
      */
     private function change(string $entidad, string $exe): array|string
@@ -125,7 +126,8 @@ class _init_dps{
     }
 
     /**
-     * @param string $entidad
+     * Integra la llamada de la ejecucion en java
+     * @param string $entidad Entidad a ejecutar
      * @return string
      */
     private function ejecuta_funcion(string $entidad): string
@@ -158,8 +160,9 @@ class _init_dps{
     }
 
     /**
-     * @param string $entidad
-     * @param string $exe
+     * Integra el llamado del evento change en java
+     * @param string $entidad Entidad que detona exe
+     * @param string $exe Entidad a ejecutar
      * @return array|string
      */
     private function event_change(string $entidad, string $exe): array|string
@@ -788,12 +791,28 @@ class _init_dps{
      * @param string $seccion_limpia Seccion
      * @param string $seccion_param Parametros extra
      * @return array|string
+     * @version15.7.0
      */
     private function update_ejecuta(array $childrens, string $entidad_key, string $key_option,
                                     string $seccion_limpia, string $seccion_param): array|string
     {
 
+        $seccion_limpia = trim($seccion_limpia);
+        if($seccion_limpia === ''){
+            return $this->error->error(mensaje: 'Error seccion_limpia esta vacia',data:  $seccion_limpia);
+        }
+
+
         $key = "dp_$seccion_limpia";
+
+        $key = trim($key);
+        $entidad_key = trim($entidad_key);
+        $key_option = trim($key_option);
+
+        $valida = $this->valida_base(entidad_key: $entidad_key,key_option:  $key_option,seccion:  $key);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar datos', data: $valida);
+        }
 
         $url = $this->url_servicio_get(seccion_limpia: $seccion_limpia, seccion_param: $seccion_param);
         if(errores::$error){
@@ -803,7 +822,8 @@ class _init_dps{
         $url_val = 'let url = '.$url.';';
 
 
-        $update = $this->update_data(childrens: $childrens, entidad_key: $entidad_key,key:  $key,key_option:  $key_option);
+        $update = $this->update_data(childrens: $childrens, entidad_key: $entidad_key,key:  $key,
+            key_option:  $key_option);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar update',data:  $update);
         }

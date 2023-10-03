@@ -368,6 +368,32 @@ class _init_dpsTest extends test {
 
     }
 
+    public function test_update_ejecuta(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $childrens = array();
+        $entidad_key = 'b';
+        $key_option = 'c';
+        $seccion_limpia = 'a';
+        $seccion_param = '';
+
+        $resultado = $init->update_ejecuta($childrens, $entidad_key, $key_option, $seccion_limpia, $seccion_param);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertStringContainsStringIgnoringCase("let url = get_url('dp_a','get_a', {});;get_data(url, function (data) {
+        $.each(data.registros, function( index, dp_a ) {
+            integra_new_option(sl_dp_a,dp_a.b_c,dp_a.dp_a_id);
+        });", $resultado);
+
+        errores::$error = false;
+    }
+
     public function test_url_servicio(): void
     {
         errores::$error = false;
