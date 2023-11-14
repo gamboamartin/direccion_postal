@@ -301,9 +301,13 @@ class _init_dps{
         $urls = array();
 
         $urls['pais'] = array();
+        $urls['pais']['seccion_param'] = 'dp_pais';
+        $urls['pais']['key_option'] = 'descripcion';
         $urls['pais']['exe'] = 'dp_estado';
 
         $urls['calle'] = array();
+        $urls['calle']['seccion_param'] = 'dp_calle';
+        $urls['calle']['key_option'] = 'descripcion';;
 
         $urls['estado']['seccion_param'] = 'dp_pais';
         $urls['estado']['key_option'] = 'descripcion';
