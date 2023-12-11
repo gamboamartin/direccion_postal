@@ -47,10 +47,12 @@ class dp_cp_htmlTest extends test {
         $con_registros = true;
         $id_selected = -1;
         $resultado = $dir->select_dp_cp_id($cols, $con_registros, $id_selected, $this->link);
+        //print_r($resultado);exit;
         errores::$error = false;
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-1'><label class='control-label' for='dp_cp_id'>CP</label><div class='controls'><select class='form-control selectpicker color-secondary  dp_cp_id' data-live-searc",$resultado);
+        $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-1'><label class='control-label' for='dp_cp_id'>CP</label><div class='controls'><select class='form-control selectpicker color-secondary dp_cp_id ' data-live-search='true' id='dp_cp_id' name='dp_cp_id'  ><option value=''  >Selecciona una opcion</option><option value='1'  >00099</option></select></div></div>",$resultado);
+        //$this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-1'><label class='control-label' for='dp_cp_id'>CP</label><div class='controls'><select class='form-control selectpicker color-secondary  dp_cp_id' data-live-searc",$resultado);
 
         errores::$error = false;
     }

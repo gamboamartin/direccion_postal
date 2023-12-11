@@ -36,11 +36,12 @@ class dp_colonia_postal_htmlTest extends test {
         $con_registros = false;
         $id_selected = -1;
         $resultado = $dir->select_dp_colonia_postal_id($cols, $con_registros, $id_selected, $this->link);
-
+        //print_r($resultado);exit;
 
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-1'><label class='control-label' for='dp_colonia_postal_id'>Colonia</label><div class='controls'><select class='form-control selectpicker color-secondary  dp_colonia_postal_id' data-live-search=",$resultado);
+        //$this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-1'><label class='control-label' for='dp_colonia_postal_id'>Colonia</label><div class='controls'><select class='form-control selectpicker color-secondary  dp_colonia_postal_id ' data-live-search=",$resultado);
+        $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-1'><label class='control-label' for='dp_colonia_postal_id'>Colonia</label><div class='controls'><select class='form-control selectpicker color-secondary dp_colonia_postal_id ' data-live-search='true' id='dp_colonia_postal_id' name='dp_colonia_postal_id'  ><option value=''  >Selecciona una opcion</option></select></div></div>",$resultado);
 
 
         errores::$error = false;
