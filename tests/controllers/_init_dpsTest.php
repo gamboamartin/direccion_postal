@@ -163,6 +163,32 @@ class _init_dpsTest extends test {
         errores::$error = false;
     }
 
+    public function test_genera_java(): void
+    {
+        errores::$error = false;
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'dp_calle';
+        $_SESSION['grupo_id'] = '1';
+        $init = new _init_dps();
+        $init = new liberator($init);
+
+        $params = new stdClass();
+        $params->key = 'a';
+        $params->childrens = array();
+        $params->entidad_key = 'c';
+        $params->key_option = 'd';
+        $params->seccion_limpia = 'b';
+        $params->seccion_param = 'e';
+        $params->exe = '';
+
+        $resultado = $init->genera_java($params);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertStringContainsStringIgnoringCase('let asigna_a = (e_id = "", val_selected_id = "") => {',$resultado->update);
+
+        errores::$error = false;
+    }
+
     public function test_java(): void
     {
         errores::$error = false;

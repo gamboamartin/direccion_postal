@@ -262,9 +262,15 @@ class _init_dps{
      * Genera el java para cambio de direcciones
      * @param stdClass $params Parametros
      * @return array|stdClass
+     * @version 16.1.0
      */
     private function genera_java(stdClass $params): array|stdClass
     {
+        $valida = $this->valida_params(params: $params);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar parametros de java',data:  $valida);
+        }
+
         $java = $this->java(params: $params);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar java',data:  $java);
@@ -399,45 +405,10 @@ class _init_dps{
      */
     private function java(stdClass $params): array|stdClass
     {
-        if(!isset($params->key)){
-            return $this->error->error(mensaje: 'Error $params->key no existe',data:  $params);
-        }
-        $params->key = trim($params->key);
-        if($params->key === ''){
-            return $this->error->error(mensaje: 'Error $params->key esta vacio',data:  $params);
-        }
-        if(!isset($params->childrens)){
-            return $this->error->error(mensaje: 'Error $params->childrens no existe',data:  $params);
-        }
-        if(!isset($params->entidad_key)){
-            return $this->error->error(mensaje: 'Error $params->entidad_key no existe',data:  $params);
-        }
-        if(!isset($params->key_option)){
-            return $this->error->error(mensaje: 'Error $params->key_option no existe',data:  $params);
-        }
-        if(!isset($params->seccion_limpia)){
-            return $this->error->error(mensaje: 'Error $params->seccion_limpia no existe',data:  $params);
-        }
-        if(!isset($params->seccion_param)){
-            return $this->error->error(mensaje: 'Error $params->seccion_param no existe',data:  $params);
-        }
-        if(!is_array($params->childrens)){
-            return $this->error->error(mensaje: 'Error $params->childrens debe ser un array',data:  $params);
-        }
-        if($params->seccion_limpia === ''){
-            return $this->error->error(mensaje: 'Error $params->seccion_limpia esta vacio',data:  $params);
-        }
-        if($params->entidad_key === ''){
-            return $this->error->error(mensaje: 'Error $params->entidad_key esta vacio',data:  $params);
-        }
-        if($params->key_option === ''){
-            return $this->error->error(mensaje: 'Error $params->key_option esta vacio',data:  $params);
-        }
-        if($params->seccion_param === ''){
-            return $this->error->error(mensaje: 'Error $params->seccion_param esta vacio',data:  $params);
-        }
-        if(!isset($params->exe)){
-            return $this->error->error(mensaje: 'Error $params->exe no existe',data:  $params);
+
+        $valida = $this->valida_params(params: $params);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar parametros de java',data:  $valida);
         }
 
         $css_id = $this->select(entidad: $params->key);
@@ -1052,7 +1023,7 @@ class _init_dps{
      * @return bool|array
      * @version 15.4.0
      */
-    private function valida_base(string $entidad_key, string $key_option, string $seccion): bool|array
+    private function valida_base(string $entidad_key, string $key_option, string $seccion): true|array
     {
         $seccion = trim($seccion);
         if($seccion === ''){
@@ -1067,6 +1038,52 @@ class _init_dps{
             return $this->error->error(mensaje: 'Error key_option esta vacia', data: $key_option);
         }
         return true;
+    }
+
+    private function valida_params(stdClass $params): true|array
+    {
+        if(!isset($params->key)){
+            return $this->error->error(mensaje: 'Error $params->key no existe',data:  $params);
+        }
+        $params->key = trim($params->key);
+        if($params->key === ''){
+            return $this->error->error(mensaje: 'Error $params->key esta vacio',data:  $params);
+        }
+        if(!isset($params->childrens)){
+            return $this->error->error(mensaje: 'Error $params->childrens no existe',data:  $params);
+        }
+        if(!isset($params->entidad_key)){
+            return $this->error->error(mensaje: 'Error $params->entidad_key no existe',data:  $params);
+        }
+        if(!isset($params->key_option)){
+            return $this->error->error(mensaje: 'Error $params->key_option no existe',data:  $params);
+        }
+        if(!isset($params->seccion_limpia)){
+            return $this->error->error(mensaje: 'Error $params->seccion_limpia no existe',data:  $params);
+        }
+        if(!isset($params->seccion_param)){
+            return $this->error->error(mensaje: 'Error $params->seccion_param no existe',data:  $params);
+        }
+        if(!is_array($params->childrens)){
+            return $this->error->error(mensaje: 'Error $params->childrens debe ser un array',data:  $params);
+        }
+        if($params->seccion_limpia === ''){
+            return $this->error->error(mensaje: 'Error $params->seccion_limpia esta vacio',data:  $params);
+        }
+        if($params->entidad_key === ''){
+            return $this->error->error(mensaje: 'Error $params->entidad_key esta vacio',data:  $params);
+        }
+        if($params->key_option === ''){
+            return $this->error->error(mensaje: 'Error $params->key_option esta vacio',data:  $params);
+        }
+        if($params->seccion_param === ''){
+            return $this->error->error(mensaje: 'Error $params->seccion_param esta vacio',data:  $params);
+        }
+        if(!isset($params->exe)){
+            return $this->error->error(mensaje: 'Error $params->exe no existe',data:  $params);
+        }
+        return true;
+
     }
 
     /**
