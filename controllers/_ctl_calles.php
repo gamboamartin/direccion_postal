@@ -2,7 +2,6 @@
 
 namespace controllers;
 
-use base\controller\controler;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;

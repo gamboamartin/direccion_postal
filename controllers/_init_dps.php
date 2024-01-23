@@ -284,10 +284,23 @@ class _init_dps{
     }
 
     /**
-     * Inicializa datatables
-     * @param array $columns Columnas para front
-     * @param array $filtro Filtros aplicables datatables
+     * POR DOCUMENTAR EN WIKI
+     * Método init_datatables
+     *
+     * @param array $columns Columnas para la tabla de datos.
+     * @param array $filtro Filtro aplicado en la tabla de datos.
+     *
      * @return stdClass
+     *
+     * Este método recibe dos parámetros, $columns y $filtro, que representan las
+     * columnas y el filtro aplicado en la tabla de datos, respectivamente.
+     *
+     * Crea una nueva instancia de stdClass llamada $datatables y asigna los
+     * valores de $columns y $filtro a las propiedades 'columns' y 'filtro'
+     * del objeto $datatables, respectivamente.
+     *
+     * Finalmente, devuelve el objeto $datatables.
+     * @version 19.0.0
      */
     final public function init_datatables(array $columns, array $filtro): stdClass
     {
