@@ -624,7 +624,6 @@ class _init_dps{
      * @param array $data Datos de url
      * @param string $seccion_limpia Seccion a integrar
      * @return array|stdClass
-     * @version 10.11.0
      */
     private function params(array $data, string $seccion_limpia): array|stdClass
     {
@@ -735,10 +734,12 @@ class _init_dps{
     }
 
     /**
-     * Obtiene el params de data
-     * @param array $data Datos de inicializacion de urls
-     * @return string|array
-     * @version 9.94.2
+     * POR DOCUMENTAR EN WIKI
+     * Extrae y limpia el valor 'seccion_param' de un array
+     *
+     * @param array $data El array de input en el tiene que extraerse y limpiarse el 'seccion_param'
+     * @return string|array El valor 'seccion_param' limpio si se encuentra. En caso contrario retorna una cadena vacía.
+     * @version 19.1.0
      */
     private function seccion_param(array $data): string|array
     {
