@@ -494,12 +494,17 @@ class _init_dps{
     }
 
     /**
+     * POD DOCUMENTAR EN WIKI
+     * Obtiene la llave 'key_option' de los datos proporcionados.
      *
-     * Genera el key a utilizar en option
-     * @param array $data Datos inicializados de url
-     * @return string
-     * @version 9.97.3
+     * @param array $data Array de datos donde se busca el valor de 'key_option'.
+     * @return string Retorna el valor encontrado para la llave 'key_option'. Si no se encuentra, retorna una cadena vacía.
      *
+     * Este método espera un parámetro `$data` que es un array de datos.
+     * Intenta obtener el valor de la llave 'key_option' del array.
+     * Si la llave existe, entonces obtiene su valor, lo recorta y lo retorna.
+     * Si la llave 'key_option' no existe en el array de datos, entonces retorna una cadena vacía.
+     * @version 19.2.0
      */
     private function key_option(array $data): string
     {
