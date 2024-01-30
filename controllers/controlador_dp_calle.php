@@ -94,11 +94,17 @@ class controlador_dp_calle extends _ctl_calles {
     {
         $identificador = "codigo";
         $propiedades = array("place_holder" => "Código", "cols" => 4);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $prop = $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al integrar propiedad',data:  $prop);
+        }
 
         $identificador = "descripcion";
         $propiedades = array("place_holder" => "Calle", "cols" => 12);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $prop = $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al integrar propiedad',data:  $prop);
+        }
 
         return $this->keys_selects;
     }
