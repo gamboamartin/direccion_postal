@@ -479,10 +479,18 @@ class _init_dps{
     }
 
     /**
-     * Genera el key del array haciendo referencia a dp
-     * @param string $seccion_limpia Seccion sin prefijo
-     * @return string|array
-     * @version 9.88.1
+     * POR DOCUMENTAR EN WIKI
+     * Esta función toma un string que representa una sección y devuelve una
+     * clave específica en función del string proporcionado.
+     *
+     * @param string $seccion_limpia El nombre de la sección para la que se creará la clave.
+     *
+     * @return string|array Retorna una cadena con la clave formada añadiendo "dp_" al inicio
+     *       del parámetro dado si este es válido. Si el parámetro está vacío, devuelve un
+     *       arreglo con un mensaje de error.
+     *
+     * @throws errores En caso de que el parámetro proporcionado esté vacío, se generará un error.
+     * @version 20.1.0
      */
     private function key(string $seccion_limpia): string|array
     {
