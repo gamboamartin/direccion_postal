@@ -65,8 +65,7 @@ class _init_dps{
 
     }
 
-    public function asigna_propiedades_base(
-        controlador_dp_calle_pertenece|controlador_dp_colonia_postal $controlador): controlador_dp_calle_pertenece|controlador_dp_colonia_postal
+    public function asigna_propiedades_base(_ctl_calles|_ctl_dps $controlador): _ctl_calles|_ctl_dps
     {
         $identificador = "dp_pais_id";
         $propiedades = array("label" => "Pais",'key_descripcion_select' => 'dp_pais_descripcion');
@@ -77,21 +76,24 @@ class _init_dps{
 
 
         $identificador = "dp_estado_id";
-        $propiedades = array("label" => "Estado", "con_registros" => false, 'key_descripcion_select' => 'dp_estado_descripcion');
+        $propiedades = array("label" => "Estado", "con_registros" => false,
+            'key_descripcion_select' => 'dp_estado_descripcion');
         $prop = $controlador->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al asignar propiedad', data: $prop);
         }
 
         $identificador = "dp_municipio_id";
-        $propiedades = array("label" => "Municipio", "con_registros" => false, 'key_descripcion_select' => 'dp_municipio_descripcion');
+        $propiedades = array("label" => "Municipio", "con_registros" => false,
+            'key_descripcion_select' => 'dp_municipio_descripcion');
         $prop = $controlador->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al asignar propiedad', data: $prop);
         }
 
         $identificador = "dp_cp_id";
-        $propiedades = array("label" => "Código Postal", "con_registros" => false, 'key_descripcion_select' => 'dp_cp_descripcion');
+        $propiedades = array("label" => "Código Postal", "con_registros" => false,
+            'key_descripcion_select' => 'dp_cp_descripcion');
         $prop = $controlador->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al asignar propiedad', data: $prop);
