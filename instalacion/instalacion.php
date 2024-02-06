@@ -3,6 +3,7 @@ namespace gamboamartin\direccion_postal\instalacion;
 
 use gamboamartin\administrador\models\_instalacion;
 use gamboamartin\direccion_postal\models\dp_estado;
+use gamboamartin\direccion_postal\models\dp_municipio;
 use gamboamartin\direccion_postal\models\dp_pais;
 use gamboamartin\errores\errores;
 use PDO;
@@ -147,16 +148,16 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
         }
 
-        $dp_estados_ins = array();
-        $dp_estado_ins['id'] = '230';
-        $dp_estado_ins['codigo'] = 'JAL008';
-        $dp_estado_ins['descripcion_select'] = 'JAL008 Arandas';
-        $dp_estado_ins['descripcion'] = 'Arandas';
-        $dp_estado_ins['dp_estado_id'] = '14';
+        $dp_municipios_ins = array();
+        $dp_municipio_ins['id'] = '230';
+        $dp_municipio_ins['codigo'] = 'JAL008';
+        $dp_municipio_ins['descripcion_select'] = 'JAL008 Arandas';
+        $dp_municipio_ins['descripcion'] = 'Arandas';
+        $dp_municipio_ins['dp_estado_id'] = '14';
 
-        $dp_estados_ins[0] = $dp_estado_ins;
-        foreach ($dp_estados_ins as $dp_estado_ins){
-            $alta = (new dp_estado(link: $link))->inserta_registro_si_no_existe(registro: $dp_estado_ins);
+        $dp_municipios_ins[0] = $dp_municipio_ins;
+        foreach ($dp_municipios_ins as $dp_municipio_ins){
+            $alta = (new dp_municipio(link: $link))->inserta_registro_si_no_existe(registro: $dp_municipio_ins);
             if(errores::$error){
                 return (new errores())->error(mensaje: 'Error al insertar',data:  $alta);
             }
