@@ -23,7 +23,7 @@ class instalacion
         $foraneas = array();
         $foraneas['dp_pais_id'] = new stdClass();
 
-        $foraneas_r = (new _instalacion(link:$link))->foraneas(foraneas: $foraneas,table:  'dp_pais');
+        $foraneas_r = (new _instalacion(link:$link))->foraneas(foraneas: $foraneas,table:  'dp_estado');
 
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
@@ -84,6 +84,18 @@ class instalacion
 
     }
 
+    /**
+     * POR DOCUMENTAR EN WIKI
+     * Este método maneja la creación de la tabla 'dp_pais' en el proceso de instalación.
+     *
+     * @param PDO $link Conexión de base de datos mediante el objeto PDO.
+     *
+     * @return array|stdClass
+     * Retorna un objeto con el resultado de la creación de la tabla. En caso de error, Retorna un objeto de error.
+     *
+     * @throws errores En el caso de que ocurran errores en el proceso de creación de la tabla, se lanza una excepción.
+     * @version 20.3.0
+     */
 
     private function _add_dp_pais(PDO $link): array|stdClass
     {
@@ -93,7 +105,7 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al create table', data:  $create);
         }
         $out->create = $create;
-        
+
         return $out;
 
     }
