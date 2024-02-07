@@ -191,8 +191,8 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_estado(PDO $link, string $codigo = '1', string $descripcion = '1', int $dp_pais_id = 1,
-                                   int $id = 1, bool $predeterminado = false): array|\stdClass
+    public function alta_dp_estado(PDO $link, string $codigo = 'JAL', string $descripcion = '1', int $dp_pais_id = 151,
+                                   int $id = 14, bool $predeterminado = false): array|\stdClass
     {
 
 
@@ -201,20 +201,6 @@ class base_test{
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al generar registro', data: $registro);
         }
-
-        $existe = (new dp_pais($link))->existe_by_id(registro_id: $dp_pais_id);
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al validar si existe', data: $existe);
-        }
-
-        if(!$existe){
-            $alta = $this->alta_dp_pais(link: $link,id: $dp_pais_id);
-            if(errores::$error){
-                return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
-            }
-        }
-
-
 
         $registro['dp_pais_id'] = $dp_pais_id;
 
@@ -227,7 +213,7 @@ class base_test{
     }
 
     public function alta_dp_municipio(PDO $link, string $codigo = '1', string $descripcion = '1',
-                                      int $dp_estado_id = 1, int $id = 1,
+                                      int $dp_estado_id = 14, int $id = 1,
                                       string $predeterminado = 'inactivo'): array|stdClass{
 
 

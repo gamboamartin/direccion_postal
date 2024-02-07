@@ -1,6 +1,7 @@
 <?php
 namespace gamboamartin\direccion_postal\tests\orm;
 
+use gamboamartin\direccion_postal\instalacion\instalacion;
 use gamboamartin\direccion_postal\models\dp_calle_pertenece;
 use gamboamartin\direccion_postal\models\dp_cp;
 use gamboamartin\direccion_postal\tests\base_test;
@@ -25,15 +26,24 @@ class dp_cpTest extends test {
 
     public function test_alta_bd(): void
     {
+        $_SESSION['usuario_id'] = 2;
+        $_SESSION['grupo_id'] = 2;
+
+        $instala = (new instalacion())->instala(link: $this->link);
+        if(errores::$error){
+            $error  = (new errores())->error('Error al reinstalar', $instala);
+            print_r($error);
+            exit;
+        }
         errores::$error = false;
         $_GET['session_id'] = 1;
         $_GET['seccion'] = 'dp_estado';
         $_SESSION['usuario_id'] = 1;
         $modelo = new dp_cp($this->link);
 
-        $del = (new base_test())->del_dp_pais(link: $this->link);
+        $del = (new base_test())->del_dp_municipio(link: $this->link);
         if(errores::$error){
-            $error  = (new errores())->error('Error al eliminar', $del);
+            $error  = (new errores())->error('Error al del', $del);
             print_r($error);
             exit;
         }
@@ -47,8 +57,10 @@ class dp_cpTest extends test {
         }
 
 
+
         $modelo->registro['descripcion'] = '01125';
         $modelo->registro['codigo'] = '01125';
+
 
         $resultado = $modelo->alta_bd();
 
@@ -126,12 +138,6 @@ class dp_cpTest extends test {
             exit;
         }
 
-        $del = (new base_test())->del_dp_pais($this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
 
 
 

@@ -118,12 +118,6 @@ class dp_calle_perteneceTest extends test {
             exit;
         }
 
-        $del = (new base_test())->del_dp_pais($this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
 
 
 

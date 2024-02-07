@@ -380,14 +380,27 @@ class instalacion
         }
 
         $dp_paises_ins = array();
+
         $dp_pais_ins['id'] = '151';
         $dp_pais_ins['codigo'] = 'MEX';
         $dp_pais_ins['descripcion_select'] = 'MEX Mexico';
         $dp_pais_ins['descripcion'] = 'Mexico';
-
         $dp_paises_ins[0] = $dp_pais_ins;
+
+        $dp_pais_ins['id'] = '66';
+        $dp_pais_ins['codigo'] = 'USA';
+        $dp_pais_ins['descripcion_select'] = 'Estados Unidos (los)';
+        $dp_pais_ins['descripcion'] = 'Estados Unidos (los)';
+        $dp_paises_ins[1] = $dp_pais_ins;
+
+        $dp_pais_ins['id'] = '253';
+        $dp_pais_ins['codigo'] = 'XXX';
+        $dp_pais_ins['descripcion_select'] = 'SIN PAIS';
+        $dp_pais_ins['descripcion'] = 'SIN PAIS';
+        $dp_paises_ins[2] = $dp_pais_ins;
+
         foreach ($dp_paises_ins as $dp_pais_ins){
-            $alta = (new dp_pais(link: $link))->inserta_registro_si_no_existe(registro: $dp_pais_ins);
+            $alta = (new dp_pais(link: $link,aplica_transacciones_base: true))->inserta_registro_si_no_existe(registro: $dp_pais_ins);
             if(errores::$error){
                 return (new errores())->error(mensaje: 'Error al insertar',data:  $alta);
             }
@@ -404,17 +417,17 @@ class instalacion
 
         $result = new stdClass();
 
-        $dp_colonia = $this->dp_colonia(link: $link);
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al ajustar dp_colonia', data:  $dp_colonia);
-        }
-        $result->dp_colonia = $dp_colonia;
-
         $dp_pais = $this->dp_pais(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al ajustar dp_pais', data:  $dp_pais);
         }
         $result->dp_pais = $dp_pais;
+
+        $dp_colonia = $this->dp_colonia(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar dp_colonia', data:  $dp_colonia);
+        }
+        $result->dp_colonia = $dp_colonia;
 
         $dp_estado = $this->dp_estado(link: $link);
         if(errores::$error){
