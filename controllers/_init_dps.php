@@ -138,7 +138,6 @@ class _init_dps{
      * Integra los childrens de data para conf de js
      * @param array $data Datos de urls
      * @return array
-     * @version 9.107.3
      *
      */
     private function childrens(array $data): array
@@ -174,7 +173,6 @@ class _init_dps{
      * @param array $data Datos previos
      * @param string $key Key a integrar
      * @return string|array
-     * @version 9.105.3
      */
     private function entidad_key(array $data, string $key): string|array
     {
