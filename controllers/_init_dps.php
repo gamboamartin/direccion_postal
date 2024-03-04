@@ -168,11 +168,12 @@ class _init_dps{
     }
 
     /**
-     *
+     * POR DOCUMENTAR EN WIKI
      * Integra el nombre de la entidad
      * @param array $data Datos previos
-     * @param string $key Key a integrar
+     * @param string $key Key  integrar
      * @return string|array
+     * @version 20.9.0
      */
     private function entidad_key(array $data, string $key): string|array
     {
