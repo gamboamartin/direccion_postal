@@ -134,10 +134,11 @@ class _init_dps{
     }
 
     /**
-     *
+     * POR DOCUMENTAR EN WIKI
      * Integra los childrens de data para conf de js
      * @param array $data Datos de urls
      * @return array
+     * @version 21.1.0
      *
      */
     private function childrens(array $data): array
