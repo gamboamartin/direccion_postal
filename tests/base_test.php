@@ -38,7 +38,7 @@ class base_test{
     {
 
 
-        $registro = (new test())->registro(
+        $registro = (new test(''))->registro(
             codigo: $codigo,descripcion:  $descripcion,id:  $id,predeterminado:  $predeterminado);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al generar registro', data: $registro);
@@ -99,7 +99,7 @@ class base_test{
                                     int $id = 1, bool $predeterminado = false): array|\stdClass
     {
 
-        $registro = (new test())->registro(
+        $registro = (new test(''))->registro(
             codigo: $codigo,descripcion:  $descripcion,id:  $id,predeterminado:  $predeterminado);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al generar registro', data: $registro);
