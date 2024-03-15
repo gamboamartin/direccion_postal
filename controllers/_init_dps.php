@@ -220,7 +220,6 @@ class _init_dps{
      * Integra la funcion js a ejecutar
      * @param array $data Datos de urls
      * @return string|array
-     * @version 9.109.3
      */
     private function exe(array $data): string|array
     {
@@ -770,7 +769,6 @@ class _init_dps{
      * Integra un selector de tipo id forma jquery
      * @param string $entidad Entidad a integrar equivalente a select
      * @return array|string
-     * @version 9.113.3
      */
     private function select(string $entidad): array|string
     {
@@ -806,7 +804,6 @@ class _init_dps{
      * Integra un selector en forma js
      * @param string $entidad Entidad a integrar
      * @return string|array
-     * @version 9.111.3
      */
     private function selector(string $entidad): string|array
     {
