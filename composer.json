@@ -12,8 +12,8 @@
 
     "autoload": {
         "psr-4": {
-          "controllers\\": "controllers",
           "config\\": "config/",
+          "gamboamartin\\direccion_postal\\controllers\\": "controllers",
           "gamboamartin\\direccion_postal\\models\\": "orm",
           "gamboamartin\\direccion_postal\\tests\\": "tests",
           "gamboamartin\\direccion_postal\\src\\": "src",

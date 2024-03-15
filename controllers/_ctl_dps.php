@@ -1,6 +1,6 @@
 <?php
 
-namespace controllers;
+namespace gamboamartin\direccion_postal\controllers;
 
 use gamboamartin\errores\errores;
 use gamboamartin\system\system;

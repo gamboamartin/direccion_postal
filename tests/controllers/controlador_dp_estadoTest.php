@@ -1,7 +1,7 @@
 <?php
 namespace tests\links\secciones;
 
-use controllers\controlador_dp_estado;
+use gamboamartin\direccion_postal\controllers\controlador_dp_estado;
 use gamboamartin\direccion_postal\tests\base_test;
 use gamboamartin\errores\errores;
 use gamboamartin\test\test;

@@ -6,6 +6,6 @@
  * @final En proceso
  *
  */
-namespace controllers;
+namespace gamboamartin\direccion_postal\controllers;
 
 final class controlador_adm_seccion extends \gamboamartin\acl\controllers\controlador_adm_seccion {}

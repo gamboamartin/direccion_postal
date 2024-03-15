@@ -1,18 +1,14 @@
 <?php
 namespace tests\links\secciones;
 
-use controllers\controlador_dp_colonia;
+
+use gamboamartin\direccion_postal\controllers\controlador_dp_colonia;
 use gamboamartin\errores\errores;
 use gamboamartin\template\directivas;
 use gamboamartin\template_1\html;
-use gamboamartin\test\liberator;
 use gamboamartin\test\test;
 use html\inputs_html;
-use html\selects;
-use models\dp_calle;
-use models\dp_estado;
 use stdClass;
-use html\dp_cp_html;
 
 
 class inputs_htmlTest extends test {
@@ -37,6 +33,7 @@ class inputs_htmlTest extends test {
         $_SESSION['usuario_id'] = 2;
         $_SESSION['grupo_id'] = 2;
         $_GET['seccion'] = 'dp_estado';
+        $_GET['accion'] = 'lista';
 
         $inp = new inputs_html();
 

@@ -1,8 +1,8 @@
 <?php
 namespace gamboamartin\direccion_postal\tests\controllers;
 
-use controllers\_init_dps;
-use controllers\controlador_dp_calle;
+
+use gamboamartin\direccion_postal\controllers\_init_dps;
 use gamboamartin\errores\errores;
 use gamboamartin\test\liberator;
 use gamboamartin\test\test;

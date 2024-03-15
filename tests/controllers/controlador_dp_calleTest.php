@@ -1,7 +1,8 @@
 <?php
 namespace gamboamartin\direccion_postal\tests\controllers;
 
-use controllers\controlador_dp_calle;
+
+use gamboamartin\direccion_postal\controllers\controlador_dp_calle;
 use gamboamartin\direccion_postal\tests\base_test;
 use gamboamartin\errores\errores;
 use gamboamartin\test\test;

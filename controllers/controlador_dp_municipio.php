@@ -6,7 +6,7 @@
  * @final En proceso
  *
  */
-namespace controllers;
+namespace gamboamartin\direccion_postal\controllers;
 
 use gamboamartin\direccion_postal\models\dp_estado;
 use gamboamartin\direccion_postal\models\dp_municipio;
