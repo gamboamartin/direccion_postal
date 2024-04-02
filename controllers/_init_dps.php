@@ -134,7 +134,7 @@ class _init_dps{
     }
 
     /**
-     * POR DOCUMENTAR EN WIKI
+     * POR DOCUMENTAR EN WIKI FINAL REV
      * Integra los childrens de data para conf de js
      * @param array $data Datos de urls
      * @return array
@@ -146,7 +146,8 @@ class _init_dps{
         $childrens = array();
         if(isset($data['childrens'])){
             if(!is_array($data['childrens'])){
-                return $this->error->error(mensaje: 'Error $data[childrens] dbe ser array',data:  $data);
+                return $this->error->error(mensaje: 'Error $data[childrens] dbe ser array',data:  $data,
+                    es_final: true);
             }
             $childrens = $data['childrens'];
         }
@@ -169,7 +170,7 @@ class _init_dps{
     }
 
     /**
-     * POR DOCUMENTAR EN WIKI
+     * POR DOCUMENTAR EN WIKI FINAL REV
      * Integra el nombre de la entidad
      * @param array $data Datos previos
      * @param string $key Key  integrar
@@ -180,7 +181,7 @@ class _init_dps{
     {
         $key = trim($key);
         if($key === ''){
-            return $this->error->error(mensaje: 'Error key esta vacio',data:  $key);
+            return $this->error->error(mensaje: 'Error key esta vacio',data:  $key, es_final: true);
         }
         $entidad_key = $key;
         if(isset($data['entidad_key'])){
@@ -226,7 +227,7 @@ class _init_dps{
         $exe = '';
         if(isset($data['exe'])){
             if(!is_string($data['exe'])){
-                return $this->error->error(mensaje: 'Error exe debe ser string',data:  $data);
+                return $this->error->error(mensaje: 'Error exe debe ser string',data:  $data, es_final: true);
             }
 
             $exe = trim($data['exe']);
@@ -480,7 +481,7 @@ class _init_dps{
     }
 
     /**
-     * POR DOCUMENTAR EN WIKI
+     * POR DOCUMENTAR EN WIKI FINAL REV
      * Esta función toma un string que representa una sección y devuelve una
      * clave específica en función del string proporcionado.
      *
@@ -497,13 +498,14 @@ class _init_dps{
     {
         $seccion_limpia = trim($seccion_limpia);
         if($seccion_limpia === ''){
-            return $this->error->error(mensaje: 'Error seccion_limpia esta vacia', data: $seccion_limpia);
+            return $this->error->error(mensaje: 'Error seccion_limpia esta vacia', data: $seccion_limpia,
+                es_final: true);
         }
         return "dp_$seccion_limpia";
     }
 
     /**
-     * POD DOCUMENTAR EN WIKI
+     * POD DOCUMENTAR EN WIKI FINAL REV
      * Obtiene la llave 'key_option' de los datos proporcionados.
      *
      * @param array $data Array de datos donde se busca el valor de 'key_option'.
@@ -536,11 +538,12 @@ class _init_dps{
 
         $css_id = trim($css_id);
         if($css_id === ''){
-            return $this->error->error(mensaje: 'Error css_id esta vacio', data: $css_id);
+            return $this->error->error(mensaje: 'Error css_id esta vacio', data: $css_id, es_final: true);
         }
         $entidad_limpia = trim($entidad_limpia);
         if($entidad_limpia === ''){
-            return $this->error->error(mensaje: 'Error entidad_limpia esta vacio', data: $entidad_limpia);
+            return $this->error->error(mensaje: 'Error entidad_limpia esta vacio', data: $entidad_limpia,
+                es_final: true);
         }
         $empty = $css_id.'.empty();';
         $init = 'integra_new_option('.$css_id.',"Seleccione '.$entidad_limpia.'","-1");';
@@ -643,7 +646,7 @@ class _init_dps{
     {
         $seccion_limpia = trim($seccion_limpia);
         if($seccion_limpia === ''){
-            return $this->error->error(mensaje: 'Error seccion_limpia esta vacia', data: $seccion_limpia);
+            return $this->error->error(mensaje: 'Error seccion_limpia esta vacia', data: $seccion_limpia, es_final: true);
         }
 
         $key = $this->key(seccion_limpia: $seccion_limpia);
@@ -748,7 +751,7 @@ class _init_dps{
     }
 
     /**
-     * POR DOCUMENTAR EN WIKI
+     * POR DOCUMENTAR EN WIKI FINAL REV
      * Extrae y limpia el valor 'seccion_param' de un array
      *
      * @param array $data El array de input en el tiene que extraerse y limpiarse el 'seccion_param'
@@ -774,7 +777,7 @@ class _init_dps{
     {
         $entidad = trim($entidad);
         if($entidad === ''){
-            return $this->error->error(mensaje: 'Error entidad esta vacia',data:  $entidad);
+            return $this->error->error(mensaje: 'Error entidad esta vacia',data:  $entidad, es_final: true);
         }
 
         $css_id = $this->selector($entidad);
@@ -809,7 +812,7 @@ class _init_dps{
     {
         $entidad = trim($entidad);
         if($entidad === ''){
-            return $this->error->error(mensaje: 'Error entidad esta vacia',data:  $entidad);
+            return $this->error->error(mensaje: 'Error entidad esta vacia',data:  $entidad, es_final: true);
         }
         return '$("#'.$entidad.'_id")';
     }
