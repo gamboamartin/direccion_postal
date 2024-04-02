@@ -218,9 +218,11 @@ class _init_dps{
     }
 
     /**
+     * POR DOCUMENTAR EN WIKI FINAL REV
      * Integra la funcion js a ejecutar
      * @param array $data Datos de urls
      * @return string|array
+     * @version 24.2.0
      */
     private function exe(array $data): string|array
     {
@@ -527,11 +529,20 @@ class _init_dps{
     }
 
     /**
-     * Limpia el selector con empty
-     * @param string $css_id Identificador
-     * @param string $entidad_limpia Entidad a limpiar
-     * @return string|array
-     * @version 15.2.0
+     * POR DOCUMENTAR EN WIKI FINAL REV
+     * Esta es la función '_init_dps.limpia_selector'.
+     * Realiza la limpieza del selector y luego inicializa una nueva opción en el selector.
+     *
+     * @param string $css_id          El ID del elemento CSS al que se dirige la función.
+     * @param string $entidad_limpia  La entidad a limpiar.
+     *
+     * @return string|array           Devuelve un string en caso de éxito, la combinación del proceso de limpieza del selector
+     *                                y la inicialización de una nueva opción en el selector.
+     *
+     * @throws errores              Si $css_id está vacío o si $entidad_limpia está vacío,
+     *                                lanza una Exception con un mensaje de error correspondiente.
+     *
+     * @version 24.2.0
      */
     private function limpia_selector(string $css_id, string $entidad_limpia): string|array
     {
@@ -553,10 +564,21 @@ class _init_dps{
     }
 
     /**
-     * Limpia los selectores con empty
-     * @param array $selectores Conjunto de selectores a incializar
-     * @return array|string
-     * @version 15.3.0
+     * POR DOCUMENTAR EN WIKI FINAL REV
+     * Esta es la función '_init_dps.limpia_selectores'.
+     * Limpia un conjunto de selectores y regresa el resultado concatenado de las operaciones sobre dichos selectores.
+     *
+     * @param array $selectores  Array de selectores a limpiar.
+     *
+     * @return array|string      Devuelve un string que es el resultado de concatenar las operaciones de
+     *                           limpieza sobre cada uno de los selectores. Si ocurre un error durante el proceso,
+     *                           retorna un mensaje de error.
+     *
+     * @throws errores         Si un selector está vacío, si existe un error al generar el css_id,
+     *                           o si existe un error al generar la "limpia". En cada caso, lanza una Exception
+     *                           con un mensaje de error correspondiente.
+     *
+     * @version 24.2.0
      */
     private function limpia_selectores(array $selectores): array|string
     {
@@ -565,7 +587,7 @@ class _init_dps{
 
             $selector = trim($selector);
             if($selector === ''){
-                return $this->error->error(mensaje: 'Error selector esta vacio', data: $selector);
+                return $this->error->error(mensaje: 'Error selector esta vacio', data: $selector, es_final: true);
             }
 
             $entidad = "dp_$selector";
@@ -646,7 +668,8 @@ class _init_dps{
     {
         $seccion_limpia = trim($seccion_limpia);
         if($seccion_limpia === ''){
-            return $this->error->error(mensaje: 'Error seccion_limpia esta vacia', data: $seccion_limpia, es_final: true);
+            return $this->error->error(mensaje: 'Error seccion_limpia esta vacia', data: $seccion_limpia,
+                es_final: true);
         }
 
         $key = $this->key(seccion_limpia: $seccion_limpia);
@@ -780,7 +803,7 @@ class _init_dps{
             return $this->error->error(mensaje: 'Error entidad esta vacia',data:  $entidad, es_final: true);
         }
 
-        $css_id = $this->selector($entidad);
+        $css_id = $this->selector(entidad: $entidad);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar css',data:  $css_id);
         }
@@ -804,9 +827,17 @@ class _init_dps{
 
 
     /**
-     * Integra un selector en forma js
-     * @param string $entidad Entidad a integrar
-     * @return string|array
+     * POR DOCUMENTAR EN WIKI FINAL REV
+     * Esta es la función 'selector', en la cual selecciona y retorna una entidad, para uso en jquery
+     *
+     * @param string $entidad  La entidad a seleccionar.
+     *
+     * @return string|array    Devuelve un string si la operación es exitosa.
+     *                         Si la entidad está vacía, lanza un error y devuelve
+     *                         el mensaje de error junto con los datos de la entidad.
+     *
+     * @throws errores       Cuando la entidad está vacía, lanza una Exception con el mensaje de error.
+     * @version 24.2.0
      */
     private function selector(string $entidad): string|array
     {
@@ -1054,17 +1085,22 @@ class _init_dps{
      */
     private function valida_base(string $entidad_key, string $key_option, string $seccion): true|array
     {
+        $data_err = new stdClass();
+        $data_err->entidad_key = $entidad_key;
+        $data_err->key_option = $key_option;
+        $data_err->seccion = $seccion;
+
         $seccion = trim($seccion);
         if($seccion === ''){
-            return $this->error->error(mensaje: 'Error seccion esta vacia', data: $seccion);
+            return $this->error->error(mensaje: 'Error seccion esta vacia', data: $data_err, es_final: true);
         }
         $entidad_key = trim($entidad_key);
         if($entidad_key === ''){
-            return $this->error->error(mensaje: 'Error entidad_key esta vacia', data: $entidad_key);
+            return $this->error->error(mensaje: 'Error entidad_key esta vacia', data: $data_err, es_final: true);
         }
         $key_option = trim($key_option);
         if($key_option === ''){
-            return $this->error->error(mensaje: 'Error key_option esta vacia', data: $key_option);
+            return $this->error->error(mensaje: 'Error key_option esta vacia', data: $data_err, es_final: true);
         }
         return true;
     }
