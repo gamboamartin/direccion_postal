@@ -1,6 +1,7 @@
 <?php
 namespace gamboamartin\direccion_postal\tests\controllers;
 
+use gamboamartin\administrador\instalacion\instalacion;
 use gamboamartin\direccion_postal\controllers\controlador_adm_session;
 use gamboamartin\direccion_postal\tests\base_test;
 use gamboamartin\errores\errores;
@@ -30,6 +31,14 @@ class controlador_adm_sessionTest extends test {
         $_GET['session_id'] = 1;
         $_GET['seccion'] = 'adm_session';
         $_GET['accion'] = 'login';
+
+        $instala = (new instalacion())->instala(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al instala',data:  $instala);
+            print_r($error);
+            exit;
+        }
+
 
         $del = (new base_test())->del_adm_seccion(link: $this->link);
         if(errores::$error){
