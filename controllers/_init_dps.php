@@ -33,23 +33,24 @@ class _init_dps{
     {
         $seccion_limpia = trim($seccion_limpia);
         if($seccion_limpia === ''){
-            return $this->error->error(mensaje: 'Error seccion_limpia esta vacia',data:  $seccion_limpia);
+            return $this->error->error(mensaje: 'Error seccion_limpia esta vacia',data:  $seccion_limpia,
+                es_final: true);
         }
         $entidad_key = trim($entidad_key);
         if($entidad_key === ''){
-            return $this->error->error(mensaje: 'Error entidad_key esta vacia', data: $entidad_key);
+            return $this->error->error(mensaje: 'Error entidad_key esta vacia', data: $entidad_key, es_final: true);
         }
         $key_option = trim($key_option);
         if($key_option === ''){
-            return $this->error->error(mensaje: 'Error key_option esta vacia', data: $key_option);
+            return $this->error->error(mensaje: 'Error key_option esta vacia', data: $key_option, es_final: true);
         }
         $entidad = trim($entidad);
         if($entidad === ''){
-            return $this->error->error(mensaje: 'Error entidad esta vacia', data: $entidad);
+            return $this->error->error(mensaje: 'Error entidad esta vacia', data: $entidad, es_final: true);
         }
         $seccion_param = trim($seccion_param);
         if($seccion_param === ''){
-            return $this->error->error(mensaje: 'Error seccion_param esta vacia', data: $seccion_param);
+            return $this->error->error(mensaje: 'Error seccion_param esta vacia', data: $seccion_param, es_final: true);
         }
 
         $update = $this->update_ejecuta(childrens: $childrens,entidad_key:  $entidad_key,
@@ -288,7 +289,8 @@ class _init_dps{
     }
 
     /**
-     * POR DOCUMENTAR EN WIKI
+     * TOTAL
+     * @url https://github.com/gamboamartin/direccion_postal/wiki/controllers._init_dps.init_datatables.26.0.0
      * Método init_datatables
      *
      * @param array $columns Columnas para la tabla de datos.
@@ -529,7 +531,7 @@ class _init_dps{
     }
 
     /**
-     * POR DOCUMENTAR EN WIKI FINAL REV
+     * TOTAL
      * Esta es la función '_init_dps.limpia_selector'.
      * Realiza la limpieza del selector y luego inicializa una nueva opción en el selector.
      *
@@ -543,6 +545,8 @@ class _init_dps{
      *                                lanza una Exception con un mensaje de error correspondiente.
      *
      * @version 24.2.0
+     *
+     * @url https://github.com/gamboamartin/direccion_postal/wiki/controllers._init_dps.limpia_selector.26.2.0
      */
     private function limpia_selector(string $css_id, string $entidad_limpia): string|array
     {
@@ -564,7 +568,7 @@ class _init_dps{
     }
 
     /**
-     * POR DOCUMENTAR EN WIKI FINAL REV
+     * TOTAL
      * Esta es la función '_init_dps.limpia_selectores'.
      * Limpia un conjunto de selectores y regresa el resultado concatenado de las operaciones sobre dichos selectores.
      *
@@ -579,6 +583,7 @@ class _init_dps{
      *                           con un mensaje de error correspondiente.
      *
      * @version 24.2.0
+     * @url https://github.com/gamboamartin/direccion_postal/wiki/controllers._init_dps.limpia_selectores.26.2.0
      */
     private function limpia_selectores(array $selectores): array|string
     {
@@ -607,12 +612,14 @@ class _init_dps{
     }
 
     /**
+     *  TOTAL
      * Integra la funcion new option definida en java base
      * @param string $entidad_key Entidad
      * @param string $key_option para obtener valor
      * @param string $seccion Seccion a ejecutar
      * @return string|array
      * @version 15.4.0
+     * @url https://github.com/gamboamartin/direccion_postal/wiki/controllers._init_dps.new_option.26.2.0
      */
     private function new_option(string $entidad_key, string $key_option, string $seccion): string|array
     {
@@ -631,12 +638,14 @@ class _init_dps{
     }
 
     /**
+     * TOTAL
      * Integra las opciones para java
      * @param string $entidad_key Entidad
      * @param string $key_option para obtener valor
      * @param string $seccion Seccion a ejecutar
      * @return array|string
      * @version 15.4.0
+     * @url https://github.com/gamboamartin/direccion_postal/wiki/controllers._init_dps.options.26.2.0
      */
     private function options(string $entidad_key, string $key_option, string $seccion): array|string
     {
@@ -738,7 +747,7 @@ class _init_dps{
 
             $selector = trim($selector);
             if($selector === ''){
-                return $this->error->error(mensaje: 'Error selector esta vacio', data: $selector);
+                return $this->error->error(mensaje: 'Error selector esta vacio', data: $selector, es_final: true);
             }
 
             $entidad = "dp_$selector";
@@ -768,7 +777,7 @@ class _init_dps{
     {
         $css_id = trim($css_id);
         if($css_id === ''){
-            return $this->error->error(mensaje: 'Error css_id esta vacio', data: $css_id);
+            return $this->error->error(mensaje: 'Error css_id esta vacio', data: $css_id, es_final: true);
         }
         return $css_id.'.selectpicker("refresh");';
     }
@@ -827,7 +836,7 @@ class _init_dps{
 
 
     /**
-     * POR DOCUMENTAR EN WIKI FINAL REV
+     * TOTAL
      * Esta es la función 'selector', en la cual selecciona y retorna una entidad, para uso en jquery
      *
      * @param string $entidad  La entidad a seleccionar.
@@ -838,6 +847,7 @@ class _init_dps{
      *
      * @throws errores       Cuando la entidad está vacía, lanza una Exception con el mensaje de error.
      * @version 24.2.0
+     * @url https://github.com/gamboamartin/direccion_postal/wiki/controllers._init_dps.selector.26.2.0
      */
     private function selector(string $entidad): string|array
     {
@@ -934,7 +944,8 @@ class _init_dps{
 
         $seccion_limpia = trim($seccion_limpia);
         if($seccion_limpia === ''){
-            return $this->error->error(mensaje: 'Error seccion_limpia esta vacia',data:  $seccion_limpia);
+            return $this->error->error(mensaje: 'Error seccion_limpia esta vacia',data:  $seccion_limpia,
+                es_final: true);
         }
 
 
@@ -963,12 +974,7 @@ class _init_dps{
             return $this->error->error(mensaje: 'Error al generar update',data:  $update);
         }
 
-        $ej_update = $url_val.$update;
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar update',data:  $update);
-        }
-
-        return $ej_update;
+        return $url_val.$update;
     }
 
 
@@ -1076,12 +1082,14 @@ class _init_dps{
     }
 
     /**
+     * TOTAL
      * Valida la integracion de datos basica
      * @param string $entidad_key Entidad
      * @param string $key_option para obtener valor
      * @param string $seccion Seccion a ejecutar
      * @return bool|array
      * @version 15.4.0
+     * @url https://github.com/gamboamartin/direccion_postal/wiki/controllers._init_dps.valida_base.25.2.0
      */
     private function valida_base(string $entidad_key, string $key_option, string $seccion): true|array
     {
@@ -1108,44 +1116,49 @@ class _init_dps{
     private function valida_params(stdClass $params): true|array
     {
         if(!isset($params->key)){
-            return $this->error->error(mensaje: 'Error $params->key no existe',data:  $params);
+            return $this->error->error(mensaje: 'Error $params->key no existe',data:  $params, es_final: true);
         }
         $params->key = trim($params->key);
         if($params->key === ''){
-            return $this->error->error(mensaje: 'Error $params->key esta vacio',data:  $params);
+            return $this->error->error(mensaje: 'Error $params->key esta vacio',data:  $params, es_final: true);
         }
         if(!isset($params->childrens)){
-            return $this->error->error(mensaje: 'Error $params->childrens no existe',data:  $params);
+            return $this->error->error(mensaje: 'Error $params->childrens no existe',data:  $params, es_final: true);
         }
         if(!isset($params->entidad_key)){
-            return $this->error->error(mensaje: 'Error $params->entidad_key no existe',data:  $params);
+            return $this->error->error(mensaje: 'Error $params->entidad_key no existe',data:  $params, es_final: true);
         }
         if(!isset($params->key_option)){
-            return $this->error->error(mensaje: 'Error $params->key_option no existe',data:  $params);
+            return $this->error->error(mensaje: 'Error $params->key_option no existe',data:  $params, es_final: true);
         }
         if(!isset($params->seccion_limpia)){
-            return $this->error->error(mensaje: 'Error $params->seccion_limpia no existe',data:  $params);
+            return $this->error->error(mensaje: 'Error $params->seccion_limpia no existe',data:  $params,
+                es_final: true);
         }
         if(!isset($params->seccion_param)){
-            return $this->error->error(mensaje: 'Error $params->seccion_param no existe',data:  $params);
+            return $this->error->error(mensaje: 'Error $params->seccion_param no existe',data:  $params,
+                es_final: true);
         }
         if(!is_array($params->childrens)){
-            return $this->error->error(mensaje: 'Error $params->childrens debe ser un array',data:  $params);
+            return $this->error->error(mensaje: 'Error $params->childrens debe ser un array',data:  $params,
+                es_final: true);
         }
         if($params->seccion_limpia === ''){
-            return $this->error->error(mensaje: 'Error $params->seccion_limpia esta vacio',data:  $params);
+            return $this->error->error(mensaje: 'Error $params->seccion_limpia esta vacio',data:  $params,
+                es_final: true);
         }
         if($params->entidad_key === ''){
-            return $this->error->error(mensaje: 'Error $params->entidad_key esta vacio',data:  $params);
+            return $this->error->error(mensaje: 'Error $params->entidad_key esta vacio',data:  $params, es_final: true);
         }
         if($params->key_option === ''){
-            return $this->error->error(mensaje: 'Error $params->key_option esta vacio',data:  $params);
+            return $this->error->error(mensaje: 'Error $params->key_option esta vacio',data:  $params, es_final: true);
         }
         if($params->seccion_param === ''){
-            return $this->error->error(mensaje: 'Error $params->seccion_param esta vacio',data:  $params);
+            return $this->error->error(mensaje: 'Error $params->seccion_param esta vacio',data:  $params,
+                es_final: true);
         }
         if(!isset($params->exe)){
-            return $this->error->error(mensaje: 'Error $params->exe no existe',data:  $params);
+            return $this->error->error(mensaje: 'Error $params->exe no existe',data:  $params, es_final: true);
         }
         return true;
 
