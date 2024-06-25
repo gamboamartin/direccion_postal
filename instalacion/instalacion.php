@@ -15,6 +15,48 @@ use stdClass;
 class instalacion
 {
 
+    private function _add_dp_calle(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (new _instalacion(link: $link))->create_table_new(table: 'dp_calle');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create table', data:  $create);
+        }
+        $out->create = $create;
+
+
+
+
+        return $out;
+
+    }
+    private function _add_dp_calle_pertenece(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (new _instalacion(link: $link))->create_table_new(table: 'dp_calle_pertenece');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create table', data:  $create);
+        }
+        $out->create = $create;
+
+        $foraneas = array();
+        $foraneas['dp_calle_id'] = new stdClass();
+        $foraneas['dp_colonia_postal_id'] = new stdClass();
+
+        $foraneas_r = (new _instalacion(link:$link))->foraneas(foraneas: $foraneas,table:  'dp_calle_pertenece');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
+        }
+        $out->foraneas_r = $foraneas_r;
+
+
+
+        return $out;
+
+    }
+
+
     private function _add_dp_colonia(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -196,6 +238,34 @@ class instalacion
         return $out;
 
     }
+
+    private function dp_calle(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_dp_calle(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
+        }
+
+
+        return $out;
+
+    }
+
+    private function dp_calle_pertenece(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_dp_calle_pertenece(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
+        }
+
+
+        return $out;
+
+    }
+
+
 
     private function dp_colonia(PDO $link): array|stdClass
     {
@@ -452,6 +522,18 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al ajustar dp_colonia_postal', data:  $dp_colonia_postal);
         }
         $result->dp_colonia_postal = $dp_colonia_postal;
+
+        $dp_calle = $this->dp_calle(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar dp_calle', data:  $dp_calle);
+        }
+        $result->dp_calle = $dp_calle;
+
+        $dp_calle_pertenece = $this->dp_calle_pertenece(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar dp_calle_pertenece', data:  $dp_calle_pertenece);
+        }
+        $result->dp_calle_pertenece = $dp_calle_pertenece;
 
 
         return $result;
