@@ -1,6 +1,7 @@
 <?php
 namespace gamboamartin\direccion_postal\instalacion;
 
+use config\generales;
 use gamboamartin\administrador\models\_instalacion;
 use gamboamartin\direccion_postal\models\dp_colonia;
 use gamboamartin\direccion_postal\models\dp_colonia_postal;
@@ -9,6 +10,7 @@ use gamboamartin\direccion_postal\models\dp_estado;
 use gamboamartin\direccion_postal\models\dp_municipio;
 use gamboamartin\direccion_postal\models\dp_pais;
 use gamboamartin\errores\errores;
+use gamboamartin\plugins\Importador;
 use PDO;
 use stdClass;
 
@@ -374,21 +376,58 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
         }
 
-        $dp_estados_ins = array();
-        $dp_estado_ins['id'] = '14';
-        $dp_estado_ins['codigo'] = 'JAL';
-        $dp_estado_ins['descripcion_select'] = 'JAL Jalisco';
-        $dp_estado_ins['descripcion'] = 'Jalisco';
-        $dp_estado_ins['dp_pais_id'] = '151';
+        $importador = new Importador();
+        $columnas = array();
+        $columnas[] = 'id';
+        $columnas[] = 'descripcion';
+        $columnas[] = 'codigo';
+        $columnas[] = 'status';
+        $columnas[] = 'descripcion_select';
+        $columnas[] = 'alias';
+        $columnas[] = 'codigo_bis';
+        $columnas[] = 'dp_pais_id';
+        $columnas[] = 'predeterminado';
 
-        $dp_estados_ins[0] = $dp_estado_ins;
-        foreach ($dp_estados_ins as $dp_estado_ins){
-            $alta = (new dp_estado(link: $link))->inserta_registro_si_no_existe(registro: $dp_estado_ins);
-            if(errores::$error){
-                return (new errores())->error(mensaje: 'Error al insertar',data:  $alta);
+
+        $ruta = (new generales())->path_base."instalacion/".__FUNCTION__.'.ods';
+
+        if((new generales())->sistema !== 'direccion_postal'){
+            $ruta = (new generales())->path_base;
+            $ruta .= "vendor/gamboa.martin/direccion_postal/instalacion/".__FUNCTION__.".ods";
+        }
+
+
+        $modelo = new dp_estado(link: $link);
+
+        $n_rows = $modelo->cuenta();
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al contar n_rows', data: $n_rows);
+        }
+        $altas = array();
+        if($n_rows !== 97) {
+
+            $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error al leer cat_sat_cve_prod', data: $data);
             }
-            $out->altas[] = $alta;
 
+            foreach ($data as $row) {
+                $row = (array)$row;
+                $ins['id'] = trim($row['id']);
+                $ins['descripcion'] = trim($row['descripcion']);
+                $ins['codigo'] = trim($row['codigo']);
+                $ins['status'] = trim($row['status']);
+                $ins['descripcion_select'] = trim($row['descripcion_select']);
+                $ins['alias'] = trim($row['alias']);
+                $ins['codigo_bis'] = trim($row['codigo_bis']);
+                $ins['predeterminado'] = trim($row['predeterminado']);
+                $ins['dp_pais_id'] = trim($row['dp_pais_id']);
+                $alta = $modelo->inserta_registro_si_no_existe(registro: $ins);
+                if (errores::$error) {
+                    return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $alta);
+                }
+                $altas[] = $alta;
+            }
         }
 
         return $out;
@@ -403,39 +442,59 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
         }
 
-        $dp_municipios_ins = array();
+        $importador = new Importador();
+        $columnas = array();
+        $columnas[] = 'id';
+        $columnas[] = 'descripcion';
+        $columnas[] = 'codigo';
+        $columnas[] = 'status';
+        $columnas[] = 'descripcion_select';
+        $columnas[] = 'alias';
+        $columnas[] = 'codigo_bis';
+        $columnas[] = 'dp_estado_id';
+        $columnas[] = 'predeterminado';
 
-        $dp_municipio_ins['id'] = '230';
-        $dp_municipio_ins['codigo'] = 'JAL008';
-        $dp_municipio_ins['descripcion_select'] = 'JAL008 Arandas';
-        $dp_municipio_ins['descripcion'] = 'Arandas';
-        $dp_municipio_ins['dp_estado_id'] = '14';
-        $dp_municipios_ins[0] = $dp_municipio_ins;
+        $ruta = (new generales())->path_base."instalacion/".__FUNCTION__.'.ods';
 
-
-        $dp_municipio_ins['id'] = '1805';
-        $dp_municipio_ins['codigo'] = 'JAL120';
-        $dp_municipio_ins['descripcion_select'] = 'JAL120 Zapopan';
-        $dp_municipio_ins['descripcion'] = 'Zapopan';
-        $dp_municipio_ins['dp_estado_id'] = '14';
-        $dp_municipios_ins[1] = $dp_municipio_ins;
-
-        $dp_municipio_ins['id'] = '1649';
-        $dp_municipio_ins['codigo'] = 'JAL098';
-        $dp_municipio_ins['descripcion_select'] = 'JAL098 San Pedro Tlaquepaque';
-        $dp_municipio_ins['descripcion'] = 'San Pedro Tlaquepaque';
-        $dp_municipio_ins['dp_estado_id'] = '14';
-        $dp_municipios_ins[2] = $dp_municipio_ins;
-
-
-        foreach ($dp_municipios_ins as $dp_municipio_ins){
-            $alta = (new dp_municipio(link: $link))->inserta_registro_si_no_existe(registro: $dp_municipio_ins);
-            if(errores::$error){
-                return (new errores())->error(mensaje: 'Error al insertar',data:  $alta);
-            }
-            $out->altas[] = $alta;
-
+        if((new generales())->sistema !== 'direccion_postal'){
+            $ruta = (new generales())->path_base;
+            $ruta .= "vendor/gamboa.martin/direccion_postal/instalacion/".__FUNCTION__.".ods";
         }
+
+
+        $modelo = new dp_municipio(link: $link);
+
+        $n_rows = $modelo->cuenta();
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al contar n_rows', data: $n_rows);
+        }
+        $altas = array();
+        if($n_rows !== 2466) {
+
+            $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error al leer municipio', data: $data);
+            }
+
+            foreach ($data as $row) {
+                $row = (array)$row;
+                $ins['id'] = trim($row['id']);
+                $ins['descripcion'] = trim($row['descripcion']);
+                $ins['codigo'] = trim($row['codigo']);
+                $ins['status'] = trim($row['status']);
+                $ins['descripcion_select'] = trim($row['descripcion_select']);
+                $ins['alias'] = trim($row['alias']);
+                $ins['codigo_bis'] = trim($row['codigo_bis']);
+                $ins['predeterminado'] = trim($row['predeterminado']);
+                $ins['dp_estado_id'] = trim($row['dp_estado_id']);
+                $alta = $modelo->inserta_registro_si_no_existe(registro: $ins);
+                if (errores::$error) {
+                    return (new errores())->error(mensaje: 'Error al insertar municipio', data: $alta);
+                }
+                $altas[] = $alta;
+            }
+        }
+
 
         return $out;
 
@@ -449,33 +508,56 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
         }
 
-        $dp_paises_ins = array();
+        $importador = new Importador();
+        $columnas = array();
+        $columnas[] = 'id';
+        $columnas[] = 'descripcion';
+        $columnas[] = 'codigo';
+        $columnas[] = 'status';
+        $columnas[] = 'descripcion_select';
+        $columnas[] = 'alias';
+        $columnas[] = 'codigo_bis';
+        $columnas[] = 'predeterminado';
 
-        $dp_pais_ins['id'] = '151';
-        $dp_pais_ins['codigo'] = 'MEX';
-        $dp_pais_ins['descripcion_select'] = 'MEX Mexico';
-        $dp_pais_ins['descripcion'] = 'Mexico';
-        $dp_paises_ins[0] = $dp_pais_ins;
 
-        $dp_pais_ins['id'] = '66';
-        $dp_pais_ins['codigo'] = 'USA';
-        $dp_pais_ins['descripcion_select'] = 'Estados Unidos (los)';
-        $dp_pais_ins['descripcion'] = 'Estados Unidos (los)';
-        $dp_paises_ins[1] = $dp_pais_ins;
+        $ruta = (new generales())->path_base."instalacion/".__FUNCTION__.'.ods';
 
-        $dp_pais_ins['id'] = '253';
-        $dp_pais_ins['codigo'] = 'XXX';
-        $dp_pais_ins['descripcion_select'] = 'SIN PAIS';
-        $dp_pais_ins['descripcion'] = 'SIN PAIS';
-        $dp_paises_ins[2] = $dp_pais_ins;
+        if((new generales())->sistema !== 'direccion_postal'){
+            $ruta = (new generales())->path_base;
+            $ruta .= "vendor/gamboa.martin/direccion_postal/instalacion/".__FUNCTION__.".ods";
+        }
 
-        foreach ($dp_paises_ins as $dp_pais_ins){
-            $alta = (new dp_pais(link: $link,aplica_transacciones_base: true))->inserta_registro_si_no_existe(registro: $dp_pais_ins);
-            if(errores::$error){
-                return (new errores())->error(mensaje: 'Error al insertar',data:  $alta);
+
+        $modelo = new dp_pais(link: $link,aplica_transacciones_base: true);
+
+        $n_rows = $modelo->cuenta();
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al contar n_rows', data: $n_rows);
+        }
+        $altas = array();
+        if($n_rows !== 251) {
+
+            $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error al leer dp_pais', data: $data);
             }
-            $out->altas[] = $alta;
 
+            foreach ($data as $row) {
+                $row = (array)$row;
+                $ins['id'] = trim($row['id']);
+                $ins['descripcion'] = trim($row['descripcion']);
+                $ins['codigo'] = trim($row['codigo']);
+                $ins['status'] = trim($row['status']);
+                $ins['descripcion_select'] = trim($row['descripcion_select']);
+                $ins['alias'] = trim($row['alias']);
+                $ins['codigo_bis'] = trim($row['codigo_bis']);
+                $ins['predeterminado'] = trim($row['predeterminado']);
+                $alta = $modelo->inserta_registro_si_no_existe(registro: $ins);
+                if (errores::$error) {
+                    return (new errores())->error(mensaje: 'Error al insertar dp_pais', data: $alta);
+                }
+                $altas[] = $alta;
+            }
         }
 
         return $out;
