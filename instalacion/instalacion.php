@@ -43,6 +43,16 @@ class instalacion
         }
         $out->create = $create;
 
+        $campos = new stdClass();
+        $campos->georeferencia = new stdClass();
+
+        $result = (new _instalacion(link: $link))->add_columns(campos: $campos,table:  'dp_calle_pertenece');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar campos', data:  $result);
+        }
+        $out->columnas = $result;
+
         $foraneas = array();
         $foraneas['dp_calle_id'] = new stdClass();
         $foraneas['dp_colonia_postal_id'] = new stdClass();
