@@ -3,6 +3,7 @@ namespace gamboamartin\direccion_postal\instalacion;
 
 use config\generales;
 use gamboamartin\administrador\models\_instalacion;
+use gamboamartin\direccion_postal\models\dp_calle;
 use gamboamartin\direccion_postal\models\dp_colonia;
 use gamboamartin\direccion_postal\models\dp_colonia_postal;
 use gamboamartin\direccion_postal\models\dp_cp;
@@ -161,17 +162,6 @@ class instalacion
         }
         $out->foraneas_r = $foraneas_r;
 
-        /*$campos = new stdClass();
-        $campos->fecha = new stdClass();
-        $campos->fecha->tipo_dato = 'DATE';
-        $campos->fecha->default = '1900-01-01';
-
-        $result = (new _instalacion(link: $link))->add_columns(campos: $campos,table:  'fc_cer_csd');
-
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al ajustar campos', data:  $result);
-        }
-        $out->columnas = $result;*/
 
 
 
@@ -196,18 +186,6 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
         }
         $out->foraneas_r = $foraneas_r;
-
-        /*$campos = new stdClass();
-        $campos->fecha = new stdClass();
-        $campos->fecha->tipo_dato = 'DATE';
-        $campos->fecha->default = '1900-01-01';
-
-        $result = (new _instalacion(link: $link))->add_columns(campos: $campos,table:  'fc_cer_csd');
-
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al ajustar campos', data:  $result);
-        }
-        $out->columnas = $result;*/
 
 
 
@@ -249,6 +227,23 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
         }
 
+        $dp_calle_ins['id'] = '100';
+        $dp_calle_ins['codigo'] = 'PREDETERMINADO';
+        $dp_calle_ins['descripcion_select'] = 'PREDETERMINADO';
+        $dp_calle_ins['descripcion'] = 'PREDETERMINADO';
+        $dp_calle_ins['predeterminado'] = 'activo';
+
+        $dp_calles_ins[1] = $dp_calle_ins;
+
+        foreach ($dp_calles_ins as $dp_calle_ins){
+            $alta = (new dp_calle(link: $link))->inserta_registro_si_no_existe(registro: $dp_calle_ins);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar',data:  $alta);
+            }
+            $out->altas[] = $alta;
+
+        }
+
 
         return $out;
 
@@ -260,6 +255,27 @@ class instalacion
         $create = $this->_add_dp_calle_pertenece(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
+        }
+
+
+        $dp_calle_ins['id'] = '100';
+        $dp_calle_ins['codigo'] = 'PREDETERMINADO';
+        $dp_calle_ins['descripcion_select'] = 'PREDETERMINADO';
+        $dp_calle_ins['descripcion'] = 'PREDETERMINADO';
+        $dp_calle_ins['predeterminado'] = 'activo';
+        $dp_calle_ins['dp_calle_id'] = '100';
+        $dp_calle_ins['georeferencia'] = '100';
+        $dp_calle_ins['dp_colonia_postal_id'] = '105';
+
+        $dp_calles_ins[1] = $dp_calle_ins;
+
+        foreach ($dp_calles_ins as $dp_calle_ins){
+            $alta = (new dp_calle(link: $link))->inserta_registro_si_no_existe(registro: $dp_calle_ins);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar',data:  $alta);
+            }
+            $out->altas[] = $alta;
+
         }
 
 
@@ -278,6 +294,7 @@ class instalacion
         }
 
         $dp_colonias_ins = array();
+        $dp_colonia_ins = array();
         $dp_colonia_ins['id'] = '49728';
         $dp_colonia_ins['codigo'] = '49728';
         $dp_colonia_ins['descripcion_select'] = 'Residencial Revolución';
@@ -285,6 +302,18 @@ class instalacion
         $dp_colonia_ins['georeferencia'] = 'SG';
 
         $dp_colonias_ins[0] = $dp_colonia_ins;
+
+        $dp_colonia_ins = array();
+        $dp_colonia_ins['id'] = '110707';
+        $dp_colonia_ins['codigo'] = '110707';
+        $dp_colonia_ins['descripcion_select'] = 'PREDETERMINADO';
+        $dp_colonia_ins['descripcion'] = 'PREDETERMINADO';
+        $dp_colonia_ins['georeferencia'] = 'SG';
+        $dp_colonia_ins['predeterminado'] = 'activo';
+
+        $dp_colonias_ins[1] = $dp_colonia_ins;
+
+
         foreach ($dp_colonias_ins as $dp_colonia_ins){
             $alta = (new dp_colonia(link: $link))->inserta_registro_si_no_existe(registro: $dp_colonia_ins);
             if(errores::$error){
@@ -315,6 +344,18 @@ class instalacion
         $dp_colonia_postal_ins['dp_colonia_id'] = '49728';
 
         $dp_colonias_postales_ins[0] = $dp_colonia_postal_ins;
+
+
+        $dp_colonia_postal_ins['id'] = '105';
+        $dp_colonia_postal_ins['codigo'] = 'PREDETERMINADO';
+        $dp_colonia_postal_ins['descripcion_select'] = 'PREDETERMINADO';
+        $dp_colonia_postal_ins['descripcion'] = 'PREDETERMINADO';
+        $dp_colonia_postal_ins['dp_cp_id'] = '11';
+        $dp_colonia_postal_ins['dp_colonia_id'] = '110707';
+        $dp_colonia_postal_ins['predeterminado'] = 'activo';
+
+        $dp_colonias_postales_ins[1] = $dp_colonia_postal_ins;
+
         foreach ($dp_colonias_postales_ins as $dp_colonia_postal_ins){
             $alta = (new dp_colonia_postal(link: $link))->inserta_registro_si_no_existe(registro: $dp_colonia_postal_ins);
             if(errores::$error){
@@ -337,6 +378,7 @@ class instalacion
         }
 
         $dp_cps_ins = array();
+        $dp_cp_ins = array();
         $dp_cp_ins['id'] = '1';
         $dp_cp_ins['codigo'] = '45010';
         $dp_cp_ins['descripcion_select'] = '45010 45010';
@@ -345,7 +387,7 @@ class instalacion
         $dp_cp_ins['georeferencia'] = 'SG';
         $dp_cps_ins[0] = $dp_cp_ins;
 
-
+        $dp_cp_ins = array();
         $dp_cp_ins['id'] = '2';
         $dp_cp_ins['codigo'] = '45580';
         $dp_cp_ins['descripcion_select'] = '45580 45580';
@@ -354,6 +396,17 @@ class instalacion
         $dp_cp_ins['georeferencia'] = 'SG';
 
         $dp_cps_ins[1] = $dp_cp_ins;
+
+        $dp_cp_ins = array();
+        $dp_cp_ins['id'] = '11';
+        $dp_cp_ins['codigo'] = 'PRED';
+        $dp_cp_ins['descripcion_select'] = 'PRED';
+        $dp_cp_ins['descripcion'] = 'PRED';
+        $dp_cp_ins['dp_municipio_id'] = '2467';
+        $dp_cp_ins['georeferencia'] = 'SG';
+        $dp_cp_ins['predeterminado'] = 'activo';
+
+        $dp_cps_ins[2] = $dp_cp_ins;
 
         foreach ($dp_cps_ins as $dp_cp_ins){
             $alta = (new dp_cp(link: $link))->inserta_registro_si_no_existe(registro: $dp_cp_ins);
