@@ -412,15 +412,13 @@ class instalacion
             }
 
             foreach ($data as $row) {
-                $row = (array)$row;
-                $ins['id'] = trim($row['id']);
-                $ins['descripcion'] = trim($row['descripcion']);
-                $ins['codigo'] = trim($row['codigo']);
-                $ins['status'] = trim($row['status']);
-                $ins['descripcion_select'] = trim($row['descripcion_select']);
-                $ins['alias'] = trim($row['alias']);
-                $ins['codigo_bis'] = trim($row['codigo_bis']);
-                $ins['predeterminado'] = trim($row['predeterminado']);
+                if(is_object($row)) {
+                    $row = (array)$row;
+                }
+                $ins = (new _instalacion(link: $link))->row_ins_base(row: $row);
+                if (errores::$error) {
+                    return (new errores())->error(mensaje: 'Error al maquetar row base', data: $ins);
+                }
                 $ins['dp_pais_id'] = trim($row['dp_pais_id']);
                 $alta = $modelo->inserta_registro_si_no_existe(registro: $ins);
                 if (errores::$error) {
@@ -477,15 +475,14 @@ class instalacion
             }
 
             foreach ($data as $row) {
-                $row = (array)$row;
-                $ins['id'] = trim($row['id']);
-                $ins['descripcion'] = trim($row['descripcion']);
-                $ins['codigo'] = trim($row['codigo']);
-                $ins['status'] = trim($row['status']);
-                $ins['descripcion_select'] = trim($row['descripcion_select']);
-                $ins['alias'] = trim($row['alias']);
-                $ins['codigo_bis'] = trim($row['codigo_bis']);
-                $ins['predeterminado'] = trim($row['predeterminado']);
+                if(is_object($row)) {
+                    $row = (array)$row;
+                }
+                $ins = (new _instalacion(link: $link))->row_ins_base(row: $row);
+                if (errores::$error) {
+                    return (new errores())->error(mensaje: 'Error al maquetar row base', data: $ins);
+                }
+
                 $ins['dp_estado_id'] = trim($row['dp_estado_id']);
                 $alta = $modelo->inserta_registro_si_no_existe(registro: $ins);
                 if (errores::$error) {
@@ -543,15 +540,13 @@ class instalacion
             }
 
             foreach ($data as $row) {
-                $row = (array)$row;
-                $ins['id'] = trim($row['id']);
-                $ins['descripcion'] = trim($row['descripcion']);
-                $ins['codigo'] = trim($row['codigo']);
-                $ins['status'] = trim($row['status']);
-                $ins['descripcion_select'] = trim($row['descripcion_select']);
-                $ins['alias'] = trim($row['alias']);
-                $ins['codigo_bis'] = trim($row['codigo_bis']);
-                $ins['predeterminado'] = trim($row['predeterminado']);
+                if(is_object($row)) {
+                    $row = (array)$row;
+                }
+                $ins = (new _instalacion(link: $link))->row_ins_base(row: $row);
+                if (errores::$error) {
+                    return (new errores())->error(mensaje: 'Error al maquetar row base', data: $ins);
+                }
                 $alta = $modelo->inserta_registro_si_no_existe(registro: $ins);
                 if (errores::$error) {
                     return (new errores())->error(mensaje: 'Error al insertar dp_pais', data: $alta);
