@@ -4,6 +4,7 @@ namespace gamboamartin\direccion_postal\instalacion;
 use config\generales;
 use gamboamartin\administrador\models\_instalacion;
 use gamboamartin\direccion_postal\models\dp_calle;
+use gamboamartin\direccion_postal\models\dp_calle_pertenece;
 use gamboamartin\direccion_postal\models\dp_colonia;
 use gamboamartin\direccion_postal\models\dp_colonia_postal;
 use gamboamartin\direccion_postal\models\dp_cp;
@@ -270,7 +271,7 @@ class instalacion
         $dp_calles_ins[1] = $dp_calle_ins;
 
         foreach ($dp_calles_ins as $dp_calle_ins){
-            $alta = (new dp_calle(link: $link))->inserta_registro_si_no_existe(registro: $dp_calle_ins);
+            $alta = (new dp_calle_pertenece(link: $link))->inserta_registro_si_no_existe(registro: $dp_calle_ins);
             if(errores::$error){
                 return (new errores())->error(mensaje: 'Error al insertar',data:  $alta);
             }
