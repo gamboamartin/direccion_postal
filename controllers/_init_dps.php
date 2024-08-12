@@ -485,7 +485,7 @@ class _init_dps{
     }
 
     /**
-     * POR DOCUMENTAR EN WIKI FINAL REV
+     * TOTAL
      * Esta función toma un string que representa una sección y devuelve una
      * clave específica en función del string proporcionado.
      *
@@ -497,6 +497,7 @@ class _init_dps{
      *
      * @throws errores En caso de que el parámetro proporcionado esté vacío, se generará un error.
      * @version 20.1.0
+     * @url https://github.com/gamboamartin/direccion_postal/wiki/controllers._init_dps.key
      */
     private function key(string $seccion_limpia): string|array
     {
