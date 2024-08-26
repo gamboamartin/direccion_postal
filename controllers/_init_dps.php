@@ -114,7 +114,7 @@ class _init_dps{
     {
         $entidad = trim($entidad);
         if($entidad === ''){
-            return $this->error->error(mensaje: 'Error entidad esta vacia',data:  $entidad);
+            return $this->error->error(mensaje: 'Error entidad esta vacia',data:  $entidad, es_final: true);
         }
 
         $selected = $this->selected(entidad: $entidad);
@@ -156,16 +156,18 @@ class _init_dps{
     }
 
     /**
+     * TOTAL
      * Integra la llamada de la ejecucion en java
      * @param string $entidad Entidad a ejecutar
      * @return string|array
      * @version 15.10.0
+     * @url https://github.com/gamboamartin/direccion_postal/wiki/controllers._init_dps.ejecuta_funcion
      */
     private function ejecuta_funcion(string $entidad): string|array
     {
         $entidad = trim($entidad);
         if($entidad === ''){
-            return $this->error->error(mensaje: 'Error entidad esta vacio',data:  $entidad);
+            return $this->error->error(mensaje: 'Error entidad esta vacio',data:  $entidad, es_final: true);
         }
         return 'asigna_'.$entidad.'(selected.val());';
     }
@@ -205,7 +207,7 @@ class _init_dps{
     {
         $entidad = trim($entidad);
         if($entidad === ''){
-            return $this->error->error(mensaje: 'Error entidad esta vacia',data:  $entidad);
+            return $this->error->error(mensaje: 'Error entidad esta vacia',data:  $entidad, es_final: true);
         }
 
         $change = $this->change(entidad: $entidad, exe: $exe);
@@ -821,16 +823,18 @@ class _init_dps{
     }
 
     /**
+     * TOTAL
      * Integra selected en option
      * @param string $entidad Entidad de integracion
      * @return string|array
      * @version 15.9.0
+     * @url https://github.com/gamboamartin/direccion_postal/wiki/controllers._init_dps.selected
      */
     private function selected(string $entidad): string|array
     {
         $entidad = trim($entidad);
         if($entidad === ''){
-            return $this->error->error(mensaje: 'Error entidad esta vacia',data:  $entidad);
+            return $this->error->error(mensaje: 'Error entidad esta vacia',data:  $entidad, es_final: true);
         }
         return 'let selected = sl_'.$entidad.'.find("option:selected");';
     }
